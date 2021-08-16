@@ -34,7 +34,7 @@ const getAllAvailableRoomsDetails = async (req, res) => {       //get all availa
         });
 }
 
-const getAllNotAvailableRoomsDetails = async (req, res) => {       //get all not available rooms details.
+const getAllUnavailableRoomsDetails = async (req, res) => {       //get all not available rooms details.
     await Room.find({isAvailable:false})
         .then(data => {
             res.status(200).send({ data: data });
@@ -69,7 +69,7 @@ module.exports = {
     createRoom,
     getAllRoomsDetails,
     getAllAvailableRoomsDetails,
-    getAllNotAvailableRoomsDetails,
+    getAllUnavailableRoomsDetails,
     getSelectedRoomDetails,
     deleteRoom
 };
