@@ -7,8 +7,9 @@ const EmployeeSchema = new mongoose.Schema({    //make schema
     mobileNumber: { type: Number, required: true },
     nicNo: { type: String, required: true, trim: true },
     salary: { type: Number, required: true },
+    isWorking: {type: Boolean, default:true},
     userName: { type: String, required: true, trim: true },
-    password: { type: String, required: true, trim: true },
+    password: { type: String, required: true, trim: true }
 
 });
 
