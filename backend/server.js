@@ -5,7 +5,7 @@ const cors = require('cors');           //middleware
 const bodyParser = require('body-parser');   
 
 //import APIs
-// const roomAPI = require('./src/api/room.api');
+const employeeAPI = require('./src/apis/employee.api');   //IT19007502 - Hiddalarachchi J.
 // const categoryAPI = require('./src/api/category.api');
 
 dotenv.config();
@@ -36,11 +36,11 @@ mongoose.connection.once('open', () => {
 
 //root route
 app.route('/').get((req, res) => {
-  res.send('SLIIT AF FINAL API BY SE2021 BATCH');
+  res.send('SLIIT SPM FINAL API BY SE2021 BATCH');
 });
 
 //register router - CHANGEABLE
-// app.use('/room', roomAPI());
+app.use('/employee', employeeAPI());    //IT19007502 - Hiddalarachchi J.
 // app.use('/category', categoryAPI());
 
 app.listen(PORT, () => {
