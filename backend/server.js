@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 //import APIs
 const employeeAPI = require('./src/apis/employee.api');   //IT19007502 - Hiddalarachchi J.
-// const categoryAPI = require('./src/api/category.api');
+const roomAPI = require('./src/apis/room.api');   //IT19007502 - Hiddalarachchi J.
 
 dotenv.config();
 const app = express();
@@ -41,7 +41,7 @@ app.route('/').get((req, res) => {
 
 //register router - CHANGEABLE
 app.use('/employee', employeeAPI());    //IT19007502 - Hiddalarachchi J.
-// app.use('/category', categoryAPI());
+app.use('/room', roomAPI());    //IT19007502 - Hiddalarachchi J.
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);
