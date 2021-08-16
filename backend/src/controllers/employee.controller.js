@@ -25,7 +25,7 @@ const getAllEmployeesDetails = async (req, res) => {       //get all employee de
 }
 
 const getAllWorkingEmployeesDetails = async (req, res) => {       //get all working employee details.
-    await Employee.find({isWorking = 1})
+    await Employee.find({isWorking:true})
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -35,7 +35,7 @@ const getAllWorkingEmployeesDetails = async (req, res) => {       //get all work
 }
 
 const getAllRetiredEmployeesDetails = async (req, res) => {       //get all retired employee details.
-    await Employee.find({isWorking = 0})
+    await Employee.find({isWorking:false})
         .then(data => {
             res.status(200).send({ data: data });
         })
