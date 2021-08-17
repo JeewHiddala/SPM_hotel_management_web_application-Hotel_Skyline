@@ -9,6 +9,8 @@ const employeeAPI = require('./src/apis/employee.api');   //IT19007502 - Hiddala
 const roomAPI = require('./src/apis/room.api');   //IT19007502 - Hiddalarachchi J.
 const serviceAPI = require('./src/apis/service.api');   //IT19007502 - Hiddalarachchi J.
 
+const foodApi = require('./src/apis/food.api');// IT19021058 -De Seram E.M.A.P.
+
 dotenv.config();
 const app = express();
 app.use(cors());
@@ -44,6 +46,8 @@ app.route('/').get((req, res) => {
 app.use('/employee', employeeAPI());    //IT19007502 - Hiddalarachchi J.
 app.use('/room', roomAPI());    //IT19007502 - Hiddalarachchi J.
 app.use('/service', serviceAPI());    //IT19007502 - Hiddalarachchi J.
+
+app.use('/food',foodApi());// IT19021058 -De Seram E.M.A.P.
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);
