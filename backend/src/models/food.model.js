@@ -8,8 +8,7 @@ const FoodSchema = new mongoose.Schema({    //make schema
     description: { type: String, required: true, trim: true },
     date: { type: String, required: true, trim: true },
     status: {type: String, required:true},
-    chefName: { type: String, required: true, trim: true }
-    
+    chefName: [{ type: mongoose.Schema.Types.ObjectId, required: false, ref: 'employees'}]
 });
 
 const Food = mongoose.model('foods', FoodSchema);        //give name for collection
