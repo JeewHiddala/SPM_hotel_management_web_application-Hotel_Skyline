@@ -39,7 +39,7 @@ const getSelectedFoodDetails = async (req, res) => {          //get selected foo
 const deleteFood = async (req, res) => {               // delete selected food.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the food
-        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No food with id: ${id}`);       //validating the employee id.
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No food with id: ${id}`);       //validating the food id.
         await Food.findByIdAndRemove(id);         // remove selected food details
         res.json({message: "Food deleted successfully."}); // success message
     }

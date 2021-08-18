@@ -1,0 +1,53 @@
+const Ingredient = require('../models/ingredient.model');       //import Ingredient model
+const mongoose = require("mongoose");
+
+const createIngredient = async (req, res) => {       //create a Ingredient to db.
+    if (req.body) {
+        const ingredient = new Ingredient(req.body);
+        ingredient.save()
+            .then(data => {
+                res.status(200).send({ data: data });
+            })
+            .catch(error => {
+                res.status(500).send({ error: error.message });
+            });
+    }
+}
+
+const getAllIngredientsDetails = async (req, res) => {       //get all Ingredient details.
+    await Ingredient.find({})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
+const getSelectedIngredientDetails = async (req, res) => {          //get selected Ingredient details.
+    if (req.params && req.params.id) {
+        await Ingredient.findById(req.params.id)
+            .then(data => {
+                res.status(200).send({ data : data });
+            })
+            .catch(error => {
+                res.status(500).send({ error: error.message });
+            });
+    }
+}
+
+const deleteIngredient = async (req, res) => {               // delete selected Ingredient.
+    if (req.params && req.params.id) {
+        const {id} = req.params;            // fetching the id of the Ingredient
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Ingredient with id: ${id}`);       //validating the Ingredient id.
+        await Ingredient.findByIdAndRemove(id);         // remove selected Ingredient details
+        res.json({message: "Ingredient deleted successfully."}); // success message
+    }
+}
+
+module.exports = {
+    createIngredient,
+    getAllIngredientsDetails,
+    getSelectedIngredientDetails,
+    deleteIngredient
+};
