@@ -1,9 +1,10 @@
 import './App.css';
+import NavBar from './components/navBar/navBar';
 
 function App() {
   return (
     <div>
-      <h1>Skylight-Hotel-Management-Web-Application</h1>
+      <NavBar/>
     </div>
   );
 }
