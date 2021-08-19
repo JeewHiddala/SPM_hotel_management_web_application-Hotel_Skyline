@@ -12,6 +12,9 @@ const serviceAPI = require('./src/apis/service.api');   //IT19007502 - Hiddalara
 const foodApi = require('./src/apis/food.api');// IT19021058 -De Seram E.M.A.P.
 const ingredientApi = require('./src/apis/ingredient.api');// IT19021058 -De Seram E.M.A.P.
 const ingredientOrderApi = require('./src/apis/ingredientOrder.api');// IT19021058 -De Seram E.M.A.P.
+const customerServiceApi = require('./src/apis/customerService.api');// IT19021058 -De Seram E.M.A.P.
+const serviceListApi = require('./src/apis/serviceList.api');// IT19021058 -De Seram E.M.A.P.
+
 
 dotenv.config();
 const app = express();
@@ -52,6 +55,9 @@ app.use('/service', serviceAPI());    //IT19007502 - Hiddalarachchi J.
 app.use('/food',foodApi());// IT19021058 -De Seram E.M.A.P.
 app.use('/ingredient',ingredientApi());// IT19021058 -De Seram E.M.A.P.
 app.use('/ingredientOrder',ingredientOrderApi());// IT19021058 -De Seram E.M.A.P.
+app.use('/customerService',customerServiceApi());// IT19021058 -De Seram E.M.A.P.
+app.use('/serviceList',serviceListApi());// IT19021058 -De Seram E.M.A.P.
+
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);
