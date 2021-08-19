@@ -9,7 +9,8 @@ const EmployeeSchema = new mongoose.Schema({    //make schema
     salary: { type: Number, required: true },
     isWorking: {type: Boolean, default:true},
     userName: { type: String, required: true, trim: true },
-    password: { type: String, required: true, trim: true }
+    password: { type: String, required: true, trim: true },
+    userData: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'users'}
 
 });
 
