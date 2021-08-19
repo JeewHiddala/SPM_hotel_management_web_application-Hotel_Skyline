@@ -24,7 +24,7 @@ const getAllServiceListsDetails = async (req, res) => {       //get all ServiceL
         });
 }
 
-const getSelectedServiceListDetails = async (req, res) => {          //get selected ServiceList details.
+const getSelectedServiceListDetails = async (req, res) => {  //get selected ServiceList details.
     if (req.params && req.params.id) {
         await ServiceList.findById(req.params.id).populate('customerServices','name date noOfHours price cost')
             .then(data => {
