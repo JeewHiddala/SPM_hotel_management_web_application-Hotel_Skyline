@@ -106,7 +106,7 @@ class WorkingEmployee extends Component {
                                         </form>
                                     </div>
                                     <div className="col-4">
-                                        <h4><b>Working Employee DataTable</b></h4>
+                                        <h4><b>Working Employees DataTable</b></h4>
                                     </div>
 
                                     <br />
