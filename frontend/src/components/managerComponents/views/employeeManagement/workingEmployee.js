@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 import '../../../css/dash.css';
 import Animation from '../../animation/animation';
 
@@ -14,6 +14,7 @@ class WorkingEmployee extends Component {
         }
         this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
         this.dropdown = this.dropdown.bind(this);
+        this.resignEmployee = this.resignEmployee.bind(this);
         // this.deleteAdmin = this.deleteAdmin.bind(this);
         // this.back = this.back.bind(this);
     }
@@ -47,6 +48,29 @@ class WorkingEmployee extends Component {
         this.setState(prevState => ({
             isDropdownClicked: !prevState.isDropdownClicked
          }))
+    }
+
+    resignEmployee(e , employeeId) {
+        console.log("I am on Delete", employeeId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Resign that Employee!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.patch(`http://localhost:8100/employee/resign/${employeeId}`)
+                Swal.fire(
+                    'Resigned!',
+                    'Employee has been resigned.',
+                    'success'
+                )
+                window.location.reload(false);
+            }
+        })
     }
 
     render() {
@@ -151,7 +175,7 @@ class WorkingEmployee extends Component {
                                                     <td>{item.userName}</td>
                                                     <td>{item.password}</td>
                                                     <td><button type="button" className="btn btn-warning">Update</button></td>
-                                                    <td><button type="button" className="btn btn-danger">Retire</button></td>
+                                                    <td><button type="button" className="btn btn-danger" onClick={e => this.resignEmployee(e, item._id)}>Retire</button></td>
                                                 </tr>
                                             ))}
                                             </tbody>
