@@ -3,25 +3,25 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 import '../../../css/dash.css';
 
-class RetiredEmployee extends Component {
+class RoomManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            employees: []
+            rooms: []
         }
-        this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
-        // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
+        this.deleteRoom = this.deleteRoom.bind(this);
+        this.navigateCreateRoomPage = this.navigateCreateRoomPage.bind(this);
         // this.back = this.back.bind(this);
     }
 
     componentDidMount() {   //inbuild function
-        this.fetchRetiredEmployee();
+        this.fetchRoomDetails_Manager();
     }
 
-    fetchRetiredEmployee(){
-        axios.get('http://localhost:8100/employee/retiredEmployees/')
+    fetchRoomDetails_Manager(){
+        axios.get('http://localhost:8100/room/')
         .then(response => {
-            this.setState({ employees: response.data.data });
+            this.setState({ rooms: response.data.data });
         })
 
     }
@@ -30,16 +30,16 @@ class RetiredEmployee extends Component {
     //     window.location = `/updateAdmin/${adminId}`
     // }
 
-    // navigateCreateEmployeePage(e) {
-    //     window.location = '/createEmployee'
-    // }
+    navigateCreateRoomPage(e) {
+        window.location = '/createRoom'
+    }
 
     // back(e) {
     //     window.location = '/adminSubcategories'
     // }
 
-    deleteRetiredEmployee(e , employeeId) {
-        console.log("I am on Delete", employeeId)
+    deleteRoom(e , roomId) {
+        console.log("I am on Delete", roomId)
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -50,10 +50,10 @@ class RetiredEmployee extends Component {
             confirmButtonText: 'Yes, delete it permanently!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:8100/employee/${employeeId}`)
+                axios.delete(`http://localhost:8100/room/${roomId}`)
                 Swal.fire(
                     'Deleted!',
-                    'Employee has been deleted.',
+                    'Room has been deleted.',
                     'success'
                 )
                 window.location.reload(false);
@@ -88,12 +88,12 @@ class RetiredEmployee extends Component {
                                     <div className="container" >
                                     <h5><b>Creations</b></h5>
                                         <div className="list-group">
-                                            <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Room Management</button></a>
-                                            <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
+                                            <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Room Management</button></a>
+                                            <button type="button" className="list-group-item list-group-item-action " >
                                                 Employee Management
                                             </button>
                                             <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employees</button></a>
-                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Retired Employees</button></a>
+                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employees</button></a>
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
@@ -114,9 +114,9 @@ class RetiredEmployee extends Component {
                             </div>
                             <div className="col-8">
                                 <div className="container" >
-                                    {/* <div className="float-end">
-                                        <button type="button" className="btn btn-success" onClick={e => this.navigateCreateEmployeePage(e)}>Create Employee</button>
-                                    </div> */}
+                                    <div className="float-end">
+                                        <button type="button" className="btn btn-success" onClick={e => this.navigateCreateRoomPage(e)}>Create New Room</button>
+                                    </div>
                                     
                                     <div className="float-end">
                                         <form className="d-flex">
@@ -125,7 +125,7 @@ class RetiredEmployee extends Component {
                                         </form>
                                     </div>
                                     <div className="col-4">
-                                        <h4><b>Retired Employees DataTable</b></h4>
+                                        <h4><b>Rooms DataTable</b></h4>
                                     </div>
 
                                     <br />
@@ -133,28 +133,29 @@ class RetiredEmployee extends Component {
                                         <table className="table">
                                             <thead className="table-dark">
                                                 <tr>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Position</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Mobile No</th>
-                                                    <th scope="col">NIC No</th>
-                                                    <th scope="col">Salary</th>
-                                                    <th scope="col">Username</th>                                                    
-                                                    <th scope="col">Password</th>                                                    
+                                                    <th scope="col">Room Number</th>
+                                                    <th scope="col">Category</th>
+                                                    <th scope="col">A/C Category</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Availability</th>
+                                                    <th scope="col">Price</th>                                              
+                                                    <th scope="col"></th>                                                    
                                                     <th scope="col"></th>  
                                                 </tr>
                                             </thead>
-                                            <tbody>{this.state.employees.length > 0 && this.state.employees.map((item, index) => (
+                                            <tbody>{this.state.rooms.length > 0 && this.state.rooms.map((item, index) => (
                                                 <tr key={index}>
-                                                    <td>{item.name}</td>
-                                                    <td>{item.position}</td>
-                                                    <td>{item.email}</td>
-                                                    <td>{item.mobileNumber}</td>
-                                                    <td>{item.nicNo}</td>
-                                                    <td>{item.salary}</td>
-                                                    <td>{item.userName}</td>
-                                                    <td>{item.password}</td>
-                                                    <td><button type="button" className="btn btn-danger" onClick={e => this.deleteRetiredEmployee(e, item._id)}>Delete</button></td>
+                                                    <td>{item.roomNo}</td>
+                                                    <td>{item.category}</td>
+                                                    <td>{item.airConditioningCategory}</td>
+                                                    <td>{item.description}</td>
+                                                    <td>{item.isAvailable.toString() === 'true'
+                                                            ? <div> Available </div>
+                                                            : <div> Unavailable </div> } 
+                                                    </td>
+                                                    <td>{item.price}</td>
+                                                    <td><button type="button" className="btn btn-warning" >Update</button></td>
+                                                    <td><button type="button" className="btn btn-danger" onClick={e => this.deleteRoom(e, item._id)}>Delete</button></td>
                                                 </tr>
                                                 ))}
                                             </tbody>
@@ -180,4 +181,4 @@ class RetiredEmployee extends Component {
     }
 }
 
-export default RetiredEmployee;
+export default RoomManagement;
