@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 import '../../../css/dash.css';
 
 class RetiredEmployee extends Component {
@@ -9,10 +9,11 @@ class RetiredEmployee extends Component {
         this.state = {
             employees: []
         }
-        // this.deleteAdmin = this.deleteAdmin.bind(this);
+        this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
         // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
         // this.back = this.back.bind(this);
     }
+
     componentDidMount() {   //inbuild function
         this.fetchRetiredEmployee();
     }
@@ -36,6 +37,31 @@ class RetiredEmployee extends Component {
     // back(e) {
     //     window.location = '/adminSubcategories'
     // }
+
+    deleteRetiredEmployee(e , employeeId) {
+        console.log("I am on Delete", employeeId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it permanently!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/employee/${employeeId}`)
+                Swal.fire(
+                    'Deleted!',
+                    'Employee has been deleted.',
+                    'success'
+                )
+                window.location.reload(false);
+            }
+        })
+    }
+
+
 
     render() {
         return (
@@ -128,7 +154,7 @@ class RetiredEmployee extends Component {
                                                     <td>{item.salary}</td>
                                                     <td>{item.userName}</td>
                                                     <td>{item.password}</td>
-                                                    <td><button type="button" className="btn btn-danger">Delete</button></td>
+                                                    <td><button type="button" className="btn btn-danger" onClick={e => this.deleteRetiredEmployee(e, item._id)}>Delete</button></td>
                                                 </tr>
                                                 ))}
                                             </tbody>
