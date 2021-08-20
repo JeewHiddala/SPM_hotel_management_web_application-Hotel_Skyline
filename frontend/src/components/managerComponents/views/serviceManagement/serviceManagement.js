@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 import '../../../css/dash.css';
 
 class ServiceManagement extends Component {
@@ -9,7 +9,7 @@ class ServiceManagement extends Component {
         this.state = {
             services: []
         }
-        // this.deleteRoom = this.deleteRoom.bind(this);
+        this.deleteService = this.deleteService.bind(this);
         this.navigateCreateServicePage = this.navigateCreateServicePage.bind(this);
         // this.back = this.back.bind(this);
     }
@@ -38,28 +38,28 @@ class ServiceManagement extends Component {
     //     window.location = '/adminSubcategories'
     // }
 
-    // deleteRoom(e , roomId) {
-    //     console.log("I am on Delete", roomId)
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, delete it permanently!'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             axios.delete(`http://localhost:8100/room/${roomId}`)
-    //             Swal.fire(
-    //                 'Deleted!',
-    //                 'Room has been deleted.',
-    //                 'success'
-    //             )
-    //             window.location.reload(false);
-    //         }
-    //     })
-    // }
+    deleteService(e , serviceId) {
+        console.log("I am on Delete", serviceId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it permanently!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/service/${serviceId}`)
+                Swal.fire(
+                    'Deleted!',
+                    'Service has been deleted.',
+                    'success'
+                )
+                window.location.reload(false);
+            }
+        })
+    }
 
 
 
@@ -152,7 +152,7 @@ class ServiceManagement extends Component {
                                                     <td>{item.description}</td>
                                                     <td>{item.employeeCount}</td>
                                                     <td><button type="button" className="btn btn-warning" >Update</button></td>
-                                                    <td><button type="button" className="btn btn-danger" >Delete</button></td>
+                                                    <td><button type="button" className="btn btn-danger" onClick={e => this.deleteService(e, item._id)}>Delete</button></td>
                                                 </tr>
                                                 ))}
                                             </tbody>
