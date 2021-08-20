@@ -7,9 +7,11 @@ class RetiredEmployee extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            employees: []
+            employees: [],
+            isDropdownClicked: false
         }
         this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
+        this.dropdown = this.dropdown.bind(this);
         // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
         // this.back = this.back.bind(this);
     }
@@ -61,9 +63,14 @@ class RetiredEmployee extends Component {
         })
     }
 
-
+    dropdown(e) {
+        this.setState(prevState => ({
+            isDropdownClicked: !prevState.isDropdownClicked
+         }))
+    }
 
     render() {
+        const { isDropdownClicked } = this.state;
         return (
             <div>
                 <br /><br />
@@ -92,8 +99,16 @@ class RetiredEmployee extends Component {
                                             {/* <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
                                                 Employee Management
                                             </button> */}
-                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employee Management</button></a>
-                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Retired Employee Management</button></a>
+
+                                            <button type="button" className="list-group-item list-group-item-action active" data-bs-toggle="dropdown" aria-expanded="false" aria-current="true" onClick={e => this.dropdown(e)}>
+                                                Employee Management
+                                            </button>
+                                            {isDropdownClicked && (
+                                                <div>
+                                                    <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employee Management</button></a>
+                                                    <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Retired Employee Management</button></a>
+                                                </div>
+                                            )}
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>

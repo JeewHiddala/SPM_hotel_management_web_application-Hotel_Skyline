@@ -7,10 +7,12 @@ class RoomManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rooms: []
+            rooms: [],
+            isDropdownClicked: false
         }
         this.deleteRoom = this.deleteRoom.bind(this);
         this.navigateCreateRoomPage = this.navigateCreateRoomPage.bind(this);
+        this.dropdown = this.dropdown.bind(this);
         // this.back = this.back.bind(this);
     }
 
@@ -61,9 +63,14 @@ class RoomManagement extends Component {
         })
     }
 
-
+    dropdown(e) {
+        this.setState(prevState => ({
+            isDropdownClicked: !prevState.isDropdownClicked
+         }))
+    }
 
     render() {
+        const { isDropdownClicked } = this.state;
         return (
             <div>
                 <br /><br />
@@ -92,8 +99,17 @@ class RoomManagement extends Component {
                                             {/* <button type="button" className="list-group-item list-group-item-action " >
                                                 Employee Management
                                             </button> */}
-                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employee Management</button></a>
-                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employee Management</button></a>
+
+                                        <button type="button" className="list-group-item list-group-item-action" data-bs-toggle="dropdown" aria-expanded="false" onClick={e => this.dropdown(e)}>
+                                                Employee Management
+                                            </button>
+                                            {isDropdownClicked && (
+                                                <div>
+                                                    <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employees</button></a>
+                                                    <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employees</button></a>
+                                                </div>
+                                            )}
+                                            
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>

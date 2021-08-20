@@ -7,10 +7,12 @@ class ServiceManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            services: []
+            services: [],
+            isDropdownClicked: false
         }
         this.deleteService = this.deleteService.bind(this);
         this.navigateCreateServicePage = this.navigateCreateServicePage.bind(this);
+        this.dropdown = this.dropdown.bind(this);
         // this.back = this.back.bind(this);
     }
 
@@ -61,9 +63,14 @@ class ServiceManagement extends Component {
         })
     }
 
-
+    dropdown(e) {
+        this.setState(prevState => ({
+            isDropdownClicked: !prevState.isDropdownClicked
+         }))
+    }
 
     render() {
+        const { isDropdownClicked } = this.state;
         return (
             <div>
                 <br /><br />
@@ -89,11 +96,15 @@ class ServiceManagement extends Component {
                                     <h5><b>Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Room Management</button></a>
-                                            {/* <button type="button" className="list-group-item list-group-item-action " >
+                                            <button type="button" className="list-group-item list-group-item-action" data-bs-toggle="dropdown" aria-expanded="false" onClick={e => this.dropdown(e)}>
                                                 Employee Management
-                                            </button> */}
-                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employee Management</button></a>
-                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employee Management</button></a>
+                                            </button>
+                                            {isDropdownClicked && (
+                                                <div>
+                                                    <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employees</button></a>
+                                                    <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employees</button></a>
+                                                </div>
+                                            )}
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Service Management</button></a>
                                         </div>
                                         <br></br>

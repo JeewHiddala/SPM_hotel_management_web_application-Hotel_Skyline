@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import Swal from "sweetalert2";
 import '../../../css/dash.css';
-// import Animation from '../../animation/animation';
+import Animation from '../../animation/animation';
 
 class WorkingEmployee extends Component {
     constructor(props) {
         super(props);
         this.state = {
             employees: [],
+            isDropdownClicked: false,
             loading: true
         }
-        // this.deleteAdmin = this.deleteAdmin.bind(this);
         this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
+        this.dropdown = this.dropdown.bind(this);
+        // this.deleteAdmin = this.deleteAdmin.bind(this);
         // this.back = this.back.bind(this);
     }
 
@@ -21,11 +23,11 @@ class WorkingEmployee extends Component {
     }
 
     fetchWorkingEmployee(){
-        // this.setState({loading:false});
+        this.setState({loading:false});
         axios.get('http://localhost:8100/employee/workingEmployees/')
         .then(response => {
             this.setState({ employees: response.data.data });
-            // this.setState({loading:true});
+            this.setState({loading:true});
         })
     }
 
@@ -41,10 +43,17 @@ class WorkingEmployee extends Component {
     //     window.location = '/adminSubcategories'
     // }
 
+    dropdown(e) {
+        this.setState(prevState => ({
+            isDropdownClicked: !prevState.isDropdownClicked
+         }))
+    }
+
     render() {
-        // if (this.state.loading === false) {
-        //     return <Animation />;
-        //   } else {
+        const { isDropdownClicked } = this.state;
+        if (this.state.loading === false) {
+            return <Animation />;
+          } else {
         return (
             <div>
                 <br /><br />
@@ -70,11 +79,15 @@ class WorkingEmployee extends Component {
                                     <h5><b>Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Room Management</button></a>
-                                            {/* <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
+                                            <button type="button" className="list-group-item list-group-item-action active" data-bs-toggle="dropdown" aria-expanded="false" aria-current="true" onClick={e => this.dropdown(e)}>
                                                 Employee Management
-                                            </button> */}
-                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Working Employee Management</button></a>
-                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" aria-current="true">Retired Employee Management</button></a>
+                                            </button>
+                                            {isDropdownClicked && (
+                                                <div>
+                                                    <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Working Employee Management</button></a>
+                                                    <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" aria-current="true">Retired Employee Management</button></a>
+                                                </div>
+                                            )}
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
@@ -165,7 +178,7 @@ class WorkingEmployee extends Component {
             </div>
         )
         }
-    // }
+    }
 }
 
 export default WorkingEmployee;
