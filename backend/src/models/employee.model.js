@@ -10,7 +10,6 @@ const EmployeeSchema = new mongoose.Schema({    //make schema
     isWorking: {type: Boolean, default:true},
     userName: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true }
-
 });
 
 const Employee = mongoose.model('employees', EmployeeSchema);        //give name for collection
