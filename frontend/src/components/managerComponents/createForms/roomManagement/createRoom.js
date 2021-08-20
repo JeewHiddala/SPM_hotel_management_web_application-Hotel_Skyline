@@ -4,17 +4,14 @@ import Swal from "sweetalert2";
 import '../../../css/dash.css';
 
 const initialState = {      //initiate states
-    name: '',
-    position: '',
-    email: '',
-    mobileNumber: 0,
-    nicNo: '',
-    salary: 0,
-    userName: '',
-    password: ''
+    roomNo: '',
+    category: '',
+    airConditioningCategory: '',
+    description: '',
+    price: 0
 }
 
-class CreateEmployee extends Component {
+class CreateRoom extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
@@ -28,39 +25,33 @@ class CreateEmployee extends Component {
     }
 
     back(e) {
-        window.location = '/workingEmployee'
+        window.location = '/roomManagement'
     }
 
     onSubmit(e) {      //submit details
         e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-        let employee = {
-            name: this.state.name,
-            position: this.state.position,
-            email: this.state.email,
-            mobileNumber: this.state.mobileNumber,
-            nicNo: this.state.nicNo,
-            salary: this.state.salary,
-            userName: this.state.userName,
-            password: this.state.password
+        let room = {
+            roomNo: this.state.roomNo,
+            category: this.state.category,
+            airConditioningCategory: this.state.airConditioningCategory,
+            description: this.state.description,
+            price: this.state.price
         }
-        console.log('DATA TO SEND', employee);    
-        axios.post('http://localhost:8100/employee/create', employee)
+        console.log('DATA TO SEND', room);    
+        axios.post('http://localhost:8100/room/create', room)
             .then(response => {
-                // alert('Employee Data successfully inserted')
+                // alert('Room Data successfully inserted')
                 this.setState({ 
-                    name: '',
-                    position: '',
-                    email: '',
-                    mobileNumber: 0,
-                    nicNo: '',
-                    salary: 0,
-                    userName: '',
-                    password: ''
+                    roomNo: '',
+                    category: '',
+                    airConditioningCategory: '',
+                    description: '',
+                    price: 0
                  })
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'New Employee details has been saved',
+                    title: 'New Room details has been saved',
                     showConfirmButton: false,
                     timer: 1500
                   })
@@ -93,15 +84,15 @@ class CreateEmployee extends Component {
                         <div className="row justify-content-evenly">
                             <div className="col-3">
 
-                                <div className="row">
+                            <div className="row">
                                     <div className="container" >
                                     <h5><b>Creations</b></h5>
                                         <div className="list-group">
-                                            <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Room Management</button></a>
-                                            <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
+                                            <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Room Management</button></a>
+                                            <button type="button" className="list-group-item list-group-item-action " >
                                                 Employee Management
                                             </button>
-                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Working Employees</button></a>
+                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employees</button></a>
                                             <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employees</button></a>
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
@@ -135,7 +126,7 @@ class CreateEmployee extends Component {
                                     </div> */}
                                     <div className="col-4">
                                         <br/>
-                                        <h4><b>Recruit new Employee</b></h4>
+                                        <h4><b>Add new Room</b></h4>
                                     </div>
 
                                     <br />
@@ -143,127 +134,81 @@ class CreateEmployee extends Component {
                                     <form onSubmit={this.onSubmit}>
                                         <div className = "row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="name" className="form-label">Employee Name</label>
+                                            <label htmlFor="roomNo" className="form-label">Room Number</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder = "Enter Employee name"
-                                                id="name"
-                                                name="name"    //give state name
+                                                placeholder = "Enter Room Number"
+                                                id="roomNo"
+                                                name="roomNo"    //give state name
+                                                pattern="[A-Z]{1}[0-9]{3}"
+                                                maxLength="4"
                                                 required
-                                                value={this.state.name}      //bind state value
+                                                value={this.state.roomNo}      //bind state value
                                                 onChange={this.onChange}    //don't call function. only give a reference.
                                             />
                                         </div>
                                         <div className="col-6">
-                                            <label htmlFor="position" className="form-label">Position</label>
+                                            <label htmlFor="category" className="form-label">Category</label>
                                             <select class="form-select" aria-label="Default select example"
                                                 onChange={this.onChange} 
-                                                value={this.state.position}
-                                                name="position"
+                                                value={this.state.category}
+                                                name="category"
                                             >
-                                                <option selected>Open this select position</option>
-                                                <option value="Manager">Manager</option>
-                                                <option value="Receptionist">Receptionist</option>
-                                                <option value="Kitchen Head">Kitchen Head</option>
-                                                <option value="Chef">Chef</option>
-                                                <option value="Assistant Cook">Cook</option>
-                                                <option value="Assistant Manager">Assistant Manager</option>
-                                                <option value="Bar Man">Bar Man</option>
-                                                <option value="Bar Manager">Bar Manager</option>
-                                                <option value="Housekeeper">Housekeeper</option>
-                                                <option value="Bellman">Bellman</option>
-                                                <option value="Waiter" selected>Waiter</option>
+                                                <option selected>Open this select Room Category</option>
+                                                <option value="Single">Single</option>
+                                                <option value="Double">Double</option>
+                                                <option value="Triple">Triple</option>
+                                                <option value="Quad">Quad</option>
+                                                <option value="Summer Suite">Summer Suite</option>
+                                                <option value="Honeymoon Suite">Honeymoon Suite</option>
+                                                <option value="Presidential Suite">Presidential Suite</option>
+                                                <option value="Connecting rooms">Connecting room</option>
+                                                <option value="Accessible Room">Accessible Room</option>
+                                                <option value="Villa">Villa</option>
+                                                <option value="Hollywood Twin Room">Hollywood Twin Room</option>
                                             </select>
                                         </div>
                                         </div>
                                         <div className = "row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="address" className="form-label">Email Address</label>
-                                            <input
-                                                type="email"
-                                                className="form-control"
-                                                placeholder = "Enter Email Address"
-                                                // pattern=".+@globex\.com"
-                                                id="email"
-                                                name="email"
-                                                required
-                                                value={this.state.email}
-                                                onChange={this.onChange}
-                                            />
+                                            <label htmlFor="airConditioningCategory" className="form-label">Air Conditioning Category</label>
+                                            <select class="form-select" aria-label="Default select example"
+                                                onChange={this.onChange} 
+                                                value={this.state.airConditioningCategory}
+                                                name="airConditioningCategory"
+                                            >
+                                                <option selected>Select Room Air Conditioning Category</option>
+                                                <option value="A/C">A/C</option>
+                                                <option value="Non A/C">Non A/C</option>
+                                            </select>
                                         </div>
                                             <div className="col-6">
-                                                <label htmlFor="mobileNumber" className="form-label">Mobile Number</label>
-                                                <input
-                                                    type="tel"
-                                                    className="form-control"
-                                                    id="mobileNumber"
-                                                    name="mobileNumber"
-                                                    pattern="[0-9]{11}"
-                                                    maxLength="11"
-                                                    minLength="11"
-                                                    required
-                                                    value={this.state.mobileNumber}
-                                                    onChange={this.onChange}
-                                                />
-                                            </div>
-                                            </div>
-                                            <div className = "row mb-3">
-                                            <div className="col">
-                                                <label htmlFor="nic" className="form-label">National Identity Card Number</label>
-                                                <input
-                                                   type="text"
-                                                   className="form-control"
-                                                   placeholder = "Enter National Identity Card Number"
-                                                   id="nicNo"
-                                                   name="nicNo"    //give state name
-                                                   pattern="[0-9]{10}"
-                                                   required
-                                                   value={this.state.nicNo}      //bind state value
-                                                   onChange={this.onChange}    //don't call function. only give a reference. 
-                                                />
-                                            </div>
-                                            <div className="col">
-                                                <label htmlFor="userName" className="form-label">Salary</label>
+                                                <label htmlFor="Price" className="form-label">Price</label>
                                                 <input
                                                     type="number"
                                                     className="form-control"
-                                                    id="salary"
-                                                    name="salary"
-                                                    value={this.state.salary}
+                                                    id="price"
+                                                    name="price"
+                                                    required
+                                                    value={this.state.price}
                                                     onChange={this.onChange}
                                                 />
                                             </div>
-                                            </div>
-                                            <div className = "row mb-3">
-                                            <div className="col">
-                                                <label htmlFor="password" className="form-label">Username</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder = "Enter username"
-                                                    id="userName"
-                                                    name="userName"
-                                                    minlength="5"
-                                                    value={this.state.userName}
-                                                    onChange={this.onChange}
-                                                />
                                             </div>
                                             <div className="col">
-                                                <label htmlFor="password" className="form-label">Password</label>
-                                                <input
-                                                    type="password"
-                                                    className="form-control"
-                                                    placeholder = "Enter password"
-                                                    id="password"
-                                                    name="password"
-                                                    minlength="8"
-                                                    // required
-                                                    value={this.state.password}
-                                                    onChange={this.onChange}
+                                                <label htmlFor="description" className="form-label">Description</label>
+                                                <textarea
+                                                   className="form-control"
+                                                   placeholder = "Enter Description"
+                                                   id="description"
+                                                   name="description"    //give state name
+                                                   maxLength="100"
+                                                   value={this.state.description}      //bind state value
+                                                   onChange={this.onChange}    //don't call function. only give a reference. 
                                                 />
                                             </div>
-                                            </div>
+                                            <br></br>
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
                                                     <button type="button" className="btn btn-outline-primary" onClick={e => this.back(e)}> Back</button>
@@ -295,4 +240,4 @@ class CreateEmployee extends Component {
     }
 }
 
-export default CreateEmployee;
+export default CreateRoom;

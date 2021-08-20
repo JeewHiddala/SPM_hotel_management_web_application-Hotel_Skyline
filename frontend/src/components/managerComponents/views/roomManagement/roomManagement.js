@@ -10,7 +10,7 @@ class RoomManagement extends Component {
             rooms: []
         }
         this.deleteRoom = this.deleteRoom.bind(this);
-        // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
+        this.navigateCreateRoomPage = this.navigateCreateRoomPage.bind(this);
         // this.back = this.back.bind(this);
     }
 
@@ -30,9 +30,9 @@ class RoomManagement extends Component {
     //     window.location = `/updateAdmin/${adminId}`
     // }
 
-    // navigateCreateEmployeePage(e) {
-    //     window.location = '/createEmployee'
-    // }
+    navigateCreateRoomPage(e) {
+        window.location = '/createRoom'
+    }
 
     // back(e) {
     //     window.location = '/adminSubcategories'
@@ -115,7 +115,7 @@ class RoomManagement extends Component {
                             <div className="col-8">
                                 <div className="container" >
                                     <div className="float-end">
-                                        <button type="button" className="btn btn-success" >Create New Room</button>
+                                        <button type="button" className="btn btn-success" onClick={e => this.navigateCreateRoomPage(e)}>Create New Room</button>
                                     </div>
                                     
                                     <div className="float-end">
@@ -150,7 +150,7 @@ class RoomManagement extends Component {
                                                     <td>{item.airConditioningCategory}</td>
                                                     <td>{item.description}</td>
                                                     <td>{item.isAvailable.toString() === 'true'
-                                                            ? <div> Available </div> 
+                                                            ? <div> Available </div>
                                                             : <div> Unavailable </div> } 
                                                     </td>
                                                     <td>{item.price}</td>
