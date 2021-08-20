@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import Swal from "sweetalert2";
 import '../../../css/dash.css';
-import Animation from '../../animation/animation';
+// import Animation from '../../animation/animation';
 
 class WorkingEmployee extends Component {
     constructor(props) {
@@ -21,11 +21,11 @@ class WorkingEmployee extends Component {
     }
 
     fetchWorkingEmployee(){
-        this.setState({loading:false});
+        // this.setState({loading:false});
         axios.get('http://localhost:8100/employee/workingEmployees/')
         .then(response => {
             this.setState({ employees: response.data.data });
-            this.setState({loading:true});
+            // this.setState({loading:true});
         })
     }
 
@@ -42,9 +42,9 @@ class WorkingEmployee extends Component {
     // }
 
     render() {
-        if (this.state.loading === false) {
-            return <Animation />;
-          } else {
+        // if (this.state.loading === false) {
+        //     return <Animation />;
+        //   } else {
         return (
             <div>
                 <br /><br />
@@ -70,11 +70,11 @@ class WorkingEmployee extends Component {
                                     <h5><b>Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Room Management</button></a>
-                                            <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
+                                            {/* <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
                                                 Employee Management
-                                            </button>
-                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Working Employees</button></a>
-                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" aria-current="true">Retired Employees</button></a>
+                                            </button> */}
+                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Working Employee Management</button></a>
+                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" aria-current="true">Retired Employee Management</button></a>
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
@@ -165,7 +165,7 @@ class WorkingEmployee extends Component {
             </div>
         )
         }
-    }
+    // }
 }
 
 export default WorkingEmployee;

@@ -89,11 +89,11 @@ class RetiredEmployee extends Component {
                                     <h5><b>Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Room Management</button></a>
-                                            <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
+                                            {/* <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
                                                 Employee Management
-                                            </button>
-                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employees</button></a>
-                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Retired Employees</button></a>
+                                            </button> */}
+                                            <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employee Management</button></a>
+                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Retired Employee Management</button></a>
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
