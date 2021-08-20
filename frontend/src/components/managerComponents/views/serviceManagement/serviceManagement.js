@@ -10,7 +10,7 @@ class ServiceManagement extends Component {
             services: []
         }
         // this.deleteRoom = this.deleteRoom.bind(this);
-        // this.navigateCreateRoomPage = this.navigateCreateRoomPage.bind(this);
+        this.navigateCreateServicePage = this.navigateCreateServicePage.bind(this);
         // this.back = this.back.bind(this);
     }
 
@@ -30,9 +30,9 @@ class ServiceManagement extends Component {
     //     window.location = `/updateAdmin/${adminId}`
     // }
 
-    // navigateCreateRoomPage(e) {
-    //     window.location = '/createService'
-    // }
+    navigateCreateServicePage(e) {
+        window.location = '/createService'
+    }
 
     // back(e) {
     //     window.location = '/adminSubcategories'
@@ -115,7 +115,7 @@ class ServiceManagement extends Component {
                             <div className="col-8">
                                 <div className="container" >
                                     <div className="float-end">
-                                        <button type="button" className="btn btn-success" >Add New Service</button>
+                                        <button type="button" className="btn btn-success" onClick={e => this.navigateCreateServicePage(e)}>Add New Service</button>
                                     </div>
                                     
                                     <div className="float-end">

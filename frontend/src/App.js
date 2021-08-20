@@ -10,6 +10,7 @@ import RetiredEmployee from './components/managerComponents/views/employeeManage
 import RoomManagement from './components/managerComponents/views/roomManagement/roomManagement';    //IT19007502 - Hiddalarachchi J.
 import CreateRoom from './components/managerComponents/createForms/roomManagement/createRoom';    //IT19007502 - Hiddalarachchi J.
 import ServiceManagement from './components/managerComponents/views/serviceManagement/serviceManagement';    //IT19007502 - Hiddalarachchi J.
+import CreateService from './components/managerComponents/createForms/serviceManagement/createService';    //IT19007502 - Hiddalarachchi J.
 // import ManagerDashboard from './components/managerComponents/views/dashboard/managerDashboard';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                           <Route path="/roomManagement" component={RoomManagement} />
                           <Route path="/createRoom" component={CreateRoom} />
                           <Route path="/serviceManagement" component={ServiceManagement} />
+                          <Route path="/createService" component={CreateService} />
                         {/* </ManagerDashboard>  */}
                         </Switch>
                     </section>
