@@ -10,7 +10,7 @@ class WorkingEmployee extends Component {
             employees: []
         }
         // this.deleteAdmin = this.deleteAdmin.bind(this);
-        // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
+        this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
         // this.back = this.back.bind(this);
     }
 
@@ -30,9 +30,9 @@ class WorkingEmployee extends Component {
     //     window.location = `/updateAdmin/${adminId}`
     // }
 
-    // navigateCreateAdminPage(e) {
-    //     window.location = '/adminRegistration'
-    // }
+    navigateCreateEmployeePage(e) {
+        window.location = '/createEmployee'
+    }
 
     // back(e) {
     //     window.location = '/adminSubcategories'
@@ -90,7 +90,7 @@ class WorkingEmployee extends Component {
                             <div className="col-8">
                                 <div className="container" >
                                     <div className="float-end">
-                                        <button type="button" className="btn btn-success">Create Employee</button>
+                                        <button type="button" className="btn btn-success" onClick={e => this.navigateCreateEmployeePage(e)}>Create Employee</button>
                                     </div>
                                     
                                     <div className="float-end">
