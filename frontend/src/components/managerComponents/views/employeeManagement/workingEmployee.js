@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import Swal from "sweetalert2";
 import '../../../css/dash.css';
+import Animation from '../../animation/animation';
 
 class WorkingEmployee extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            employees: []
+            employees: [],
+            loading: true
         }
         // this.deleteAdmin = this.deleteAdmin.bind(this);
         this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
@@ -19,11 +21,12 @@ class WorkingEmployee extends Component {
     }
 
     fetchWorkingEmployee(){
+        this.setState({loading:false});
         axios.get('http://localhost:8100/employee/workingEmployees/')
         .then(response => {
             this.setState({ employees: response.data.data });
+            this.setState({loading:true});
         })
-
     }
 
     // navigateEditAdminPage(e, adminId) {
@@ -39,6 +42,9 @@ class WorkingEmployee extends Component {
     // }
 
     render() {
+        if (this.state.loading === false) {
+            return <Animation />;
+          } else {
         return (
             <div>
                 <br /><br />
@@ -158,6 +164,7 @@ class WorkingEmployee extends Component {
                 <br /><br /><br /><br />
             </div>
         )
+        }
     }
 }
 
