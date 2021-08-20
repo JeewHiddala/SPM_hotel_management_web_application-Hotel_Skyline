@@ -9,7 +9,7 @@ class RoomManagement extends Component {
         this.state = {
             rooms: []
         }
-        // this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
+        this.deleteRoom = this.deleteRoom.bind(this);
         // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
         // this.back = this.back.bind(this);
     }
@@ -38,28 +38,28 @@ class RoomManagement extends Component {
     //     window.location = '/adminSubcategories'
     // }
 
-    // deleteRetiredEmployee(e , employeeId) {
-    //     console.log("I am on Delete", employeeId)
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, delete it permanently!'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             axios.delete(`http://localhost:8100/employee/${employeeId}`)
-    //             Swal.fire(
-    //                 'Deleted!',
-    //                 'Employee has been deleted.',
-    //                 'success'
-    //             )
-    //             window.location.reload(false);
-    //         }
-    //     })
-    // }
+    deleteRoom(e , roomId) {
+        console.log("I am on Delete", roomId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it permanently!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/room/${roomId}`)
+                Swal.fire(
+                    'Deleted!',
+                    'Room has been deleted.',
+                    'success'
+                )
+                window.location.reload(false);
+            }
+        })
+    }
 
 
 
@@ -155,7 +155,7 @@ class RoomManagement extends Component {
                                                     </td>
                                                     <td>{item.price}</td>
                                                     <td><button type="button" className="btn btn-warning" >Update</button></td>
-                                                    <td><button type="button" className="btn btn-danger" >Delete</button></td>
+                                                    <td><button type="button" className="btn btn-danger" onClick={e => this.deleteRoom(e, item._id)}>Delete</button></td>
                                                 </tr>
                                                 ))}
                                             </tbody>
