@@ -2,16 +2,21 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
 import '../../../css/dash.css';
+import ReactPaginate from 'react-paginate';
 
 class RetiredEmployee extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            totalPages: 0,
+            page: 0,
             employees: [],
             isDropdownClicked: false
         }
         this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
         this.dropdown = this.dropdown.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);  //pagination
+        this.retiredEmployee = this.retiredEmployee.bind(this);     //pagination
         // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
         // this.back = this.back.bind(this);
     }
@@ -24,6 +29,8 @@ class RetiredEmployee extends Component {
         axios.get('http://localhost:8100/employee/retiredEmployees/')
         .then(response => {
             this.setState({ employees: response.data.data });
+            this.setState({ employees: response.data.data.docs });          //pagination
+            this.setState({ totalPages: response.data.data.totalPages });          //pagination
         })
 
     }
@@ -39,6 +46,26 @@ class RetiredEmployee extends Component {
     // back(e) {
     //     window.location = '/adminSubcategories'
     // }
+
+    retiredEmployee(page) {               //pagination
+        console.log("Pagef", page);
+        axios.get('http://localhost:8100/employee/retiredEmployees/', {
+            params: {
+                page: page
+            }
+        })
+            .then(response => {
+                this.setState({ employees: response.data.data.docs });
+                console.log("WPF", response.data.data);
+            })
+    };
+
+    handlePageChange = (data) => {          //pagination
+        let selected = data.selected + 1;
+        console.log("val", selected);
+        this.setState({ page: selected });
+        this.retiredEmployee(selected);
+    };
 
     deleteRetiredEmployee(e , employeeId) {
         console.log("I am on Delete", employeeId)
@@ -113,7 +140,7 @@ class RetiredEmployee extends Component {
                                         </div>
                                         <br></br>
                                         <h5><b>Monitoring</b></h5>
-                                        <div class="list-group">
+                                        <div className="list-group">
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Service Bills</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
                                                 View Booking Bills
@@ -175,6 +202,18 @@ class RetiredEmployee extends Component {
                                             </tbody>
                                         </table>
                                     </div>
+                                    <ReactPaginate
+                                        previousLabel={'Previous'}
+                                        nextLabel={'Next'}
+                                        breakLabel={'...'}
+                                        breakClassName={'break-me'}
+                                        pageCount={this.state.totalPages}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={this.handlePageChange}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                    />
                                 </div>
                             </div>
                         </div>

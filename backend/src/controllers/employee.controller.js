@@ -25,7 +25,27 @@ const getAllEmployeesDetails = async (req, res) => {       //get all employee de
 }
 
 const getAllWorkingEmployeesDetails = async (req, res) => {       //get all working employee details.
-    await Employee.find({isWorking:true})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Employee.paginate({isWorking:true},options)
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
+const getAllRetiredEmployeesDetails = async (req, res) => {       //get all retired employee details.
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Employee.paginate({isWorking:false},options)
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -46,16 +66,6 @@ const getAllWorkingChefsDetails = async (req, res) => {       //get all chef det
 
 const getAllWorkingReceptionistsDetails = async (req, res) => {       //get all chef details.
     await Employee.find({isWorking:true,position:"Receptionist"})
-        .then(data => {
-            res.status(200).send({ data: data });
-        })
-        .catch(error => {
-            res.status(500).send({ error: error.message });
-        });
-}
-
-const getAllRetiredEmployeesDetails = async (req, res) => {       //get all retired employee details.
-    await Employee.find({isWorking:false})
         .then(data => {
             res.status(200).send({ data: data });
         })
