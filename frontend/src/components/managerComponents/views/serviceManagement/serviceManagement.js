@@ -2,17 +2,22 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
 import '../../../css/dash.css';
+import ReactPaginate from 'react-paginate';
 
 class ServiceManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            totalPages: 0,
+            page: 0,
             services: [],
             isDropdownClicked: false
         }
         this.deleteService = this.deleteService.bind(this);
         this.navigateCreateServicePage = this.navigateCreateServicePage.bind(this);
         this.dropdown = this.dropdown.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);  //pagination
+        this.retrieveServices = this.retrieveServices.bind(this);     //pagination
         // this.back = this.back.bind(this);
     }
 
@@ -24,6 +29,8 @@ class ServiceManagement extends Component {
         axios.get('http://localhost:8100/service/')
         .then(response => {
             this.setState({ services: response.data.data });
+            this.setState({ services: response.data.data.docs });          //pagination
+            this.setState({ totalPages: response.data.data.totalPages });          //pagination
         })
 
     }
@@ -39,6 +46,26 @@ class ServiceManagement extends Component {
     // back(e) {
     //     window.location = '/adminSubcategories'
     // }
+
+    retrieveServices(page) {               //pagination
+        console.log("Pagef", page);
+        axios.get('http://localhost:8100/service/', {
+            params: {
+                page: page
+            }
+        })
+            .then(response => {
+                this.setState({ services: response.data.data.docs });
+                console.log("WPF", response.data.data);
+            })
+    };
+
+    handlePageChange = (data) => {          //pagination
+        let selected = data.selected + 1;
+        console.log("val", selected);
+        this.setState({ page: selected });
+        this.retrieveServices(selected);
+    };
 
     deleteService(e , serviceId) {
         console.log("I am on Delete", serviceId)
@@ -169,6 +196,18 @@ class ServiceManagement extends Component {
                                             </tbody>
                                         </table>
                                     </div>
+                                    <ReactPaginate
+                                        previousLabel={'Previous'}
+                                        nextLabel={'Next'}
+                                        breakLabel={'...'}
+                                        breakClassName={'break-me'}
+                                        pageCount={this.state.totalPages}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={this.handlePageChange}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                    />
                                 </div>
                             </div>
                         </div>
