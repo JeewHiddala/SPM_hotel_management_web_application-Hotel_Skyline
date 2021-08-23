@@ -114,13 +114,13 @@ class RetiredEmployee extends Component {
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
-                        <h3><b>Manager Dashboard</b></h3>
+                        <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
                             <div className="col-3">
 
                                 <div className="row">
                                     <div className="container" >
-                                    <h5><b>Creations</b></h5>
+                                    <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Room Management</button></a>
                                             {/* <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
@@ -139,7 +139,7 @@ class RetiredEmployee extends Component {
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
-                                        <h5><b>Monitoring</b></h5>
+                                        <h5><b className="sub-topic">Monitoring</b></h5>
                                         <div className="list-group">
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Service Bills</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
@@ -167,7 +167,7 @@ class RetiredEmployee extends Component {
                                         </form>
                                     </div>
                                     <div className="col-4">
-                                        <h4><b>Retired Employees DataTable</b></h4>
+                                        <h4 className="topic"><b>Retired Employees DataTable</b></h4>
                                     </div>
 
                                     <br />

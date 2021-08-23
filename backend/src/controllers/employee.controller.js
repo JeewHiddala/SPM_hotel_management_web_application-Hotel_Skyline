@@ -86,6 +86,18 @@ const getSelectedEmployeeDetails = async (req, res) => {          //get selected
     }
 }
 
+const getEmployeeDetails = async (req, res) => {       //get employee details 
+    var userData = req.params.userData;
+    await Employee.findOne({userData: userData})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+
+}
+
 const deleteEmployee = async (req, res) => {               // delete selected employee.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the employee
@@ -115,5 +127,6 @@ module.exports = {
     deleteEmployee,
     getAllWorkingChefsDetails,
     getAllWorkingReceptionistsDetails,
-    resignSelectedEmployee
+    resignSelectedEmployee,
+    getEmployeeDetails
 };

@@ -80,13 +80,13 @@ class CreateRoom extends Component {
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
-                        <h3><b>Manager Dashboard</b></h3>
+                        <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
                             <div className="col-3">
 
                             <div className="row">
                                     <div className="container" >
-                                    <h5><b>Creations</b></h5>
+                                    <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Room Management</button></a>
                                             <button type="button" className="list-group-item list-group-item-action " >
@@ -97,7 +97,7 @@ class CreateRoom extends Component {
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
-                                        <h5><b>Monitoring</b></h5>
+                                        <h5><b className="sub-topic">Monitoring</b></h5>
                                         <div class="list-group">
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Service Bills</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
@@ -126,7 +126,7 @@ class CreateRoom extends Component {
                                     </div> */}
                                     <div className="col-4">
                                         <br/>
-                                        <h4><b>Add new Room</b></h4>
+                                        <h4 className="topic"><b>Add new Room</b></h4>
                                     </div>
 
                                     <br />
@@ -134,7 +134,7 @@ class CreateRoom extends Component {
                                     <form onSubmit={this.onSubmit}>
                                         <div className = "row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="roomNo" className="form-label">Room Number</label>
+                                            <label htmlFor="roomNo" className="form-label sub-topic">Room Number</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -149,7 +149,7 @@ class CreateRoom extends Component {
                                             />
                                         </div>
                                         <div className="col-6">
-                                            <label htmlFor="category" className="form-label">Category</label>
+                                            <label htmlFor="category" className="form-label sub-topic">Category</label>
                                             <select class="form-select" aria-label="Default select example"
                                                 onChange={this.onChange} 
                                                 value={this.state.category}
@@ -172,7 +172,7 @@ class CreateRoom extends Component {
                                         </div>
                                         <div className = "row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="airConditioningCategory" className="form-label">Air Conditioning Category</label>
+                                            <label htmlFor="airConditioningCategory" className="form-label sub-topic">Air Conditioning Category</label>
                                             <select class="form-select" aria-label="Default select example"
                                                 onChange={this.onChange} 
                                                 value={this.state.airConditioningCategory}
@@ -184,7 +184,7 @@ class CreateRoom extends Component {
                                             </select>
                                         </div>
                                             <div className="col-6">
-                                                <label htmlFor="Price" className="form-label">Price</label>
+                                                <label htmlFor="Price" className="form-label sub-topic">Price</label>
                                                 <input
                                                     type="number"
                                                     className="form-control"
@@ -197,7 +197,7 @@ class CreateRoom extends Component {
                                             </div>
                                             </div>
                                             <div className="col">
-                                                <label htmlFor="description" className="form-label">Description</label>
+                                                <label htmlFor="description" className="form-label sub-topic">Description</label>
                                                 <textarea
                                                    className="form-control"
                                                    placeholder = "Enter Description"
@@ -211,11 +211,11 @@ class CreateRoom extends Component {
                                             <br></br>
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
-                                                    <button type="button" className="btn btn-outline-primary" onClick={e => this.back(e)}> Back</button>
-                                                    <button type="button" className="btn btn-outline-secondary" > Clear</button>
+                                                    <button type="button" id="button" className="btn btn-primary" onClick={e => this.back(e)}> Back</button>
+                                                    {/* <button type="button" id="button" className="btn btn-secondary" > Clear</button> */}
                                                 </div>
                                                 <div className="col mb-3">
-                                                    <button type="submit" className="btn btn-outline-success float-end">Submit</button>
+                                                    <button type="submit" id="button" className="btn btn-success float-end">Submit</button>
                                                 </div>
                                             </div>
                                     </form>
