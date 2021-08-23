@@ -13,6 +13,9 @@ const serviceAPI = require('./src/apis/service.api');   //IT19007502 - Hiddalara
 const authAPI = require('./src/apis/auth.api');   //IT19059150 - Ranaweera I.G.S.V.
 const userAPI = require('./src/apis/user.api');   //IT19059150 - Ranaweera I.G.S.V.
 const customerAPI = require('./src/apis/customer.api');   //IT19059150 - Ranaweera I.G.S.V.
+const billAPI = require('./src/apis/bill.api');   //IT19059150 - Ranaweera I.G.S.V.
+const bookingAPI = require('./src/apis/booking.api');
+
 
 dotenv.config();
 const app = express();
@@ -53,6 +56,8 @@ app.use('/service', serviceAPI());    //IT19007502 - Hiddalarachchi J.
 app.use('/auth', authAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/user', userAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/customer', customerAPI());    //IT19059150 - Ranaweera I.G.S.V.
+app.use('/bill', billAPI());    //IT19059150 - Ranaweera I.G.S.V.
+app.use('/booking', bookingAPI());
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);
@@ -62,43 +67,33 @@ function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
-        name: "customer"
+        name: "user"
       }).save(err => {
         if (err) {
           console.log("error", err);
         }
 
-        console.log("added 'customer' to roles collection");
+        console.log("added 'user' to roles collection");
       });
 
       new Role({
-        name: "manager"
+        name: "moderator"
       }).save(err => {
         if (err) {
           console.log("error", err);
         }
 
-        console.log("added 'manager' to roles collection");
+        console.log("added 'moderator' to roles collection");
       });
 
       new Role({
-        name: "reception"
+        name: "admin"
       }).save(err => {
         if (err) {
           console.log("error", err);
         }
 
-        console.log("added 'reception' to roles collection");
-      });
-
-      new Role({
-        name: "kitchen"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("added 'kitchen' to roles collection");
+        console.log("added 'admin' to roles collection");
       });
     }
   });

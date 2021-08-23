@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');       //import mongoose
 
 const CustomerSchema = new mongoose.Schema({    //make schema
-    name: { type: String, required: true, trim: true },
+    fullname: { type: String, required: true, trim: true },
     address: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true },
-    mobileNumber: { type: Number, required: true },
+    mobileNumber: { type: String, required: true },
     nicNo: { type: String, required: true, trim: true },
     userName: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },

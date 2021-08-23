@@ -24,6 +24,17 @@ const getAllCustomersDetails = async (req, res) => {       //get all Customer de
         });
 }
 
+const getCustomersDetails = async (req, res) => {       //get Customer details 
+    var userData = req.params.userData;
+    await Customer.findOne({userData: userData})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 const getSelectedCustomerDetails = async (req, res) => {          //get selected Customer details.
     if (req.params && req.params.id) {
         await Customer.findById(req.params.id)
@@ -48,6 +59,7 @@ const deleteCustomer = async (req, res) => {               // delete selected Cu
 module.exports = {
     createCustomer,
     getAllCustomersDetails,
+    getCustomersDetails,
     getSelectedCustomerDetails,
     deleteCustomer
 };
