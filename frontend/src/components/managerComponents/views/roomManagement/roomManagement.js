@@ -2,17 +2,22 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
 import '../../../css/dash.css';
+import ReactPaginate from 'react-paginate';
 
 class RoomManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            totalPages: 0,
+            page: 0,
             rooms: [],
             isDropdownClicked: false
         }
         this.deleteRoom = this.deleteRoom.bind(this);
         this.navigateCreateRoomPage = this.navigateCreateRoomPage.bind(this);
         this.dropdown = this.dropdown.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);  //pagination
+        this.retrieveRooms = this.retrieveRooms.bind(this);     //pagination
         // this.back = this.back.bind(this);
     }
 
@@ -20,11 +25,12 @@ class RoomManagement extends Component {
         this.fetchRoomDetails_Manager();
     }
 
-    fetchRoomDetails_Manager(){
+    fetchRoomDetails_Manager() {
         axios.get('http://localhost:8100/room/')
-        .then(response => {
-            this.setState({ rooms: response.data.data });
-        })
+            .then(response => {
+                this.setState({ rooms: response.data.data.docs });
+                this.setState({ totalPages: response.data.data.totalPages });
+            })
 
     }
 
@@ -40,7 +46,27 @@ class RoomManagement extends Component {
     //     window.location = '/adminSubcategories'
     // }
 
-    deleteRoom(e , roomId) {
+    retrieveRooms(page) {               //pagination
+        console.log("Pagef", page);
+        axios.get('http://localhost:8100/room/', {
+            params: {
+                page: page
+            }
+        })
+            .then(response => {
+                this.setState({ rooms: response.data.data.docs });
+                console.log("WPF", response.data.data);
+            })
+    };
+
+    handlePageChange = (data) => {          //pagination
+        let selected = data.selected + 1;
+        console.log("val", selected);
+        this.setState({ page: selected });
+        this.retrieveRooms(selected);
+    };
+
+    deleteRoom(e, roomId) {
         console.log("I am on Delete", roomId)
         Swal.fire({
             title: 'Are you sure?',
@@ -66,7 +92,7 @@ class RoomManagement extends Component {
     dropdown(e) {
         this.setState(prevState => ({
             isDropdownClicked: !prevState.isDropdownClicked
-         }))
+        }))
     }
 
     render() {
@@ -93,14 +119,14 @@ class RoomManagement extends Component {
 
                                 <div className="row">
                                     <div className="container" >
-                                    <h5><b>Creations</b></h5>
+                                        <h5><b>Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Room Management</button></a>
                                             {/* <button type="button" className="list-group-item list-group-item-action " >
                                                 Employee Management
                                             </button> */}
 
-                                        <button type="button" className="list-group-item list-group-item-action" data-bs-toggle="dropdown" aria-expanded="false" onClick={e => this.dropdown(e)}>
+                                            <button type="button" className="list-group-item list-group-item-action" data-bs-toggle="dropdown" aria-expanded="false" onClick={e => this.dropdown(e)}>
                                                 Employee Management
                                             </button>
                                             {isDropdownClicked && (
@@ -109,7 +135,7 @@ class RoomManagement extends Component {
                                                     <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employees</button></a>
                                                 </div>
                                             )}
-                                            
+
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
@@ -133,7 +159,7 @@ class RoomManagement extends Component {
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateRoomPage(e)}>Create New Room</button>
                                     </div>
-                                    
+
                                     <div className="float-end">
                                         <form className="d-flex">
                                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -154,9 +180,9 @@ class RoomManagement extends Component {
                                                     <th scope="col">A/C Category</th>
                                                     <th scope="col">Description</th>
                                                     <th scope="col">Availability</th>
-                                                    <th scope="col">Price</th>                                              
-                                                    <th scope="col"></th>                                                    
-                                                    <th scope="col"></th>  
+                                                    <th scope="col">Price</th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>{this.state.rooms.length > 0 && this.state.rooms.map((item, index) => (
@@ -166,17 +192,29 @@ class RoomManagement extends Component {
                                                     <td>{item.airConditioningCategory}</td>
                                                     <td>{item.description}</td>
                                                     <td>{item.isAvailable.toString() === 'true'
-                                                            ? <div> Available </div>
-                                                            : <div> Unavailable </div> } 
+                                                        ? <div> Available </div>
+                                                        : <div> Unavailable </div>}
                                                     </td>
                                                     <td>{item.price}</td>
                                                     <td><button type="button" className="btn btn-warning" >Update</button></td>
                                                     <td><button type="button" className="btn btn-danger" onClick={e => this.deleteRoom(e, item._id)}>Delete</button></td>
                                                 </tr>
-                                                ))}
+                                            ))}
                                             </tbody>
                                         </table>
                                     </div>
+                                    <ReactPaginate
+                                        previousLabel={'Previous'}
+                                        nextLabel={'Next'}
+                                        breakLabel={'...'}
+                                        breakClassName={'break-me'}
+                                        pageCount={this.state.totalPages}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={this.handlePageChange}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                    />
                                 </div>
                             </div>
                         </div>
