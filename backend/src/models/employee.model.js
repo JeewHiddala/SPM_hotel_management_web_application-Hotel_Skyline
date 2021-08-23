@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');       //import mongoose
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const EmployeeSchema = new mongoose.Schema({    //make schema
     name: { type: String, required: true, trim: true },
@@ -11,6 +12,6 @@ const EmployeeSchema = new mongoose.Schema({    //make schema
     userName: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true }
 });
-
+EmployeeSchema.plugin(mongoosePaginate);
 const Employee = mongoose.model('employees', EmployeeSchema);        //give name for collection
 module.exports = Employee;
