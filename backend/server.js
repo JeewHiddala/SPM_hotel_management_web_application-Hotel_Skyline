@@ -4,10 +4,18 @@ const dotenv = require('dotenv');       //environmental variables
 const cors = require('cors');           //middleware
 const bodyParser = require('body-parser');   
 
+const Role = require("./src/models/role.model");
+
 //import APIs
 const employeeAPI = require('./src/apis/employee.api');   //IT19007502 - Hiddalarachchi J.
 const roomAPI = require('./src/apis/room.api');   //IT19007502 - Hiddalarachchi J.
 const serviceAPI = require('./src/apis/service.api');   //IT19007502 - Hiddalarachchi J.
+const authAPI = require('./src/apis/auth.api');   //IT19059150 - Ranaweera I.G.S.V.
+const userAPI = require('./src/apis/user.api');   //IT19059150 - Ranaweera I.G.S.V.
+const customerAPI = require('./src/apis/customer.api');   //IT19059150 - Ranaweera I.G.S.V.
+const billAPI = require('./src/apis/bill.api');   //IT19059150 - Ranaweera I.G.S.V.
+const bookingAPI = require('./src/apis/booking.api');
+
 
 dotenv.config();
 const app = express();
@@ -33,6 +41,7 @@ mongoose.connect(MONGODB_URI, {
 //open connection
 mongoose.connection.once('open', () => {
   console.log('Database Synced');
+  initial();
 });
 
 //root route
@@ -44,7 +53,48 @@ app.route('/').get((req, res) => {
 app.use('/employee', employeeAPI());    //IT19007502 - Hiddalarachchi J.
 app.use('/room', roomAPI());    //IT19007502 - Hiddalarachchi J.
 app.use('/service', serviceAPI());    //IT19007502 - Hiddalarachchi J.
+app.use('/auth', authAPI());    //IT19059150 - Ranaweera I.G.S.V.
+app.use('/user', userAPI());    //IT19059150 - Ranaweera I.G.S.V.
+app.use('/customer', customerAPI());    //IT19059150 - Ranaweera I.G.S.V.
+app.use('/bill', billAPI());    //IT19059150 - Ranaweera I.G.S.V.
+app.use('/booking', bookingAPI());
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);
 });
+
+function initial() {
+  Role.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      new Role({
+        name: "user"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'user' to roles collection");
+      });
+
+      new Role({
+        name: "moderator"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'moderator' to roles collection");
+      });
+
+      new Role({
+        name: "admin"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'admin' to roles collection");
+      });
+    }
+  });
+}
