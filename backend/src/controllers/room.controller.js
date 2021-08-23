@@ -15,7 +15,12 @@ const createRoom = async (req, res) => {       //create a room to db.
 }
 
 const getAllRoomsDetails = async (req, res) => {       //get all room details.
-    await Room.find({})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Room.paginate({},options)         //pagination
         .then(data => {
             res.status(200).send({ data: data });
         })
