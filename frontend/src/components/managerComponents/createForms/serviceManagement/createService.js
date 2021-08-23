@@ -83,13 +83,13 @@ class CreateService extends Component {
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
-                        <h3><b>Manager Dashboard</b></h3>
+                        <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
                             <div className="col-3">
 
                             <div className="row">
                                     <div className="container" >
-                                    <h5><b>Creations</b></h5>
+                                    <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Room Management</button></a>
                                             <button type="button" className="list-group-item list-group-item-action " >
@@ -100,7 +100,7 @@ class CreateService extends Component {
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Service Management</button></a>
                                         </div>
                                         <br></br>
-                                        <h5><b>Monitoring</b></h5>
+                                        <h5><b className="sub-topic">Monitoring</b></h5>
                                         <div class="list-group">
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Service Bills</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
@@ -129,7 +129,7 @@ class CreateService extends Component {
                                     </div> */}
                                     <div className="col-4">
                                         <br/>
-                                        <h4><b>Add new Service</b></h4>
+                                        <h4 className="topic"><b>Add new Service</b></h4>
                                     </div>
 
                                     <br />
@@ -137,7 +137,7 @@ class CreateService extends Component {
                                     <form onSubmit={this.onSubmit}>
                                         <div className = "row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="serviceNo" className="form-label">Service Number</label>
+                                            <label htmlFor="serviceNo" className="form-label sub-topic">Service Number</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -151,7 +151,7 @@ class CreateService extends Component {
                                             />
                                         </div>
                                         <div className="col-6">
-                                            <label htmlFor="name" className="form-label">Service Name</label>
+                                            <label htmlFor="name" className="form-label sub-topic">Service Name</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -166,7 +166,7 @@ class CreateService extends Component {
                                         </div>
                                         <div className = "row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="addedDate" className="form-label">Added Date</label>
+                                            <label htmlFor="addedDate" className="form-label sub-topic">Added Date</label>
                                             <input
                                                 type="date"
                                                 className="form-control"
@@ -178,7 +178,7 @@ class CreateService extends Component {
                                             />
                                         </div>
                                             <div className="col-6">
-                                                <label htmlFor="pricePerHour" className="form-label">Price Per Hour</label>
+                                                <label htmlFor="pricePerHour" className="form-label sub-topic">Price Per Hour</label>
                                                 <input
                                                     type="number"
                                                     className="form-control"
@@ -192,7 +192,7 @@ class CreateService extends Component {
                                             </div>
                                             </div>
                                             <div className="col mb-3">
-                                                <label htmlFor="description" className="form-label">Description</label>
+                                                <label htmlFor="description" className="form-label sub-topic">Description</label>
                                                 <textarea
                                                    className="form-control"
                                                    placeholder = "Enter Description"
@@ -204,7 +204,7 @@ class CreateService extends Component {
                                                 />
                                             </div>
                                             <div className="col-6">
-                                                <label htmlFor="employeeCount" className="form-label">Recruited number of employees</label>
+                                                <label htmlFor="employeeCount" className="form-label sub-topic">Recruited number of employees</label>
                                                 <input
                                                     type="number"
                                                     className="form-control"
@@ -218,11 +218,11 @@ class CreateService extends Component {
                                             <br></br>
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
-                                                    <button type="button" className="btn btn-outline-primary" onClick={e => this.back(e)}> Back</button>
-                                                    <button type="button" className="btn btn-outline-secondary" > Clear</button>
+                                                    <button type="button" id="button" className="btn btn-primary" onClick={e => this.back(e)}> Back</button>
+                                                    {/* <button type="button" id="button" className="btn btn-secondary" > Clear</button> */}
                                                 </div>
                                                 <div className="col mb-3">
-                                                    <button type="submit" className="btn btn-outline-success float-end">Submit</button>
+                                                    <button type="submit" id="button" className="btn btn-success float-end">Submit</button>
                                                 </div>
                                             </div>
                                     </form>

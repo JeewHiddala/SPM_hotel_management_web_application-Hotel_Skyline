@@ -13,8 +13,8 @@ const serviceAPI = require('./src/apis/service.api');   //IT19007502 - Hiddalara
 const authAPI = require('./src/apis/auth.api');   //IT19059150 - Ranaweera I.G.S.V.
 const userAPI = require('./src/apis/user.api');   //IT19059150 - Ranaweera I.G.S.V.
 const customerAPI = require('./src/apis/customer.api');   //IT19059150 - Ranaweera I.G.S.V.
-const billAPI = require('./src/apis/bill.api');   //IT19059150 - Ranaweera I.G.S.V.
-const bookingAPI = require('./src/apis/booking.api');
+// const billAPI = require('./src/apis/bill.api');   //IT19059150 - Ranaweera I.G.S.V.
+// const bookingAPI = require('./src/apis/booking.api');
 
 
 dotenv.config();
@@ -56,8 +56,8 @@ app.use('/service', serviceAPI());    //IT19007502 - Hiddalarachchi J.
 app.use('/auth', authAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/user', userAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/customer', customerAPI());    //IT19059150 - Ranaweera I.G.S.V.
-app.use('/bill', billAPI());    //IT19059150 - Ranaweera I.G.S.V.
-app.use('/booking', bookingAPI());
+// app.use('/bill', billAPI());    //IT19059150 - Ranaweera I.G.S.V.
+// app.use('/booking', bookingAPI());
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);

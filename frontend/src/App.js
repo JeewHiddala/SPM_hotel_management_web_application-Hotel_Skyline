@@ -13,7 +13,7 @@ import CreateService from './components/managerComponents/createForms/serviceMan
 import Login from "./components/login/login.component";
 import Home from "./components/home/home.component";
 import Profile from "./components/profile/profile.component";
-import Navbar from './components/navBar/navBar';
+import NavBar from './components/navBar/navBar';
 import CustomerRegister from './components/customer-registration/customer-register';
 
 
