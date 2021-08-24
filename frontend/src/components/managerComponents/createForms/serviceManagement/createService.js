@@ -218,8 +218,8 @@ class CreateService extends Component {
                                             <br></br>
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
-                                                    <button type="button" id="button" className="btn btn-primary" onClick={e => this.back(e)}> Back</button>
-                                                    {/* <button type="button" id="button" className="btn btn-secondary" > Clear</button> */}
+                                                    <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
+                                                    {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
                                                 </div>
                                                 <div className="col mb-3">
                                                     <button type="submit" id="button" className="btn btn-success float-end">Submit</button>
