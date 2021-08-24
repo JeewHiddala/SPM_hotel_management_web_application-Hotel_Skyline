@@ -1,0 +1,25 @@
+.container-dash{
+    border-style: solid;
+    background-color: lightgrey;
+    width:95%;
+    padding: 10px;
+    margin: 5px;
+    
+}
+.hotel-name{
+    padding: 10px;
+    margin: 20px;
+}
+.col-3,.col-8{
+    border-style: solid;
+    background-color: white;
+    margin: 5px;
+    padding: 10px;
+}
+.col-1{
+    font-weight: bold;
+    font-size: 30px;
+}
+.float-end{
+    margin: 5px;
+}
