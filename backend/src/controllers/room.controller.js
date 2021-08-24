@@ -25,7 +25,7 @@ const getAllRoomsDetails = async (req, res) => {       //get all room details.
 }
 
 const getAllAvailableRoomsDetails = async (req, res) => {       //get all available rooms details.
-    await Room.find({isAvailable:true})
+    await Room.find({ isAvailable: true })
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -35,7 +35,7 @@ const getAllAvailableRoomsDetails = async (req, res) => {       //get all availa
 }
 
 const getAllUnavailableRoomsDetails = async (req, res) => {       //get all not available rooms details.
-    await Room.find({isAvailable:false})
+    await Room.find({ isAvailable: false })
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -44,11 +44,24 @@ const getAllUnavailableRoomsDetails = async (req, res) => {       //get all not 
         });
 }
 
+
+const getSelectedAvailableRoomDetails = async (req, res) => {          //get selected room details.
+    if (req.params && req.params.id) {
+        await Room.findById(req.params.id)
+            .then(data => {
+                res.status(200).send({ data: data });
+            })
+            .catch(error => {
+                res.status(500).send({ error: error.message });
+            });
+    }
+}
+
 const getSelectedRoomDetails = async (req, res) => {          //get selected room details.
     if (req.params && req.params.id) {
         await Room.findById(req.params.id)
             .then(data => {
-                res.status(200).send({ data : data });
+                res.status(200).send({ data: data });
             })
             .catch(error => {
                 res.status(500).send({ error: error.message });
@@ -58,10 +71,10 @@ const getSelectedRoomDetails = async (req, res) => {          //get selected roo
 
 const deleteRoom = async (req, res) => {               // delete selected room.
     if (req.params && req.params.id) {
-        const {id} = req.params;            // fetching the id of the room
+        const { id } = req.params;            // fetching the id of the room
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No room with id: ${id}`);       //validating the room id.
         await Room.findByIdAndRemove(id);         // find room and remove room.
-        res.json({message: "Room deleted successfully."});
+        res.json({ message: "Room deleted successfully." });
     }
 }
 
@@ -70,6 +83,7 @@ module.exports = {
     getAllRoomsDetails,
     getAllAvailableRoomsDetails,
     getAllUnavailableRoomsDetails,
+    getSelectedAvailableRoomDetails,
     getSelectedRoomDetails,
     deleteRoom
 };
