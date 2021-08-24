@@ -101,7 +101,7 @@ class CreateService extends Component {
                                         </div>
                                         <br></br>
                                         <h5><b className="sub-topic">Monitoring</b></h5>
-                                        <div class="list-group">
+                                        <div className="list-group">
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Service Bills</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
                                                 View Booking Bills

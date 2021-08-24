@@ -98,7 +98,7 @@ class CreateRoom extends Component {
                                         </div>
                                         <br></br>
                                         <h5><b className="sub-topic">Monitoring</b></h5>
-                                        <div class="list-group">
+                                        <div className="list-group">
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Service Bills</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
                                                 View Booking Bills
@@ -150,7 +150,7 @@ class CreateRoom extends Component {
                                         </div>
                                         <div className="col-6">
                                             <label htmlFor="category" className="form-label sub-topic">Category</label>
-                                            <select class="form-select" aria-label="Default select example"
+                                            <select className="form-select" aria-label="Default select example"
                                                 onChange={this.onChange} 
                                                 value={this.state.category}
                                                 name="category"
@@ -173,7 +173,7 @@ class CreateRoom extends Component {
                                         <div className = "row mb-3">
                                         <div className="col-6">
                                             <label htmlFor="airConditioningCategory" className="form-label sub-topic">Air Conditioning Category</label>
-                                            <select class="form-select" aria-label="Default select example"
+                                            <select className="form-select" aria-label="Default select example"
                                                 onChange={this.onChange} 
                                                 value={this.state.airConditioningCategory}
                                                 name="airConditioningCategory"

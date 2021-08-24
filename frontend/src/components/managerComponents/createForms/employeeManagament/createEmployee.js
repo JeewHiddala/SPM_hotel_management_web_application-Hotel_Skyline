@@ -165,7 +165,7 @@ class CreateEmployee extends Component {
                                         </div>
                                         <br></br>
                                         <h5><b className="sub-topic">Monitoring</b></h5>
-                                        <div class="list-group">
+                                        <div className="list-group">
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Service Bills</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
                                                 View Booking Bills
@@ -215,7 +215,7 @@ class CreateEmployee extends Component {
                                                 </div>
                                                 <div className="col-6">
                                                     <label htmlFor="position" className="form-label sub-topic">Position</label>
-                                                    <select class="form-select" aria-label="Default select example"
+                                                    <select className="form-select" aria-label="Default select example"
                                                         onChange={this.onChange}
                                                         value={this.state.position}
                                                         name="position"
@@ -302,7 +302,7 @@ class CreateEmployee extends Component {
                                                         placeholder="Enter username"
                                                         id="userName"
                                                         name="userName"
-                                                        minlength="5"
+                                                        minLength="5"
                                                         value={this.state.userName}
                                                         onChange={this.onChange}
                                                     />
@@ -315,7 +315,7 @@ class CreateEmployee extends Component {
                                                         placeholder="Enter password"
                                                         id="password"
                                                         name="password"
-                                                        minlength="8"
+                                                        minLength="8"
                                                         // required
                                                         value={this.state.password}
                                                         onChange={this.onChange}
