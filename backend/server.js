@@ -18,7 +18,12 @@ const roomAPI = require('./src/apis/room.api');   //IT19007502 - Hiddalarachchi 
 const foodorderAPI = require('./src/apis/foodorder.api'); //IT19051826
 const bookingAPI = require('./src/apis/booking.api'); //IT19051826
 const kitchenorderAPI = require('./src/apis/kitchen.api');
+const cashpaymentAPI = require('./src/apis/cashpayment.api');
+const creditpaymentAPI = require('./src/apis/creditpayment.api');
 
+//
+const billAPI = require('./src/apis/bill.api');
+ 
 
 dotenv.config();
 const app = express();
@@ -64,7 +69,11 @@ app.use('/booking', bookingAPI()); //IT19051826
 //app.use('/product', productApI()); //IT19051826
 // app.use('/api/products', productAPI());
 app.use('/kitchenorder', kitchenorderAPI());
+app.use('/cashpayment', cashpaymentAPI());
+app.use('/creditpayment', creditpaymentAPI());
 
+//
+app.use('/bill', billAPI());
 
 
 
