@@ -34,6 +34,11 @@ import PrivateRoute from './component/PrivateRoute';
 import ProductListScreen from './screens/ProductListScreen';
 import transferToKitchen from './components/receptionistDashboard/transferToKitchen';
 import CheckAvailableRooms from './components/receptionistDashboard/checkAvailableRooms';
+import PaymentForm from './components/receptionistDashboard/cashpaymentForm';
+import PaymentHandling from './components/receptionistDashboard/paymentHandling';
+import Paymentm from './components/receptionistDashboard/paymentm';
+import CreditPaymentForm from './components/receptionistDashboard/creditpaymentForm';
+
 
 
 function App() {
@@ -53,7 +58,9 @@ function App() {
         <Route path="/createBooking" component={createBooking} />
         <Route path="/roomBookingManagement" component={roomBookingManagement} />
         <Route path="/viewbooking/:id" component={viewBookedRoom} />
-
+        <Route path="/cashpaymentform/:id" component={PaymentForm} />
+        <Route path="/creditpaymentform/:id" component={CreditPaymentForm} />
+        <Route path="/paymenthandling" component={PaymentHandling} />
         <Route path="/foodorder" component={foodOrderManagement} />
         <Route path="/transferkitchen" component={transferToKitchen} />
         <Route path="/createfoodorder" component={createFoodOrder} />
@@ -65,6 +72,7 @@ function App() {
         <Route path="/payment" component={PaymentMethodScreen}></Route>
         <Route path="/placeorder" component={PlaceOrderScreen}></Route>
         <Route path="/order/:id" component={OrderScreen}></Route>
+        <Route path="/paymentm" component={Paymentm}></Route>
 
         <PrivateRoute
           path="/profile"
