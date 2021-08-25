@@ -30,7 +30,12 @@ const getAllRoomsDetails = async (req, res) => {       //get all room details.
 }
 
 const getAllAvailableRoomsDetails = async (req, res) => {       //get all available rooms details.
-    await Room.find({isAvailable:true})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Room.paginate({isAvailable:true},options)         //pagination
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -40,7 +45,12 @@ const getAllAvailableRoomsDetails = async (req, res) => {       //get all availa
 }
 
 const getAllUnavailableRoomsDetails = async (req, res) => {       //get all not available rooms details.
-    await Room.find({isAvailable:false})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Room.paginate({isAvailable:false},options)         //pagination
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -54,6 +64,18 @@ const getSelectedRoomDetails = async (req, res) => {          //get selected roo
         await Room.findById(req.params.id)
             .then(data => {
                 res.status(200).send({ data : data });
+            })
+            .catch(error => {
+                res.status(500).send({ error: error.message });
+            });
+    }
+}
+
+const getSelectedAvailableRoomDetails = async (req, res) => {          //get selected available room details.
+    if (req.params && req.params.id) {
+        await Room.findById(req.params.id)
+            .then(data => {
+                res.status(200).send({ data: data });
             })
             .catch(error => {
                 res.status(500).send({ error: error.message });
@@ -76,5 +98,6 @@ module.exports = {
     getAllAvailableRoomsDetails,
     getAllUnavailableRoomsDetails,
     getSelectedRoomDetails,
+    getSelectedAvailableRoomDetails,
     deleteRoom
 };
