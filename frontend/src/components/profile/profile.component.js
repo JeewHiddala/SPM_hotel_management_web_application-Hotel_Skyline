@@ -86,7 +86,7 @@ export default class Profile extends Component {
   deleteAccount(e) {
     console.log("I am on Delete", this.state.id)
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you sure you want to delete your account?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
@@ -95,12 +95,13 @@ export default class Profile extends Component {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:7000/customer/${this.state.id}`)
+        axios.delete(`http://localhost:7000/customer/${this.state.id}`)//check and delete user from user table ---to be done
         Swal.fire(
           'Deleted!',
           'Account has been deleted.',
           'success'
         )
+        AuthService.logout();
         window.location = '/login'
       }
     })

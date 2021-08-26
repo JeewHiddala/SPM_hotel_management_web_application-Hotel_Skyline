@@ -15,6 +15,13 @@ import Home from "./components/home/home.component";
 import Profile from "./components/profile/profile.component";
 import NavBar from './components/navBar/navBar';//Sahanya
 import CustomerRegister from './components/customer-registration/customer-register';
+import CheckoutHandling from './components/bill-handling/checkoutHandling';
+import CreateCheckoutBill from './components/bill-handling/createCheckoutBill';
+import ViewCheckoutBill from './components/bill-handling/viewBill';
+import Paymentm from './components/payment-bill/paymentm';
+import PaymentForm from './components/payment-bill/cashpaymentForm';
+import CreditPaymentForm from './components/payment-bill/creditpaymentForm';
+
 
 
 import React from 'react';
@@ -104,10 +111,13 @@ function App() {
             <Route path="/placeorder" component={PlaceOrderScreen}></Route>
             <Route path="/order/:id" component={OrderScreen}></Route>
             <Route path="/paymentm" component={Paymentm}></Route>
-
+            <Route exact path="/reception/checkout" component={CheckoutHandling} />
+            <Route exact path="/reception/createCheckoutBill" component={CreateCheckoutBill} />
+            <Route exact path="/reception/viewBill/:id" component={ViewCheckoutBill} />
           </Switch>
         </section>
         <Footer />
+
       </Router>
     </div>
   );

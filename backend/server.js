@@ -21,18 +21,19 @@ const serviceAPI = require('./src/apis/service.api');   //IT19007502 - Hiddalara
 const authAPI = require('./src/apis/auth.api');   //IT19059150 - Ranaweera I.G.S.V.
 const userAPI = require('./src/apis/user.api');   //IT19059150 - Ranaweera I.G.S.V.
 const customerAPI = require('./src/apis/customer.api');   //IT19059150 - Ranaweera I.G.S.V.
-// const billAPI = require('./src/apis/bill.api');   //IT19059150 - Ranaweera I.G.S.V.
-// const bookingAPI = require('./src/apis/booking.api');
+
+const billAPI = require('./src/apis/bill.api');   //IT19059150 - Ranaweera I.G.S.V.
 
 
+// const customerServiceApi = require('./src/apis/customerService.api');// IT19021058 -De Seram E.M.A.P.
+// const serviceListApi = require('./src/apis/serviceList.api');// IT19021058 -De Seram E.M.A.P.
 const foodorderAPI = require('./src/apis/foodorder.api'); //IT19051826
 const bookingAPI = require('./src/apis/booking.api'); //IT19051826
 const kitchenorderAPI = require('./src/apis/kitchen.api');
 const cashpaymentAPI = require('./src/apis/cashpayment.api');
 const creditpaymentAPI = require('./src/apis/creditpayment.api');
 
-//
-const billAPI = require('./src/apis/bill.api');
+
  
 
 dotenv.config();
@@ -77,9 +78,11 @@ app.use('/service', serviceAPI());    //IT19007502 - Hiddalarachchi J.
 app.use('/auth', authAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/user', userAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/customer', customerAPI());    //IT19059150 - Ranaweera I.G.S.V.
+
 // app.use('/bill', billAPI());    //IT19059150 - Ranaweera I.G.S.V.
 // app.use('/booking', bookingAPI());
-
+// app.use('/customerService',customerServiceApi());// IT19021058 -De Seram E.M.A.P.
+// app.use('/serviceList',serviceListApi());// IT19021058 -De Seram E.M.A.P.
 
 app.use('/foodorder', foodorderAPI()); //IT19051826
 app.use('/booking', bookingAPI()); //IT19051826
@@ -110,6 +113,7 @@ app.get('/api/config/paypal', (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api', fileRoutes.routes);
+
 
 
 app.listen(PORT, () => {

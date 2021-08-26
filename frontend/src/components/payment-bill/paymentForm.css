@@ -1,0 +1,31 @@
+.container1{
+ 
+    
+    margin: 80px;
+}
+
+.imagepath{
+    width: 500px;
+    height: 600px;
+}
+
+.img-payment{
+    width: 350px;
+    margin: 10px;
+}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+    width: 33.33%;
+    padding: 5px;
+    height: 400px;
+  }
+  
+  /* Clear floats after image containers */
+  .row::after {
+    display: table;
+    height: 250px;
+
+  }
+
+ 
