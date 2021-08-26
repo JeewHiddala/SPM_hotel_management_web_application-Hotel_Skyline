@@ -84,23 +84,7 @@ class viewBookedRoom extends Component {
     window.location = '/roomBookingManagement'
   }
 
-  onSubmit(e) {
-    e.preventDefault();
 
-    let booking = {
-      bookingNo: this.state.bookingNo,
-      customerId: this.state.customerId,
-      roomNo: this.state.roomNo,
-      boardingType: this.state.boardingType,
-      bookingDate: this.state.bookingDate,
-      noOfGuests: this.state.noOfGuests,
-      days: this.state.days,
-      arrivalDate: this.state.arrivalDate,
-
-      remarks: this.state.remarks
-    };
-
-  }
 
   render() {
     return (

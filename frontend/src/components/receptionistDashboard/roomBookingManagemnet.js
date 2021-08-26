@@ -4,17 +4,22 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './roomBookingManagement.css';
 import './dash.css';
+import ReactPaginate from 'react-paginate';
 
 class roomBookingManagement extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            totalPages: 0,
+            page: 0,
             booking: [],
 
         }
         this.deleteBooking = this.deleteBooking.bind(this);
         this.viewBooking = this.viewBooking.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);  //pagination
+        this.retriveBookingPages = this.retriveBookingPages.bind(this); 
 
     }
 
@@ -22,6 +27,8 @@ class roomBookingManagement extends Component {
         axios.get('http://localhost:8100/booking/')
             .then(response => {
                 this.setState({ booking: response.data.data });
+                this.setState({ booking: response.data.data.docs });          //pagination
+                this.setState({ totalPages: response.data.data.totalPages }); 
                 console.log("abc" + response.data.data);
                 //   console.log("a"+response.data.booking)
             })
@@ -65,6 +72,26 @@ class roomBookingManagement extends Component {
         });
     }
 
+    retriveBookingPages(page) {               //pagination
+        console.log("Pagef", page);
+        axios.get('http://localhost:8100/foodorder/', {
+            params: {
+                page: page
+            }
+        })
+            .then(response => {
+                this.setState({ booking: response.data.data.docs });
+                console.log("WPF", response.data.data);
+            })
+    };
+
+    handlePageChange = (data) => {          //pagination
+        let selected = data.selected + 1;
+        console.log("val", selected);
+        this.setState({ page: selected });
+        this.retriveBookingPages(selected);
+    };
+
 
     deleteBooking(e, bookingId) {
         console.log("Delete", bookingId)
@@ -85,6 +112,7 @@ class roomBookingManagement extends Component {
                     'success'
                 )
             }
+            window.location.reload(false);
         })
     }
 
@@ -168,6 +196,18 @@ class roomBookingManagement extends Component {
                                             <br></br>
                                         </table>
                                     </div>
+                                    <ReactPaginate
+                                        previousLabel={'Previous'}
+                                        nextLabel={'Next'}
+                                        breakLabel={'...'}
+                                        breakClassName={'break-me'}
+                                        pageCount={this.state.totalPages}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={this.handlePageChange}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                    />
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const BookingSchema = new mongoose.Schema({
     bookingNo: { type: String, required: true, trim: true },
@@ -13,6 +14,6 @@ const BookingSchema = new mongoose.Schema({
     room: [{ type: mongoose.Schema.Types.ObjectId, required: false, ref: 'rooms' }],
 });
 
-
+BookingSchema.plugin(mongoosePaginate);
 const Booking = mongoose.model('bookings', BookingSchema);
 module.exports = Booking;

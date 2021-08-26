@@ -16,7 +16,12 @@ const createBooking = async (req, res) => {
 }
 
 const getAllBookingDetails = async (req, res) => {
-    await Booking.find({})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Booking.paginate({},options)
         .then(data => {
             res.status(200).send({ data: data });
         })
