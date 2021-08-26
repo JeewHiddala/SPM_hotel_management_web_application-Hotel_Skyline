@@ -65,6 +65,19 @@ import CreditPaymentForm from './components/receptionistDashboard/creditpaymentF
 import CustomerHome from './components/Home';
 
 
+import IngredientOrderManagement from './components/kitchenHeadComponents/views/ingredientOrderManagement/ingredientOrderManagement';
+import FoodManagement from './components/kitchenHeadComponents/views/foodManagement/foodManagement';
+import IngredientOrder from './components/kitchenHeadComponents/createForms/ingredientOrder/ingredientOrder';
+import Ingredient from './components/kitchenHeadComponents/createForms/ingredient/ingredient';
+import Food from './components/kitchenHeadComponents/createForms/food/food';
+import ServiceListManagement from './components/kitchenHeadComponents/views/dashboard/serviceListManagement';
+import IngredientOrder1 from './components/kitchenHeadComponents/createForms/ingredientOrder/ingredientOrder1';
+import CustomerService from './components/receptionistComponents/createForms/customerService/customerService';
+import ServiceList from './components/receptionistComponents/createForms/serviceList/serviceList';
+import ViewFood from './components/kitchenHeadComponents/views/foodManagement/viewFood';
+import ServiceList1 from './components/receptionistComponents/createForms/serviceList/serviceList1';
+import ViewIngredientOrder from './components/kitchenHeadComponents/views/ingredientOrderManagement/viewIngredientOrder';
+
 
 function App() {
 
@@ -114,6 +127,21 @@ function App() {
             <Route exact path="/reception/checkout" component={CheckoutHandling} />
             <Route exact path="/reception/createCheckoutBill" component={CreateCheckoutBill} />
             <Route exact path="/reception/viewBill/:id" component={ViewCheckoutBill} />
+
+
+            <Route path="/kitchenHeadDashboard" component={IngredientOrderManagement} />
+                        <Route path="/create-foodManagement" component={FoodManagement} />
+                        <Route path="/create-ingredientOrder" component={IngredientOrder} />
+                        <Route path="/create-ingredient" component={Ingredient} />
+                        <Route path="/create-food" component={Food} />
+                        <Route path="/create-serviceListBill" component={ServiceListManagement} /> 
+                        <Route path="/create-ingredientOrder-continue" component={IngredientOrder1} /> 
+                        <Route path="/create-customerService/:id" component={CustomerService} /> 
+                        <Route path="/create-serviceList" component={ServiceList} /> 
+                        <Route path="/food-view/:id" component={ViewFood} /> 
+                        <Route path="/create-serviceList-continue" component={ServiceList1} /> 
+                        <Route path="/ingredientOrder-View/:id" component={ViewIngredientOrder} /> 
+
           </Switch>
         </section>
         <Footer />

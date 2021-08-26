@@ -101,12 +101,12 @@ class Navbar extends Component {
                                 )}
                                 {isReceptionist && (
                                     <li className="nav-item">
-                                        <a className="nav-link" href="/retiredEmployee">User</a>
+                                        <a className="nav-link" href="/checkAvailableRooms">User</a>
                                     </li>
                                 )}
                                 {isKitchenHead && (
                                     <li className="nav-item">
-                                        <a className="nav-link" href="/">User</a>
+                                        <a className="nav-link" href="/kitchenHeadDashboard">User</a>
                                     </li>
                                 )}
                                 {isCustomer && (

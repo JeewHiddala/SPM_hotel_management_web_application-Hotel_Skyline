@@ -36,6 +36,15 @@ const creditpaymentAPI = require('./src/apis/creditpayment.api');
 
  
 
+const foodApi = require('./src/apis/food.api');// IT19021058 -De Seram E.M.A.P.
+const ingredientApi = require('./src/apis/ingredient.api');// IT19021058 -De Seram E.M.A.P.
+const ingredientOrderApi = require('./src/apis/ingredientOrder.api');// IT19021058 -De Seram E.M.A.P.
+const customerServiceApi = require('./src/apis/customerService.api');// IT19021058 -De Seram E.M.A.P.
+const serviceListApi = require('./src/apis/serviceList.api');// IT19021058 -De Seram E.M.A.P.
+   
+
+
+
 dotenv.config();
 const app = express();
 app.use(cors());
@@ -115,6 +124,14 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', fileRoutes.routes);
 
 
+
+app.use('/food',foodApi());// IT19021058 -De Seram E.M.A.P.
+app.use('/ingredient',ingredientApi());// IT19021058 -De Seram E.M.A.P.
+app.use('/ingredientOrder',ingredientOrderApi());// IT19021058 -De Seram E.M.A.P.
+app.use('/customerService',customerServiceApi());// IT19021058 -De Seram E.M.A.P.
+app.use('/serviceList',serviceListApi());// IT19021058 -De Seram E.M.A.P.
+
+app.use('/booking', bookingAPI());
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);

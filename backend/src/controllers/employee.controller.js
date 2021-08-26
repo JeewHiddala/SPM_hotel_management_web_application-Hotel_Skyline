@@ -39,6 +39,7 @@ const getAllWorkingEmployeesDetails = async (req, res) => {       //get all work
         });
 }
 
+
 const getAllRetiredEmployeesDetails = async (req, res) => {       //get all retired employee details.
     let page = req.query.page; 
     const options = {
@@ -66,6 +67,18 @@ const getAllWorkingChefsDetails = async (req, res) => {       //get all chef det
 
 const getAllWorkingReceptionistsDetails = async (req, res) => {       //get all chef details.
     await Employee.find({isWorking:true,position:"Receptionist"})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
+
+
+const getAllWorkingChefDetails = async (req, res) => {       //get all working employee details.
+    await Employee.find({isWorking:true, position:"Chef"})
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -123,6 +136,7 @@ module.exports = {
     getAllEmployeesDetails,
     getAllWorkingEmployeesDetails,
     getAllRetiredEmployeesDetails,
+    getAllWorkingChefDetails,
     getSelectedEmployeeDetails,
     deleteEmployee,
     getAllWorkingChefsDetails,

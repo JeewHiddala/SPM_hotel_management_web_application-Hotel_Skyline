@@ -59,6 +59,9 @@
   margin-top: 5px;
 }
 
+.container-box{
+  margin: 80px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -67,5 +70,4 @@
     transform: rotate(360deg);
   }
 }
-
 
