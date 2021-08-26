@@ -146,7 +146,7 @@ class IngredientOrderManagement extends Component {
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>
-                                                    <th></th>
+                                                    {/* <th></th> */}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -171,7 +171,7 @@ class IngredientOrderManagement extends Component {
                                                             ))}
                                                         </td>
                                                         <td>{item.createdDate}</td>
-                                                        <td></td>
+                                                        {/* <td></td> */}
                                                         <td><button type="button" className="btn btn-primary" onClick={e => this.ViewIngredientOrder(e, item._id)}>View</button></td>
                                                         <td><button type="button" className="btn btn-warning">Update</button></td>
                                                         <td><button type="button" className="btn btn-danger" onClick={e => this.deleteIngredientOrder(e, item._id)}>Delete</button></td>

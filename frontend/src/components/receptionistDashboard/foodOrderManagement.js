@@ -106,12 +106,11 @@ class foodOrderManagement extends Component {
                                             <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >
                                                 Room Booking Management
                                             </button></a>
-
                                             <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
                                             <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
                                             <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Food Ordering</button></a>
-                                            <button type="button" className="list-group-item list-group-item-action">Service List Bill</button>
-                                            <button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button>
+                                            <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service List Bill</button></a>
+                                            <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
                                         </div>
                                     </div>
                                 </div>

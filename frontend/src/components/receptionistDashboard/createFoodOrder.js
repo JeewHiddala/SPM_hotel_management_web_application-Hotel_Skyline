@@ -189,7 +189,7 @@ class createFoodOrder extends Component {
                                 </input>
                             </div>
                             <br></br>
-                            <h2>Total price for the order{this.state.orderId}: Rs.{this.state.price * this.state.quantity}</h2>
+                            <h2>Total price for the order {this.state.orderId} : Rs.{this.state.price * this.state.quantity}</h2>
                             <button type="button" className="btn btn-secondary" onClick={e => this.backtofoodorder(e)}> Back</button>
                             <button type="submit" className="btn btn-primary">Submit</button>
                         </div>

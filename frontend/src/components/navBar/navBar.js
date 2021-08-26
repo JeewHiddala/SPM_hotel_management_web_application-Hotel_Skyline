@@ -9,8 +9,8 @@ import logo from '../../images/logo.jpg';
 class Navbar extends Component {
     constructor(props) {
         super(props);
-        const cart = useSelector((state) => state.cart);
-        const { cartItems } = cart;
+        // const cart = useSelector((state) => state.cart);
+        // const { cartItems } = cart;
 
         this.logOut = this.logOut.bind(this);
 
@@ -117,11 +117,11 @@ class Navbar extends Component {
 
                                 {isCustomer && (
                                       <li className="nav-item" >
-                                      <a className="nav-link" href="/cart">Cart
+                                      {/* <a className="nav-link" href="/cart">Cart
                                           {cartItems.length > 0 && (
                                               <span className="badge">{cartItems.length}</span>
                                           )}
-                                      </a>
+                                      </a> */}
                                   </li>
                                 )}
                             </div>

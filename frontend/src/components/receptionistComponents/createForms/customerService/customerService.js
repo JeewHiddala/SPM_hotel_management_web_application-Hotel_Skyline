@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
+import "../../../../App.css";
 
 const initialState = {
     selectedService: '',
@@ -37,7 +38,7 @@ class CustomerService extends Component {
         console.log("booking ID: " + id);
         this.setState({ bookingID:id });
 
-        axios.get('http://localhost:8100/service/')
+        axios.get('http://localhost:8100/service/get/')
             .then(response => {
                 this.setState({ services: response.data.data }, () => {
                     let data = [];
@@ -152,6 +153,7 @@ class CustomerService extends Component {
             noOfHours: this.state.noOfHours,
             price: this.state.price,
             cost: this.state.cost,
+            
         }
         console.log('DATA TO SEND', customerService);
         axios.post('http://localhost:8100/customerService/create', customerService)

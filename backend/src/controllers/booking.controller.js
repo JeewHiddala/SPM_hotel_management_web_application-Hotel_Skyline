@@ -15,7 +15,7 @@ const createBooking = async (req, res) => {
     }
 }
 
-const getAllBookingDetails = async (req, res) => {
+const getAllBookings = async (req, res) => {
     let page = req.query.page; 
     const options = {
         page: page,
@@ -30,6 +30,15 @@ const getAllBookingDetails = async (req, res) => {
         });
 }
 
+const getAllBookingDetails = async (req, res) => {       
+    await Booking.find({})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
 
 
 const getRoomsInBooking = async (req, res) => {
@@ -92,6 +101,7 @@ module.exports = {
     getAllBookingDetails,
     getAllAvailableBookingDetails,
     getRoomsInBooking,
+    getAllBookings,
     getAllUnavailableBookingDetails,
     getSelectedBookingDetails,
     deleteBooking

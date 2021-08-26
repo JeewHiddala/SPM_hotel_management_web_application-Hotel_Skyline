@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
-import '../receptionist-dashboard/receptionist-dashboard.css';
+// import '../receptionist-dashboard/receptionist-dashboard.css';
 
 class CheckoutHandling extends Component {
     constructor(props) {
@@ -73,16 +73,16 @@ class CheckoutHandling extends Component {
                                         <div className="container" >
                                             <h3 className="h3"><b>Creations</b></h3>
                                             <div className="list-group">
-                                                <button type="button" className="list-group-item list-group-item-action">Check Available Rooms</button>
-                                                <button type="button" className="list-group-item list-group-item-action" >
-                                                    Room Booking Management
-                                                </button>
-                                                <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
-                                                <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
-                                                <button type="button" className="list-group-item list-group-item-action">Food Ordering</button>
-                                                <button type="button" className="list-group-item list-group-item-action">Service List Bill</button>
-                                                <button type="button" className="list-group-item list-group-item-action active" aria-current="true">Checkout Handling</button>
-                                            </div>
+                                            <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Check Available Rooms</button></a>
+                                            <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >
+                                                Room Booking Management
+                                            </button></a>
+                                            <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
+                                            <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                                            <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
+                                            <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service List Bill</button></a>
+                                            <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Checkout Handling</button></a>
+                                        </div>
                                         </div>
                                     </div>
                                 <br /><br /><br /><br />

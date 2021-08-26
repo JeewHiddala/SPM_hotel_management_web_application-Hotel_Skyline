@@ -5,6 +5,7 @@ const serviceController = require('../controllers/service.controller');
 module.exports = function () {
     router.post('/create', serviceController.createService);        // create service.
     router.get('/', serviceController.getAllServicesDetails);       //get all services.
+    router.get('/get/', serviceController.getAllServicesDetailsForReceptionist);       //get selected service details.
     router.get('/:id', serviceController.getSelectedServiceDetails);       //get selected service details.
     router.delete('/:id', serviceController.deleteService);         //delete selected service details.
 

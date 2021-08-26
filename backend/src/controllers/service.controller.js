@@ -29,6 +29,16 @@ const getAllServicesDetails = async (req, res) => {       //get all services det
         });
 }
 
+const getAllServicesDetailsForReceptionist = async (req, res) => {       //get all services details.
+    await Service.find({})         //pagination
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 const getSelectedServiceDetails = async (req, res) => {          //get selected service details.
     if (req.params && req.params.id) {
         await Service.findById(req.params.id)
@@ -54,5 +64,6 @@ module.exports = {
     createService,
     getAllServicesDetails,
     getSelectedServiceDetails,
+    getAllServicesDetailsForReceptionist,
     deleteService
 };

@@ -24,7 +24,7 @@ class roomBookingManagement extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8100/booking/')
+        axios.get('http://localhost:8100/booking/get/')
             .then(response => {
                 this.setState({ booking: response.data.data });
                 this.setState({ booking: response.data.data.docs });          //pagination
@@ -74,7 +74,7 @@ class roomBookingManagement extends Component {
 
     retriveBookingPages(page) {               //pagination
         console.log("Pagef", page);
-        axios.get('http://localhost:8100/foodorder/', {
+        axios.get('http://localhost:8100/booking/get/', {
             params: {
                 page: page
             }
@@ -140,8 +140,8 @@ class roomBookingManagement extends Component {
                                             <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
                                             <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
                                             <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
-                                            <button type="button" className="list-group-item list-group-item-action">Service List Bill</button>
-                                            <button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button>
+                                            <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service List Bill</button></a>
+                                            <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
                                         </div>
                                     </div>
                                 </div>

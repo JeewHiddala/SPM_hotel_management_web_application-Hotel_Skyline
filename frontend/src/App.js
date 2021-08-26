@@ -24,14 +24,14 @@ import CreditPaymentForm from './components/payment-bill/creditpaymentForm';
 
 
 
-import React from 'react';
+// import React from 'react';
 // import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';    //make routes
 
-import Footer from './footer/footer';
+// import Footer from './footer/footer';
 // import Home from './components/Home';
 // import NavBar from './mainNav/Navbar';//Deshani
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+// import { BrowserRouter, Link, Route } from 'react-router-dom';
 // import { signout } from './actions/userActions';
 
 // import CheckAvailableRooms from './components/receptionistDashboard/checkAvailableRooms';
@@ -58,10 +58,10 @@ import ShippingAddressScreen from './screens/ShippingAddressScreen';
 // import ProductListScreen from './screens/ProductListScreen';
 import transferToKitchen from './components/receptionistDashboard/transferToKitchen';
 import CheckAvailableRooms from './components/receptionistDashboard/checkAvailableRooms';
-import PaymentForm from './components/receptionistDashboard/cashpaymentForm';
-import PaymentHandling from './components/receptionistDashboard/paymentHandling';
-import Paymentm from './components/receptionistDashboard/paymentm';
-import CreditPaymentForm from './components/receptionistDashboard/creditpaymentForm';
+// import PaymentForm from './components/receptionistDashboard/cashpaymentForm';
+// import PaymentHandling from './components/receptionistDashboard/paymentHandling';
+// import Paymentm from './components/receptionistDashboard/paymentm';
+// import CreditPaymentForm from './components/receptionistDashboard/creditpaymentForm';
 import CustomerHome from './components/Home';
 
 
@@ -111,7 +111,7 @@ function App() {
             <Route path="/viewbooking/:id" component={viewBookedRoom} />
             <Route path="/cashpaymentform/:id" component={PaymentForm} />
             <Route path="/creditpaymentform/:id" component={CreditPaymentForm} />
-            <Route path="/paymenthandling" component={PaymentHandling} />
+            {/* <Route path="/paymenthandling" component={PaymentHandling} /> */}
             <Route path="/foodorder" component={foodOrderManagement} />
             <Route path="/transferkitchen" component={transferToKitchen} />
             <Route path="/createfoodorder" component={createFoodOrder} />

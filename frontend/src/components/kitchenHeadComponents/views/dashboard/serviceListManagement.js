@@ -108,11 +108,15 @@ class ServiceListManagement extends Component {
                                     <div className="container" >
                                         <h3 className="h3"><b>Creations</b></h3>
                                         <div className="list-group">
-                                            <button type="button" className="list-group-item list-group-item-action">Room Booking Management</button>
-                                            <button type="button" className="list-group-item list-group-item-action" > Employee Leaves</button>
-                                            <button type="button" className="list-group-item list-group-item-action" > Food Ordering</button>
-                                            <a href="/create-serviceListBill" className="routeBtn">  <button type="button" className="list-group-item list-group-item-action active" aria-current="true"> Service List Bill Management</button></a>
-
+                                            <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Check Available Rooms</button></a>
+                                            <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
+                                                Room Booking Management
+                                            </button></a>
+                                            <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
+                                            <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                                            <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
+                                            <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Service List Bill</button></a>
+                                            <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +152,7 @@ class ServiceListManagement extends Component {
                                                     <th>Total</th>
                                                     <th></th>
                                                     <th></th>
-                                                    <th></th>
+                                                    {/* <th></th> */}
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -71,3 +71,12 @@
   }
 }
 
+.container-form{
+  border-style: solid;
+  padding: 35px;
+  border-color: grey;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: 80px;
+}
