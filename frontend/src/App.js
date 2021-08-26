@@ -12,6 +12,10 @@ import Footer from './components/footer/footer';
 import CustomerRegister from './components/customer-registration/customer-register';
 import CheckoutHandling from './components/bill-handling/checkoutHandling';
 import CreateCheckoutBill from './components/bill-handling/createCheckoutBill';
+import ViewCheckoutBill from './components/bill-handling/viewBill';
+import Paymentm from './components/payment-bill/paymentm';
+import PaymentForm from './components/payment-bill/cashpaymentForm';
+import CreditPaymentForm from './components/payment-bill/creditpaymentForm';
 
 class App extends Component {
 
@@ -19,25 +23,27 @@ class App extends Component {
 
     return (
       <Router>
-      <div>
-        <Navbar />
-        <div className="container mt-3">
-        
-          <Switch>
-            <Route exact path={["/", "/home"]} component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register-customer" component={CustomerRegister} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/reception/checkout" component={CheckoutHandling} />
-            <Route exact path="/reception/createCheckoutBill" component={CreateCheckoutBill} />
-            <Route path="/user" component={BoardUser} />
-            
-            
-          </Switch>
-          
+        <div>
+          <Navbar />
+          <div className="container mt-3">
+
+            <Switch>
+              <Route exact path={["/", "/home"]} component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register-customer" component={CustomerRegister} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/reception/checkout" component={CheckoutHandling} />
+              <Route exact path="/reception/createCheckoutBill" component={CreateCheckoutBill} />
+              <Route path="/user" component={BoardUser} />
+              <Route exact path="/reception/viewBill/:id" component={ViewCheckoutBill} />
+              <Route path="/paymentm" component={Paymentm}></Route>
+              <Route path="/cashpaymentform/:id" component={PaymentForm} />
+              <Route path="/creditpaymentform/:id" component={CreditPaymentForm} />
+            </Switch>
+
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
       </Router>
     );
   }

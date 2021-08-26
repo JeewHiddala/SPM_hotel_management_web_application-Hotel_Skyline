@@ -15,7 +15,10 @@ const userAPI = require('./src/apis/user.api');   //IT19059150 - Ranaweera I.G.S
 const customerAPI = require('./src/apis/customer.api');   //IT19059150 - Ranaweera I.G.S.V.
 const billAPI = require('./src/apis/bill.api');   //IT19059150 - Ranaweera I.G.S.V.
 const bookingAPI = require('./src/apis/booking.api');
-
+const customerServiceApi = require('./src/apis/customerService.api');// IT19021058 -De Seram E.M.A.P.
+const serviceListApi = require('./src/apis/serviceList.api');// IT19021058 -De Seram E.M.A.P.
+const cashpaymentAPI = require('./src/apis/cashpayment.api');
+const creditpaymentAPI = require('./src/apis/creditpayment.api');
 
 dotenv.config();
 const app = express();
@@ -57,7 +60,11 @@ app.use('/auth', authAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/user', userAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/customer', customerAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/bill', billAPI());    //IT19059150 - Ranaweera I.G.S.V.
+app.use('/customerService',customerServiceApi());// IT19021058 -De Seram E.M.A.P.
+app.use('/serviceList',serviceListApi());// IT19021058 -De Seram E.M.A.P.
 app.use('/booking', bookingAPI());
+app.use('/cashpayment', cashpaymentAPI());
+app.use('/creditpayment', creditpaymentAPI());
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);
