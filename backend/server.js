@@ -42,7 +42,7 @@ const ingredientOrderApi = require('./src/apis/ingredientOrder.api');// IT190210
 const customerServiceApi = require('./src/apis/customerService.api');// IT19021058 -De Seram E.M.A.P.
 const serviceListApi = require('./src/apis/serviceList.api');// IT19021058 -De Seram E.M.A.P.
    
-const bookingAPI = require('./src/apis/booking.api');
+
 
 
 dotenv.config();

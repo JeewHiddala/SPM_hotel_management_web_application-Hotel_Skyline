@@ -60,17 +60,17 @@ const getAllUnavailableRoomsDetails = async (req, res) => {       //get all not 
 }
 
 
-const getSelectedAvailableRoomDetails = async (req, res) => {          //get selected room details.
-    if (req.params && req.params.id) {
-        await Room.findById(req.params.id)
-            .then(data => {
-                res.status(200).send({ data: data });
-            })
-            .catch(error => {
-                res.status(500).send({ error: error.message });
-            });
-    }
-}
+// const getSelectedAvailableRoomDetails = async (req, res) => {          //get selected room details.
+//     if (req.params && req.params.id) {
+//         await Room.findById(req.params.id)
+//             .then(data => {
+//                 res.status(200).send({ data: data });
+//             })
+//             .catch(error => {
+//                 res.status(500).send({ error: error.message });
+//             });
+//     }
+// }
 
 const getSelectedRoomDetails = async (req, res) => {          //get selected room details.
     if (req.params && req.params.id) {
