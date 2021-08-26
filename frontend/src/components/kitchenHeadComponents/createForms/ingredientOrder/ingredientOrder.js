@@ -27,14 +27,14 @@ class IngredientOrder extends Component {
     }
 
 
-    addIngredient(e, orderNo) {
+    addIngredient(e, orderNo, id) {
         if ((orderNo === '')) {
-            alert('Please enter order number!');
+            alert('Please enter Ingrediet order number!');
 
         } else {
             localStorage.setItem('createdDate', this.state.createdDate);
             this.props.history.push({
-                pathname: '/create-ingredient',
+                pathname: '/create-ingredient/${id}',
                 data: `${orderNo}`
             })
         }
@@ -63,8 +63,11 @@ class IngredientOrder extends Component {
                                 <input
                                     type="text"
                                     className="form-control"
+                                    placeholder="Enter Ingredient Order Number"
                                     id="orderNumber"
                                     name="orderNumber"
+                                    pattern="[A-Z]{2}[0-9]{5}"
+                                    maxLength="7"
                                     value={this.state.orderNumber}
                                     onChange={this.onChange}
                                     required

@@ -108,9 +108,13 @@ class Food extends Component {
                             <input
                                 type="text"
                                 className="form-control"
+                                placeholder="Enter Food Number"
                                 id="foodNumber"
                                 name="foodNumber"
-                                value={this.state.foodNumber}
+                                pattern="[A-Z]{1}[0-9]{5}"
+                                maxLength="6"
+                                required
+                                value={this.state.foodNumber}          
                                 onChange={this.onChange}
                             />
                         </div>
@@ -120,8 +124,10 @@ class Food extends Component {
                             <input
                                 type="text"
                                 className="form-control"
+                                placeholder="Enter Food Name"
                                 id="foodName"
                                 name="foodName"
+                                required
                                 value={this.state.foodName}
                                 onChange={this.onChange}
                             />
@@ -134,8 +140,10 @@ class Food extends Component {
                             <input
                                 type="text"
                                 className="form-control"
+                                placeholder="Enter Food Category"
                                 id="category"
                                 name="category"
+                                required
                                 value={this.state.category}
                                 onChange={this.onChange}
                             />
@@ -146,8 +154,10 @@ class Food extends Component {
                             <input
                                 type="text"
                                 className="form-control"
+                                placeholder="Enter Food Price"
                                 id="price"
                                 name="price"
+                                required
                                 value={this.state.price}
                                 onChange={this.onChange}
                             />
@@ -159,6 +169,8 @@ class Food extends Component {
                             className="form-control"
                             id="description"
                             name="description"
+                            placeholder="Enter Food Description"
+                            required
                             value={this.state.description}
                             onChange={this.onChange}
                         >
@@ -174,6 +186,7 @@ class Food extends Component {
                                 className="form-control"
                                 id="createDate"
                                 name="createDate"
+                                required
                                 value={this.state.createDate}
                                 onChange={this.onChange}
 

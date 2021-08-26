@@ -139,8 +139,10 @@ class Ingredient extends Component {
                                 <input
                                     type="text"
                                     className="form-control"
+                                    placeholder="Enter Ingredient Name"
                                     id="ingredientName"
                                     name="ingredientName"
+                                    required
                                     value={this.state.ingredientName}
                                     onChange={this.onChange}
                                 />
@@ -151,8 +153,10 @@ class Ingredient extends Component {
                                 <input
                                     type="text"
                                     className="form-control"
+                                    placeholder="Enter Quantity"
                                     id="quantity"
                                     name="quantity"
+                                    required
                                     value={this.state.quantity}
                                     onChange={this.onChange}
                                 />

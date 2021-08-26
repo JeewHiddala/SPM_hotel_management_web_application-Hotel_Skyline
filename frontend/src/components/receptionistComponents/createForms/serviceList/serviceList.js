@@ -130,8 +130,7 @@ render() {
                                 placeholder="Select Booking ID"
                                 name="selectedBookingID"
                                 value ={selectedBookingID}
-                                options={this.state.options1}
-                                
+                                options={this.state.options1}        
                                 onChange={this.onBookingIDSelect}
                                 className="basic-single"
                                
@@ -147,6 +146,7 @@ render() {
                                 name="createdDate"
                                 value={this.state.createdDate}
                                 onChange={this.onChange}
+                                
 
                             />
                         </div>
