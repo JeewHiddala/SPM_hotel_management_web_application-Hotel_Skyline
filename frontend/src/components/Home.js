@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // import Footer from '../footer/footer';
 // import Navbar from '../navbar/navbar';
 
-class Home extends Component {
+class CustomerHome extends Component {
   constructor(props) {
     super(props);
 
@@ -24,7 +24,7 @@ class Home extends Component {
                 <h2>Delivering you the great food!</h2>
 
                 <div className="btns">
-                  <a href="/" className="btn-menu animated fadeInUp scrollto">Our Menu</a>
+                  <a href="/foods-customer" className="btn-menu animated fadeInUp scrollto">Our Menu</a>
 
                 </div>
               </div>
@@ -45,4 +45,4 @@ class Home extends Component {
 
 
 
-export default Home;
+export default CustomerHome;
