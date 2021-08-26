@@ -2,8 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');       //environmental variables
 const cors = require('cors');           //middleware
-const bodyParser = require('body-parser');   
+const bodyParser = require('body-parser');
+const path = require('path');
+const fileRoutes = require('./src/routes/file-upload-routes');
+const productRouter = require('./src/routers/productRouter');
 
+const userRouter = require('./src/routers/userRouter');
+const orderRouter = require('./src/routers/orderRouter.js');
+const { data } = require('./data.js');
+
+//const APIs
 const Role = require("./src/models/role.model");
 
 //import APIs
@@ -17,10 +25,23 @@ const customerAPI = require('./src/apis/customer.api');   //IT19059150 - Ranawee
 // const bookingAPI = require('./src/apis/booking.api');
 
 
+const foodorderAPI = require('./src/apis/foodorder.api'); //IT19051826
+const bookingAPI = require('./src/apis/booking.api'); //IT19051826
+const kitchenorderAPI = require('./src/apis/kitchen.api');
+const cashpaymentAPI = require('./src/apis/cashpayment.api');
+const creditpaymentAPI = require('./src/apis/creditpayment.api');
+
+//
+const billAPI = require('./src/apis/bill.api');
+ 
+
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(express.json());
+app.use(express.urlencoded({ extened: true }));
 
 //port no for run backend server
 const PORT = process.env.PORT || 8066;
@@ -58,6 +79,38 @@ app.use('/user', userAPI());    //IT19059150 - Ranaweera I.G.S.V.
 app.use('/customer', customerAPI());    //IT19059150 - Ranaweera I.G.S.V.
 // app.use('/bill', billAPI());    //IT19059150 - Ranaweera I.G.S.V.
 // app.use('/booking', bookingAPI());
+
+
+app.use('/foodorder', foodorderAPI()); //IT19051826
+app.use('/booking', bookingAPI()); //IT19051826
+//app.use('/product', productApI()); //IT19051826
+// app.use('/api/products', productAPI());
+app.use('/kitchenorder', kitchenorderAPI());
+app.use('/cashpayment', cashpaymentAPI());
+app.use('/creditpayment', creditpaymentAPI());
+
+//
+app.use('/bill', billAPI());
+
+
+
+app.use('/api/users', userRouter);
+app.use('/api/products/', productRouter);
+app.use('/api/orders', orderRouter);
+
+app.get('/api/config/paypal', (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+});
+
+// app.get('/api/products', (req, res)=>{
+//   res.send(data.products);
+// });
+
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use('/api', fileRoutes.routes);
+
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);
