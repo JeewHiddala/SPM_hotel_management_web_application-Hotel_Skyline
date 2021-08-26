@@ -242,7 +242,7 @@ class CreateEmployee extends Component {
                                                         type="email"
                                                         className="form-control"
                                                         placeholder="Enter Email Address"
-                                                        // pattern=".+@globex\.com"
+                                                        pattern=".+@skylight\.com"
                                                         id="email"
                                                         name="email"
                                                         required
