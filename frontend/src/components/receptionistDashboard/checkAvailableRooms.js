@@ -4,24 +4,29 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import CheckoutSteps from '../checkoutSteps/checkoutSteps'
 import './dash.css';
+import ReactPaginate from 'react-paginate';
+
 
 class CheckAvailableRooms extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
+            totalPages: 0,
+            page: 0,
             room: [],
 
         }
-        // this.deleteResearchPaperUpload = this.deleteResearchPaperUpload.bind(this);
-        // this.viewResearchPaperUpload = this.viewResearchPaperUpload.bind(this);
-        //  this.createBooking = this.createBooking.bind(this);
+       
         this.navigateBookingPage = this.navigateBookingPage.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);  //pagination
+        this.retriveAvailableRoomsPages = this.retriveAvailableRoomsPages.bind(this);     //pagination
     }
     componentDidMount() {
         axios.get('http://localhost:8100/room/availableRooms')
             .then(response => {
                 this.setState({ room: response.data.data });
+                this.setState({ room: response.data.data.docs });          //pagination
+                this.setState({ totalPages: response.data.data.totalPages });          //pagination
             })
 
     }
@@ -34,42 +39,25 @@ class CheckAvailableRooms extends Component {
         });
     }
 
+    retriveAvailableRoomsPages(page) {               //pagination
+        console.log("Pagef", page);
+        axios.get('http://localhost:8100/room/availableRooms', {
+            params: {
+                page: page
+            }
+        })
+            .then(response => {
+                this.setState({ room: response.data.data.docs });
+                console.log("WPF", response.data.data);
+            })
+    };
 
-    navigate(e, roomId) {
-
-    }
-
-    // createBooking(e, booking){
-    //   this.props.history.push({
-    //     pathname: `/booking/${booking}`,
-    //     // data:`${this.goforBooking}`
-    //   });
-    // }
-
-
-    //   deleteResearchPaperUpload(e , researchPaperId) {
-    //     console.log("Delete", researchPaperId)
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, delete it!'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             axios.delete(`http://localhost:7000/researchPaper/${researchPaperId}`)
-    //             Swal.fire(
-    //                 'Deleted!',
-    //                 'Research Paper has been deleted.',
-    //                 'success'
-    //             )
-    //         }
-    //     })
-    //   }
-
-
+    handlePageChange = (data) => {          //pagination
+        let selected = data.selected + 1;
+        console.log("val", selected);
+        this.setState({ page: selected });
+        this.retriveAvailableRoomsPages(selected);
+    };
 
 
     render() {
@@ -79,18 +67,6 @@ class CheckAvailableRooms extends Component {
                 <br></br>
                 <br></br>
                 <br></br>
-                {/* <br /><br />
-
-          <h1 className="hotel-name"> Hotel Skylight</h1>
-          <br />
-          <div className="container">
-              <div className="row justify-content-end">
-                  <div className="col-1">
-                      Username
-                  </div>
-              </div>
-          </div>
-          <br /> */}
                 <div className="row justify-content-center">
                     <div className="container-dash">
                         <h2><b>Receptionist Dashboard</b></h2>
@@ -179,6 +155,18 @@ class CheckAvailableRooms extends Component {
                                             </tbody>
                                         </table>
                                     </div>
+                                    <ReactPaginate
+                                        previousLabel={'Previous'}
+                                        nextLabel={'Next'}
+                                        breakLabel={'...'}
+                                        breakClassName={'break-me'}
+                                        pageCount={this.state.totalPages}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={this.handlePageChange}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                    />
                                 </div>
                             </div>
                         </div>

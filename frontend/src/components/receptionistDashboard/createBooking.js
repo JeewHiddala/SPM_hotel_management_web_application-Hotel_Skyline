@@ -129,10 +129,16 @@ class createBooking extends Component {
       if (result.isConfirmed) {
 
         axios.post('http://localhost:8100/booking/create', booking)
-        Swal.fire(
-          'Booked!',
-          'success'
-        )
+        .then(response => {
+          Swal.fire(
+            ' Booking!',
+            'success'
+          )
+        })
+        .catch(error => {
+            console.log(error.message);
+            alert(error.message)
+        })
       }
     })
 
