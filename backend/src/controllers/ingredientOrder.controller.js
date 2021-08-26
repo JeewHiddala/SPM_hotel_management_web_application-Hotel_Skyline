@@ -14,8 +14,24 @@ const createIngredientOrder = async (req, res) => {       //create a IngredientO
     }
 }
 
-const getAllIngredientOrdersDetails = async (req, res) => {       //get all IngredientOrder details.
-    await IngredientOrder.find({}).populate('ingredients','name quantity chefName')
+const getAllIngredientOrdersDetails = async (req, res) => {   
+    // let page = req.query.page; 
+    // var abc = [{ path: 'ingredients', select: 'ingredientName quantity chefName' },{ path: 'chefName', select: 'name' }];
+   
+    // const options = {
+    //     page: page,
+    //     populate: abc,   
+    //     limit: 5
+    //   }
+      
+    // console.log("Page", req.query.page);      //get all IngredientOrder details.
+    await IngredientOrder.find({}).populate('ingredients','ingredientName quantity chefName')
+    .populate({
+        path: 'ingredients',
+        populate: {
+            path: 'chefName'
+        }
+    })
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -24,9 +40,16 @@ const getAllIngredientOrdersDetails = async (req, res) => {       //get all Ingr
         });
 }
 
+
 const getSelectedIngredientOrderDetails = async (req, res) => {          //get selected IngredientOrder details.
     if (req.params && req.params.id) {
-        await IngredientOrder.findById(req.params.id).populate('ingredients','name quantity chefName')
+        await IngredientOrder.findById(req.params.id).populate('ingredients','ingredientName quantity chefName')
+        .populate({
+            path: 'ingredients',
+            populate: {
+                path: 'chefName'
+            }
+        })
             .then(data => {
                 res.status(200).send({ data : data });
             })

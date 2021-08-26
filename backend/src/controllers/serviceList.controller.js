@@ -15,7 +15,24 @@ const createServiceList = async (req, res) => {       //create a ServiceList to 
 }
 
 const getAllServiceListsDetails = async (req, res) => {       //get all ServiceList details.
-    await ServiceList.find({}).populate('customerServices','name date noOfHours price cost')
+    // let page = req.query.page; 
+    // var abc = ({ path: 'customerServices', select: 'date noOfHours price cost' });
+    // var abcde = ({ path: 'serviceName', select: 'name' });
+    // const options = {
+    //     page: page,
+    //     populate: abc,
+    //     populate: abcde,
+    //     limit: 5
+    //   }
+    //   console.log("Page", req.query.page);  
+    await ServiceList.find({}).populate('customerServices','serviceName date noOfHours price cost')
+    .populate('bookingID','bookingNo')
+    .populate({
+        path: 'customerServices',
+        populate: {
+            path: 'serviceName'
+        }
+    })
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -26,7 +43,7 @@ const getAllServiceListsDetails = async (req, res) => {       //get all ServiceL
 
 const getSelectedServiceListDetails = async (req, res) => {  //get selected ServiceList details.
     if (req.params && req.params.id) {
-        await ServiceList.findById(req.params.id).populate('customerServices','name date noOfHours price cost')
+        await ServiceList.findById(req.params.id).populate('customerServices','serviceName date noOfHours price cost')
             .then(data => {
                 res.status(200).send({ data : data });
             })

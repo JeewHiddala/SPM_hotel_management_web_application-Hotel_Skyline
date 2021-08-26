@@ -15,7 +15,8 @@ const createCustomerService = async (req, res) => {       //create a CustomerSer
 }
 
 const getAllCustomerServicesDetails = async (req, res) => {       //get all CustomerService details.
-    await CustomerService.find({})//.populate('ingredients','name quantity chefName')
+    await CustomerService.find({}).populate('bookingID','bookingNo')
+    .populate('serviceName','name')
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -24,9 +25,34 @@ const getAllCustomerServicesDetails = async (req, res) => {       //get all Cust
         });
 }
 
+// const getServicesInList = async (req, res) => {       
+//     var bookingID = req.params.bookingID;
+//     console.log("conn",bookingID);
+//     await CustomerService.find({ bookingID: bookingID }).populate('serviceName','name')
+//         .then(data => {
+//             res.status(200).send({ data: data });
+//         })
+//         .catch(error => {
+//             res.status(500).send({ error: error.message });
+//         });
+// }
+const getCustomerServicessInServiceList = async (req, res) => {       //get all customer service details.
+    var bookingNo = req.params.bookingNo;
+    console.log(bookingNo);
+    await CustomerService.find({ bookingID: bookingNo })
+    .then(data => {
+        res.status(200).send({ data: data });
+    })
+    .catch(error => {
+        res.status(500).send({ error: error.message });
+    });
+}
+
 const getSelectedCustomerServiceDetails = async (req, res) => {          //get selected CustomerService details.
     if (req.params && req.params.id) {
-        await CustomerService.findById(req.params.id)//.populate('ingredients','name quantity chefName')
+        await CustomerService.findById(req.params.id)
+        .populate('serviceName','name')
+        .populate('bookingID','bookingNo')
             .then(data => {
                 res.status(200).send({ data : data });
             })
@@ -35,7 +61,6 @@ const getSelectedCustomerServiceDetails = async (req, res) => {          //get s
             });
     }
 }
-
 const deleteCustomerService = async (req, res) => {               // delete selected CustomerService.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the CustomerService
@@ -49,5 +74,6 @@ module.exports = {
     createCustomerService,
     getAllCustomerServicesDetails,
     getSelectedCustomerServiceDetails,
+    getCustomerServicessInServiceList,
     deleteCustomerService
 };

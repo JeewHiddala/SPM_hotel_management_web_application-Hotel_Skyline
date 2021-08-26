@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');       //import mongoose
 
 const CustomerServiceSchema = new mongoose.Schema({    //make schema
-    
-    name: { type: String, required: true, trim: true },
+    bookingID: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'bookings'},
+    serviceName: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'services'},
     date: { type: String, required: true, trim: true },
     noOfHours: { type: Number, required: true },
     price: { type: Number, required: true },

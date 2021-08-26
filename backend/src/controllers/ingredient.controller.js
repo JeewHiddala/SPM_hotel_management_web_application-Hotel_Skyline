@@ -24,11 +24,23 @@ const getAllIngredientsDetails = async (req, res) => {       //get all Ingredien
         });
 }
 
+const getIngredientsInOrder = async (req, res) => {       //get all Ingredient details.
+    var orderNo = req.params.orderNo;
+    console.log(orderNo);
+    await Ingredient.find({ orderNumber: orderNo }).populate('chefName','name')
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 const getSelectedIngredientDetails = async (req, res) => {          //get selected Ingredient details.
     if (req.params && req.params.id) {
         await Ingredient.findById(req.params.id)
             .then(data => {
-                res.status(200).send({ data : data });
+                res.status(200).send({ data: data });
             })
             .catch(error => {
                 res.status(500).send({ error: error.message });
@@ -38,16 +50,17 @@ const getSelectedIngredientDetails = async (req, res) => {          //get select
 
 const deleteIngredient = async (req, res) => {               // delete selected Ingredient.
     if (req.params && req.params.id) {
-        const {id} = req.params;            // fetching the id of the Ingredient
+        const { id } = req.params;            // fetching the id of the Ingredient
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Ingredient with id: ${id}`);       //validating the Ingredient id.
         await Ingredient.findByIdAndRemove(id);         // remove selected Ingredient details
-        res.json({message: "Ingredient deleted successfully."}); // success message
+        res.json({ message: "Ingredient deleted successfully." }); // success message
     }
 }
 
 module.exports = {
     createIngredient,
     getAllIngredientsDetails,
+    getIngredientsInOrder,
     getSelectedIngredientDetails,
     deleteIngredient
 };

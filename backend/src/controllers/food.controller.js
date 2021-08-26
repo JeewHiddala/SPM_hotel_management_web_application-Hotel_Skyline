@@ -15,18 +15,26 @@ const createFood = async (req, res) => {       //create a food to db.
 }
 
 const getAllFoodsDetails = async (req, res) => {       //get all foods details.
-    await Food.find({})
+    let page = req.query.page; 
+    var abc = ({ path: 'chefName', select: 'name' });
+    const options = {
+        page: page,
+        populate: abc,
+        limit: 5
+      }
+    console.log("Page", req.query.page);  
+    await Food.paginate({},options)
         .then(data => {
             res.status(200).send({ data: data });
         })
-        .catch(error => {
-            res.status(500).send({ error: error.message });
-        });
+        // .catch(error => {
+        //     res.status(500).send({ error: error.message });
+        // });
 }
 
 const getSelectedFoodDetails = async (req, res) => {          //get selected food details.
     if (req.params && req.params.id) {
-        await Food.findById(req.params.id)
+        await Food.findById(req.params.id).populate('chefName','name')
             .then(data => {
                 res.status(200).send({ data : data });
             })

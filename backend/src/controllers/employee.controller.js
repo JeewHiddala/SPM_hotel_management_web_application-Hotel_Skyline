@@ -34,8 +34,21 @@ const getAllWorkingEmployeesDetails = async (req, res) => {       //get all work
         });
 }
 
+
 const getAllRetiredEmployeesDetails = async (req, res) => {       //get all retired employee details.
     await Employee.find({isWorking:false})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
+
+
+const getAllWorkingChefDetails = async (req, res) => {       //get all working employee details.
+    await Employee.find({isWorking:true, position:"Chef"})
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -70,6 +83,7 @@ module.exports = {
     getAllEmployeesDetails,
     getAllWorkingEmployeesDetails,
     getAllRetiredEmployeesDetails,
+    getAllWorkingChefDetails,
     getSelectedEmployeeDetails,
     deleteEmployee
 };
