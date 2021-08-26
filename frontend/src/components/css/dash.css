@@ -31,8 +31,13 @@
 .generateReportbtn{
     float: right;
 }
+/* 
+.row justify-content-evenly{
+    display: table;
+} */
+
 .pagination {
-    justify-content: center;
+    justify-content: left;
   }
   
   ul {
@@ -44,6 +49,7 @@
     display: inline-block;
     padding: 10px;
     border: 1px solid #e2e2e2;
+    background-color: rgb(102, 102, 102);
     display: flex;
     justify-content: center;
     font-size: 25px;
@@ -51,7 +57,7 @@
   
   ul.pagination li a {
     text-decoration: none;
-    color: #337ab7;
+    color: #003b6e;
     font-size: 20px;
   }
   
@@ -59,22 +65,39 @@
     color: white;
   }
   ul.pagination li.active {
-    background-color: #337ab7;
+    background-color: rgb(0, 0, 0);
   }
   
   ul.pagination li:hover,
   ul.pagination li a.active {
-    color: blue;
+    color: rgb(255, 145, 0);
   }
   
   .page-selection {
     width: 48px;
     height: 30px;
-    color: #337ab7;
+    color: #003b6e;
   }
   
   .pagination-wrapper {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+  }
+
+
+  .topic{
+    color: black;
+  }
+
+  .super-topic{
+    color: black;
+  }
+
+  .sub-topic{
+    color: black;
+  }
+
+  #button{
+    margin: 10px;
   }

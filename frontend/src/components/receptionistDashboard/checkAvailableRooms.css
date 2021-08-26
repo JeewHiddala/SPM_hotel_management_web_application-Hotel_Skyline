@@ -1,0 +1,18 @@
+.table-hover{
+    border: black;
+    width: 50%;
+  }
+  
+  .container{
+    border: black;
+  }
+  thead{
+    color: rgb(236, 231, 231);
+    background-color: rgb(115, 113, 116);
+  }
+.container{
+    width: fixed;
+}
+.col{
+    width: 20px;
+} 

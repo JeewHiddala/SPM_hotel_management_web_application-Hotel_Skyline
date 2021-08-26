@@ -15,7 +15,12 @@ const createRoom = async (req, res) => {       //create a room to db.
 }
 
 const getAllRoomsDetails = async (req, res) => {       //get all room details.
-    await Room.find({})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Room.paginate({},options)         //pagination
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -25,7 +30,12 @@ const getAllRoomsDetails = async (req, res) => {       //get all room details.
 }
 
 const getAllAvailableRoomsDetails = async (req, res) => {       //get all available rooms details.
-    await Room.find({isAvailable:true})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Room.paginate({isAvailable:true},options)         //pagination
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -35,7 +45,12 @@ const getAllAvailableRoomsDetails = async (req, res) => {       //get all availa
 }
 
 const getAllUnavailableRoomsDetails = async (req, res) => {       //get all not available rooms details.
-    await Room.find({isAvailable:false})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Room.paginate({isAvailable:false},options)         //pagination
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -44,11 +59,12 @@ const getAllUnavailableRoomsDetails = async (req, res) => {       //get all not 
         });
 }
 
-const getSelectedRoomDetails = async (req, res) => {          //get selected room details.
+
+const getSelectedAvailableRoomDetails = async (req, res) => {          //get selected room details.
     if (req.params && req.params.id) {
         await Room.findById(req.params.id)
             .then(data => {
-                res.status(200).send({ data : data });
+                res.status(200).send({ data: data });
             })
             .catch(error => {
                 res.status(500).send({ error: error.message });
@@ -56,12 +72,47 @@ const getSelectedRoomDetails = async (req, res) => {          //get selected roo
     }
 }
 
+const getSelectedRoomDetails = async (req, res) => {          //get selected room details.
+    if (req.params && req.params.id) {
+        await Room.findById(req.params.id)
+            .then(data => {
+                res.status(200).send({ data: data });
+            })
+            .catch(error => {
+                res.status(500).send({ error: error.message });
+            });
+    }
+}
+
+const getSelectedAvailableRoomDetails = async (req, res) => {          //get selected available room details.
+    if (req.params && req.params.id) {
+        await Room.findById(req.params.id)
+            .then(data => {
+                res.status(200).send({ data: data });
+            })
+            .catch(error => {
+                res.status(500).send({ error: error.message });
+            });
+    }
+}
+
+const getRoomsDetailsByNo = async (req, res) => {       //get all available rooms details.
+    var roomNo = req.query.roomNo;
+    await Room.findOne({roomNo: roomNo})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 const deleteRoom = async (req, res) => {               // delete selected room.
     if (req.params && req.params.id) {
-        const {id} = req.params;            // fetching the id of the room
+        const { id } = req.params;            // fetching the id of the room
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No room with id: ${id}`);       //validating the room id.
         await Room.findByIdAndRemove(id);         // find room and remove room.
-        res.json({message: "Room deleted successfully."});
+        res.json({ message: "Room deleted successfully." });
     }
 }
 
@@ -70,6 +121,9 @@ module.exports = {
     getAllRoomsDetails,
     getAllAvailableRoomsDetails,
     getAllUnavailableRoomsDetails,
+    getSelectedAvailableRoomDetails,
     getSelectedRoomDetails,
+    getSelectedAvailableRoomDetails,
+    getRoomsDetailsByNo,
     deleteRoom
 };

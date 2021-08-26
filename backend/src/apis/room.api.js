@@ -7,8 +7,10 @@ module.exports = function () {
     router.get('/', roomController.getAllRoomsDetails);       //get all employees.
     router.get('/availableRooms/', roomController.getAllAvailableRoomsDetails);       //get all working employees.
     router.get('/unavailableRooms/', roomController.getAllUnavailableRoomsDetails);       //get all retired employees.
+    router.get('/checkoutRooms/', roomController.getRoomsDetailsByNo);       //get room by roomNo.
+    router.get('/availableRooms/:id', roomController.getSelectedAvailableRoomDetails); //get selected available room details.
     router.get('/:id', roomController.getSelectedRoomDetails);       //get selected employees details.
-    router.delete('/:id', roomController.deleteRoom);         //delete selected employees details.
+    router.delete('/:id', roomController.deleteRoom);         //delete selected employees details.   
 
     return router;
 }
