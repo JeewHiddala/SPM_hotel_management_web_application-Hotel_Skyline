@@ -10,6 +10,7 @@ module.exports = function () {
     router.get('/:id', roomController.getSelectedRoomDetails);       //get selected employees details.
     router.delete('/:id', roomController.deleteRoom);         //delete selected employees details.
     router.get('/availableRooms/:id', roomController.getSelectedAvailableRoomDetails); //get selected available room details.
+    router.get('/checkoutRooms/', roomController.getRoomsDetailsByNo);       //get room by roomNo.
 
     return router;
 }

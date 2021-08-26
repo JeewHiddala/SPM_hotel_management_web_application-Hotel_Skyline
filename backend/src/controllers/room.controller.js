@@ -83,6 +83,17 @@ const getSelectedAvailableRoomDetails = async (req, res) => {          //get sel
     }
 }
 
+const getRoomsDetailsByNo = async (req, res) => {       //get all available rooms details.
+    var roomNo = req.query.roomNo;
+    await Room.findOne({roomNo: roomNo})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 const deleteRoom = async (req, res) => {               // delete selected room.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the room
@@ -99,5 +110,6 @@ module.exports = {
     getAllUnavailableRoomsDetails,
     getSelectedRoomDetails,
     getSelectedAvailableRoomDetails,
+    getRoomsDetailsByNo,
     deleteRoom
 };
