@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 const Foodorder = require('../models/foodorder.model');
 
@@ -16,7 +15,12 @@ const createFoodOrder = async (req, res) => {
 }
 
 const getAllFoodOrderDetails = async (req, res) => {
-    await Foodorder.find({})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Foodorder.paginate({},options)
         .then(data => {
             res.status(200).send({ data: data });
         })

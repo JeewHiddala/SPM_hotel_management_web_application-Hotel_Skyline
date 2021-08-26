@@ -2,25 +2,30 @@ import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
 import './roomBookingManagement.css';
+import ReactPaginate from 'react-paginate';
 
 class foodOrderManagement extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            totalPages: 0,
+            page: 0,
             foodorder: [],
         }
         // this.transferKitchen = this.transferKitchen.bind(this);
         // this.viewFoodorder = this.viewFoodorder.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);  //pagination
+        this.retriveFoodorderPages = this.retriveFoodorderPages.bind(this); 
 
     }
-
-
 
     componentDidMount() {
         axios.get('http://localhost:8100/foodorder/')
             .then(response => {
                 this.setState({ foodorder: response.data.data });
+                this.setState({ foodorder: response.data.data.docs });          //pagination
+                this.setState({ totalPages: response.data.data.totalPages }); 
             })
 
     }
@@ -29,42 +34,33 @@ class foodOrderManagement extends Component {
         window.location = `/createfoodorder`
     }
 
-
-
-
-    //   onSubmit(e) {
-    //     e.preventDefault();
-
-    //     let foodorder = {
-    //         orderId: this.state.orderId,
-    //         foodName: this.state.foodName,
-    //         price: this.state.price,
-    //         quantity: this.state.quantity,
-    //         pricenquantity: this.state.pricenquantity,
-    //         totalPrice: this.state.price* this.state.quantity,
-
-
-
-    //     };
-
-    //     console.log('DATA TO SEND', foodorder);
-    //     axios.post('http://localhost:8100/foodorder/create', foodorder)
-    //         .then(response => {
-    //             alert('Food Ordering Success')
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message);
-    //             alert(error.message)
-    //         })
-
-    //     }
-
     transfertokitchen(e, foodorderId) {
         this.props.history.push({
             pathname: `/transferkitchen/${foodorderId}`,
             data: `${foodorderId}`
         });
     }
+
+
+    retriveFoodorderPages(page) {               //pagination
+        console.log("Pagef", page);
+        axios.get('http://localhost:8100/foodorder/', {
+            params: {
+                page: page
+            }
+        })
+            .then(response => {
+                this.setState({ foodorder: response.data.data.docs });
+                console.log("WPF", response.data.data);
+            })
+    };
+
+    handlePageChange = (data) => {          //pagination
+        let selected = data.selected + 1;
+        console.log("val", selected);
+        this.setState({ page: selected });
+        this.retriveFoodorderPages(selected);
+    };
 
 
     deleteFoodOrder(e, foodorderId) {
@@ -86,6 +82,7 @@ class foodOrderManagement extends Component {
                     'success'
                 )
             }
+            window.location.reload(false);
         })
     }
 
@@ -165,7 +162,7 @@ class foodOrderManagement extends Component {
 
                                                         <td><button type="button" className="btn btn-warning" onClick={e => this.updateOrder(e, item._id)} >Update</button></td>
                                                         <td><button type="button" className="btn btn-danger" onClick={e => this.deleteFoodOrder(e, item._id)}>Delete</button></td>
-                                                        <td><button type="button" className="btn btn-primary" onClick={e => this.transfertokitchen(e, item._id)}>TransferToKitchen</button></td>
+                                                        <td><button type="button" className="btn btn-primary" onClick={e => this.transfertokitchen(e, item._id)}onClick={e => this.transfertokitchen(e, item._id)}>TransferToKitchen</button></td>
 
                                                     </tr>
                                                 ))}
@@ -173,11 +170,21 @@ class foodOrderManagement extends Component {
                                             <br></br>
                                             <br></br>
                                             <br></br>
-                                            <br></br>
-
-
+                                        
                                         </table>
                                     </div>
+                                    <ReactPaginate
+                                        previousLabel={'Previous'}
+                                        nextLabel={'Next'}
+                                        breakLabel={'...'}
+                                        breakClassName={'break-me'}
+                                        pageCount={this.state.totalPages}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={this.handlePageChange}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                    />
                                 </div>
                             </div>
                         </div>

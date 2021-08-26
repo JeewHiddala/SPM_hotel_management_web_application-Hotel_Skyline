@@ -2,13 +2,8 @@ import './createBooking.css';
 import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
-// import image from '../images/w1.jpg';
-// import CheckoutSteps from '../checkoutSteps/checkoutSteps';
-
-
 
 const initialState = {
-
 
     orderId: '',
     foodName: '',
@@ -21,39 +16,10 @@ const initialState = {
 class transferToKitchen extends Component {
     constructor(props) {
         super(props);
-        // this.onChange = this.onChange.bind(this);
-        // this.onSubmit = this.onSubmit.bind(this);
-        // this.onEditorSelect = this.onEditorSelect.bind(this);
-        //  this.onAdminSelect = this.onAdminSelect.bind(this);
+
         this.state = initialState;
     }
 
-    // componentDidMount() {
-    //     axios.get('http://localhost:7000/editor/')
-    //         .then(response => {
-    //             this.setState({ editors: response.data.data }, () => {
-    //                 let data = [];
-    //                 this.state.editors.map((item, index) => {
-    //                     let editors = {
-    //                         value: item._id,
-    //                         label: item.name
-    //                     }
-    //                     data.push(editors)
-    //                     console.log("a" + editors);
-    //                 });
-    //                 this.setState({ options1: data });
-    //             })
-    //         })
-
-    // }
-
-    // onChange(e) {
-    //     this.setState({ [e.target.name]: e.target.value });
-    // }
-
-    // onEditorSelect(e) {
-    //     this.setState({ selectedEditors: e ? e.map(item => item.value) : [] });
-    // }
 
     componentDidMount() {
 
@@ -102,58 +68,20 @@ class transferToKitchen extends Component {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.post('http://localhost:8100/kitchenorder/create', foodorder)
-                Swal.fire(
-                    'Transfered!',
-                    'success'
-                )
+                    .then(response => {
+                        Swal.fire(
+                            'Transfer!',
+                            'success'
+                        )
+                    })
+                    .catch(error => {
+                        console.log(error.message);
+                        alert(error.message)
+                    })
             }
         })
 
-
-
-        // transfer() {
-        //     Swal.fire({
-        //         title: 'Are you sure?',
-        //         text: "You won't be able to revert this!",
-        //         icon: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         cancelButtonColor: '#d33',
-        //         confirmButtonText: 'Yes, delete it!'
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-
-
-        //     let foodorder = {
-        //         orderId: this.state.orderId,
-        //         foodName: this.state.foodName,
-        //         quantity: this.state.quantity,
-        //         price: this.state.price,
-        //         totalPrice: this.state.totalPrice,
-
-        //     };
-
-        //     console.log('DATA TO SEND', foodorder);
-        //     axios.post('http://localhost:8100/kitchenorder/create', foodorder)
-        //         // .then(response => {
-        //         //     alert('Transfer Success')
-        //         // })
-        //         // .catch(error => {
-        //         //     console.log(error.message);
-        //         //     alert(error.message)
-        //         // })
-
-        //         Swal.fire(
-        //             'Deleted!',
-        //             'Booking Removed.',
-        //             'success'
-        //         )
-        //     }
-        // })
     }
-
-
-
 
 
     render() {
