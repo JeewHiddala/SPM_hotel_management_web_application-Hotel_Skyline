@@ -15,7 +15,12 @@ const createService = async (req, res) => {       //create a service to db.
 }
 
 const getAllServicesDetails = async (req, res) => {       //get all services details.
-    await Service.find({})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Service.paginate({},options)         //pagination
         .then(data => {
             res.status(200).send({ data: data });
         })

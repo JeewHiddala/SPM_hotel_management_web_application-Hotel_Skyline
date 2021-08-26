@@ -1,0 +1,36 @@
+.container1{
+   margin-left: 400px;
+    width: 900px;
+    margin-top: 80px;
+
+
+}
+.imagepath{
+
+    width: 500px;
+    height: 600px;
+}
+
+img{
+    width: 350px;
+
+  
+
+}
+
+.column {
+    
+    width: 33.33%;
+    padding: 5px;
+    height: 400px;
+
+  }
+  
+
+  .row::after {
+    display: table;
+    height: 250px;
+
+  }
+
+ 

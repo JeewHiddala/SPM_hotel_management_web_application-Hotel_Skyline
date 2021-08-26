@@ -1,6 +1,6 @@
 import React, { Component } from 'react';       //import react and react components
 import { Link, BrowserRouter as Router } from "react-router-dom";
-
+import { useSelector } from 'react-redux';
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 
@@ -9,10 +9,17 @@ import logo from '../../images/logo.jpg';
 class Navbar extends Component {
     constructor(props) {
         super(props);
+        const cart = useSelector((state) => state.cart);
+        const { cartItems } = cart;
+
         this.logOut = this.logOut.bind(this);
 
         this.state = {
             currentUser: undefined,
+            isManager: false,
+            isReceptionist: false,
+            isKitchenHead: false,
+            isCustomer: false
         };
     }
 
@@ -29,7 +36,25 @@ class Navbar extends Component {
             .then(
                 response => {
                     console.log("fffffff", response.data.role.name);
+                    if (!response.data.role.name.localeCompare("Manager")) {
+                        this.setState({
+                            isManager: true,
+                        });
+                        console.log("mmmm", this.state.isManager);
 
+                    } else if (!response.data.role.name.localeCompare("Receptionist")) {
+                        this.setState({
+                            isReceptionist: true,
+                        });
+                    } else if (!response.data.role.name.localeCompare("Kitchen Head")) {
+                        this.setState({
+                            isKitchenHead: true,
+                        });
+                    } else if (!response.data.role.name.localeCompare("customer")) {
+                        this.setState({
+                            isCustomer: true,
+                        });
+                    }
 
                 }
             );
@@ -41,6 +66,11 @@ class Navbar extends Component {
 
     render() {
         const { currentUser } = this.state;
+        const { isManager } = this.state;
+        const { isReceptionist } = this.state;
+        const { isKitchenHead } = this.state;
+        const { isCustomer } = this.state;
+
         return (
             <div>
                 <Router>
@@ -64,10 +94,35 @@ class Navbar extends Component {
                                     <a className="nav-link" href="/home#contact">About</a>
                                 </li>
 
-                                {currentUser && (
+                                {isManager && (
                                     <li className="nav-item">
-                                        <a className="nav-link" href="/user">User</a>
+                                        <a className="nav-link" href="/workingEmployee">User</a>
                                     </li>
+                                )}
+                                {isReceptionist && (
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/retiredEmployee">User</a>
+                                    </li>
+                                )}
+                                {isKitchenHead && (
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/">User</a>
+                                    </li>
+                                )}
+                                {isCustomer && (
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/customerhome">User</a>
+                                    </li>
+                                )}
+
+                                {isCustomer && (
+                                      <li className="nav-item" >
+                                      <a className="nav-link" href="/cart">Cart
+                                          {cartItems.length > 0 && (
+                                              <span className="badge">{cartItems.length}</span>
+                                          )}
+                                      </a>
+                                  </li>
                                 )}
                             </div>
 
