@@ -25,7 +25,12 @@ const getAllEmployeesDetails = async (req, res) => {       //get all employee de
 }
 
 const getAllWorkingEmployeesDetails = async (req, res) => {       //get all working employee details.
-    await Employee.find({isWorking:true})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Employee.paginate({isWorking:true},options)
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -35,7 +40,32 @@ const getAllWorkingEmployeesDetails = async (req, res) => {       //get all work
 }
 
 const getAllRetiredEmployeesDetails = async (req, res) => {       //get all retired employee details.
-    await Employee.find({isWorking:false})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await Employee.paginate({isWorking:false},options)
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
+const getAllWorkingChefsDetails = async (req, res) => {       //get all chef details.
+    await Employee.find({isWorking:true,position:"Chef"})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
+const getAllWorkingReceptionistsDetails = async (req, res) => {       //get all chef details.
+    await Employee.find({isWorking:true,position:"Receptionist"})
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -56,6 +86,18 @@ const getSelectedEmployeeDetails = async (req, res) => {          //get selected
     }
 }
 
+const getEmployeeDetails = async (req, res) => {       //get employee details 
+    var userData = req.params.userData;
+    await Employee.findOne({userData: userData})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+
+}
+
 const deleteEmployee = async (req, res) => {               // delete selected employee.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the employee
@@ -65,11 +107,26 @@ const deleteEmployee = async (req, res) => {               // delete selected em
     }
 }
 
+const resignSelectedEmployee = async (req, res) => {       //retire selected employee
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the employee.
+        const employee = req.body.isWorking;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No employee With That id');      // validating the employee id
+        const resignEmployee = await Employee.findByIdAndUpdate(id, {$set: {"isWorking":false}});      // find employee and Update employee
+        res.json(resignEmployee);
+    }
+}
+
 module.exports = {
     createEmployee,
     getAllEmployeesDetails,
     getAllWorkingEmployeesDetails,
     getAllRetiredEmployeesDetails,
     getSelectedEmployeeDetails,
-    deleteEmployee
+    deleteEmployee,
+    getAllWorkingChefsDetails,
+    getAllWorkingReceptionistsDetails,
+    resignSelectedEmployee,
+    getEmployeeDetails
 };

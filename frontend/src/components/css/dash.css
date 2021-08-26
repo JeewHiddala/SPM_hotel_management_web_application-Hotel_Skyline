@@ -15,7 +15,7 @@
     background-color: white;
     margin: 5px;
     padding: 10px;
-    display: table-cell;
+    /* display: table-cell; */
 }
 .col-1{
     font-weight: bold;
@@ -32,10 +32,10 @@
 .generateReportbtn{
     float: right;
 }
-
+/* 
 .row justify-content-evenly{
     display: table;
-}
+} */
 
 .pagination {
     justify-content: left;
