@@ -107,7 +107,7 @@ class createFoodOrder extends Component {
 
     render() {
         return (
-            <div className="container"><br />
+            <div className="container-box"><br />
 
                 <h2>Create Food Order</h2>
 
@@ -190,8 +190,8 @@ class createFoodOrder extends Component {
                             </div>
                             <br></br>
                             <h2>Total price for the order {this.state.orderId} : Rs.{this.state.price * this.state.quantity}</h2>
-                            <button type="button" className="btn btn-secondary" onClick={e => this.backtofoodorder(e)}> Back</button>
-                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtofoodorder(e)}> Back</button>
+                            <button type="submit" id="form-button" className="btn btn-primary">Submit</button>
                         </div>
                     </div>
                     <br>

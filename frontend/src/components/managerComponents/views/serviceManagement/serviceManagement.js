@@ -112,7 +112,7 @@ class ServiceManagement extends Component {
                     </div>
                 </div> */}
                 <br />
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">

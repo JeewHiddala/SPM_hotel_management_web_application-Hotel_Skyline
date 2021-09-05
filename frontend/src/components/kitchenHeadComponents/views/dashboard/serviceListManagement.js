@@ -98,7 +98,7 @@ class ServiceListManagement extends Component {
         return (
             <div>
                 <br></br>
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h2><b>Receptionist Dashboard</b></h2>
                         <div className="row justify-content-evenly">
@@ -115,7 +115,7 @@ class ServiceListManagement extends Component {
                                             <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
                                             <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
                                             <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
-                                            <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Service List Bill</button></a>
+                                            <a href="/create-serviceListBill" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Service List Bill</button></a>
                                             <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
                                         </div>
                                     </div>
@@ -164,23 +164,23 @@ class ServiceListManagement extends Component {
 
                                                         <td>
                                                             {item.customerServices.map((item, index) => (
-                                                                <p>{item.serviceName.name}</p>
+                                                                <p id="servicelist-tbl">{item.serviceName.name}</p>
                                                             ))}
                                                         </td>
                                                         <td>
                                                             {item.customerServices.map((item, index) => (
-                                                                <p>{item.date}</p>
+                                                                <p id="servicelist-tbl">{item.date}</p>
                                                             ))}
                                                         </td>
 
                                                         <td>
                                                             {item.customerServices.map((item, index) => (
-                                                                <p>{item.noOfHours}</p>
+                                                                <p id="servicelist-tbl">{item.noOfHours}</p>
                                                             ))}
                                                         </td>
                                                         <td>
                                                             {item.customerServices.map((item, index) => (
-                                                                <p>{item.price}</p>
+                                                                <p id="servicelist-tbl">{item.price}</p>
                                                             ))}
                                                         </td>
                                                         <td>{item.total}</td>

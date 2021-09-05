@@ -90,8 +90,8 @@ class IngredientOrder extends Component {
 
 
 
-                            <button className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
-                            <button onClick={e => this.addIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add New Ingredient</button>
+                            <button id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
+                            <button id="form-button" onClick={e => this.addIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add New Ingredient</button>
                         </div>
                     </div>
                     <br>

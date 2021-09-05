@@ -197,6 +197,7 @@ class Food extends Component {
                         <div className="col-6" style={{ textAlign: "left" }}>
                             <label htmlFor="status" className="form-label">Status</label><br></br>
                             <select className="mb-3" id="lang"
+                                className="form-select"
                                 onChange={this.onChange}
                                 value={this.state.status}
                                 name="status"
@@ -225,8 +226,8 @@ class Food extends Component {
                     <br></br>
                     <br></br>
                     <div className="mb-3">
-                        <button type="button" className="btn btn-secondary" onClick={e => this.backtoFoodManagement(e)}>Back</button>
-                        <button type="submit" className="btn btn-primary" onClick={e => this.backtoFoodManagement(e)}>Add New Food</button>
+                        <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoFoodManagement(e)}>Back</button>
+                        <button type="submit" id="form-button" className="btn btn-primary" onClick={e => this.backtoFoodManagement(e)}>Add New Food</button>
                     </div>
 
                     <br>

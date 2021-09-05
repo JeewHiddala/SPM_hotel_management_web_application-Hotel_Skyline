@@ -67,7 +67,7 @@ class CheckAvailableRooms extends Component {
                 <br></br>
                 <br></br>
                 <br></br>
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h2><b>Receptionist Dashboard</b></h2>
                         <div className="row justify-content-evenly">
@@ -77,7 +77,7 @@ class CheckAvailableRooms extends Component {
                                     <div className="container" >
                                         <h3 className="h3"><b>Creations</b></h3>
                                         <div className="list-group">
-                                            <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Check Available Rooms</button></a>
+                                            <a href="/checkAvailableRooms" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Check Available Rooms</button></a>
                                             <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >
                                                 Room Booking Management
                                             </button></a>

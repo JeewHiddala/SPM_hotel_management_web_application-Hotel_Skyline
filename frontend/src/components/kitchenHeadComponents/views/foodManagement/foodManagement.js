@@ -102,7 +102,7 @@ class FoodManagement extends Component {
                                     <div className="container" >
                                         <h3 className="h3"><b>Creations</b></h3>
                                         <div className="list-group">
-                                            <a href="/create-foodManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Food Management</button></a>
+                                            <a href="/create-foodManagement" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Food Management</button></a>
                                             <a href="/kitchenHeadDashboard" className="routeBtn">  <button type="button" className="list-group-item list-group-item-action"  > Ingredient Order Management</button></a>
 
                                         </div>
@@ -149,7 +149,7 @@ class FoodManagement extends Component {
                                                     <tr key={index}>
 
                                                         <td>{item.foodNumber}</td>
-                                                        <th>{item.foodName}</th>
+                                                        <td>{item.foodName}</td>
                                                         <td>{item.category}</td>
                                                         <td>{item.price}</td>
                                                         <td>{item.description}</td>
@@ -157,7 +157,7 @@ class FoodManagement extends Component {
                                                         <td>{item.status}</td>
                                                         <td>
                                                             {item.chefName.map((item, index) => (
-                                                                <p>{item.name}</p>
+                                                                <p id="food-tbl">{item.name}</p>
                                                             ))}
                                                         </td>
                                                         <td><button type="button" className="btn btn-primary" onClick={e => this.viewFood(e, item._id)}>View</button></td>

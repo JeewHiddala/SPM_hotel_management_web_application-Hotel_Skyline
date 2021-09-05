@@ -63,7 +63,7 @@ class CheckoutHandling extends Component {
                 <br /><br />
 
                 <br />
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h3><b>Receptionist Dashboard</b></h3>
                         <div className="row justify-content-evenly">
@@ -81,7 +81,7 @@ class CheckoutHandling extends Component {
                                             <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
                                             <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
                                             <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service List Bill</button></a>
-                                            <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Checkout Handling</button></a>
+                                            <a href="/reception/checkout" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Checkout Handling</button></a>
                                         </div>
                                         </div>
                                     </div>

@@ -88,7 +88,7 @@ class viewBookedRoom extends Component {
 
   render() {
     return (
-      <div className="container"><br />
+      <div className="container-box"><br />
 
         <h2>View Booking Details</h2>
         <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>

@@ -167,7 +167,7 @@ class ServiceList1 extends Component {
         //const { selectedBookingID } = this.state.selectedBookingID;
 
         return (
-            <div className="container"><br />
+            <div className="container-box"><br />
 
                 <h2>Create New Service List</h2>
                 <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>

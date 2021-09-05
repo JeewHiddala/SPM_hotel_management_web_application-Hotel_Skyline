@@ -145,7 +145,7 @@ class createBooking extends Component {
   }
   render() {
     return (
-      <div className="container"><br />
+      <div className="container-box"><br />
 
         <h2>Create Booking</h2>
         <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "right" }}>
@@ -209,7 +209,7 @@ class createBooking extends Component {
               <div className="mb-3" style={{ textAlign: "left" }}>
                 <label htmlFor="boardingType" className="form-label">BoardingType</label>
                 <br></br>
-                <select className="mb-3" id="lang"
+                <select className="form-select" id="lang"
                   onChange={this.onChange}
                   value={this.state.boardingType}
                   name="boardingType">
@@ -299,8 +299,8 @@ class createBooking extends Component {
 
 
 
-              <button type="button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
-              <button type="submit" className="btn btn-primary">Book</button>
+              <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
+              <button type="submit" id="form-button" className="btn btn-primary">Book</button>
             </div>
           </div>
           <br>

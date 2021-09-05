@@ -111,7 +111,7 @@ render() {
     const { selectedBookingID } = this.state.selectedBookingID;
     console.log("bid: " + selectedBookingID); 
     return (
-        <div className="container"><br />
+        <div className="container-box"><br />
 
             <h2>Create Customer Service List</h2>
             <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
@@ -152,8 +152,8 @@ render() {
                         </div>
                         <br></br>
                         <br></br>
-                        <button type="button" className="btn btn-secondary" onClick={e => this.backtoServiceListBillManagementDash(e)}>Back</button>
-                        <button onClick={e => this.addService(e, this.state.selectedBookingID.label,this.state.selectedBookingID.value)} className="btn btn-primary">Add Service</button>
+                        <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoServiceListBillManagementDash(e)}>Back</button>
+                        <button id="form-button" onClick={e => this.addService(e, this.state.selectedBookingID.label,this.state.selectedBookingID.value)} className="btn btn-primary">Add Service</button>
                         
 
 

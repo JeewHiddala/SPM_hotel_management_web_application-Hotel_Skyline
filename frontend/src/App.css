@@ -54,15 +54,14 @@
   text-align: center;
   margin-top: 10px;
   padding: 10px;
+  z-index: 2;
 }
 
 .footer h6{
   margin-top: 5px;
 }
 
-.container-box{
-  margin: 80px;
-}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -72,7 +71,7 @@
   }
 }
 
-.container-form{
+.container-box{
   border-style: solid;
   padding: 35px;
   border-color: grey;
@@ -80,4 +79,7 @@
   left: 0;
   right: 0;
   margin: 80px;
+}
+#form-button{
+  margin: 10px;
 }

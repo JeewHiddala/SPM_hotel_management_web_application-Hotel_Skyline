@@ -188,8 +188,8 @@ class IngredientOrder1 extends Component {
                                 </table>
                             </div>
 
-                            <button type="button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
-                            <button type="submit" className="btn btn-primary" onClick={e => this.backtoIngredientOrderManagementDash(e)}>Create New Ingredient Order</button>
+                            <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
+                            <button type="submit" id="form-button" className="btn btn-primary" onClick={e => this.backtoIngredientOrderManagementDash(e)}>Create New Ingredient Order</button>
                         </div>
                     </div>
                     <br>

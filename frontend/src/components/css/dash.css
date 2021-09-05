@@ -6,6 +6,10 @@
     margin: 5px;
     
 }
+#dash-box{
+  margin-right: 10px;
+  margin-left: 10px;
+}
 .hotel-name{
     padding: 10px;
     margin: 20px;
@@ -109,4 +113,11 @@
   #description{
     width: 788px;
     /* height: 100px; */
+  }
+
+  #food-tbl{
+    font-size: 15px;
+  }
+  #servicelist-tbl{
+    font-size: 15px;
   }
