@@ -127,13 +127,13 @@ class Navbar extends Component {
                             </div>
 
                             {currentUser ? (
-                                <div className="navbar-nav ml-auto">
+                                <div className="navbar-nav ms-auto">
                                     <li className="nav-item">
                                         <a className="nav-link" href="/profile">{currentUser.userName}</a>
                                     </li>
                                     <li className="nav-item">
                                         <a href="/login" className="nav-link" onClick={this.logOut}>
-                                            LogOut
+                                            LogOut&ensp;&ensp;
                                         </a>
                                     </li>
                                 </div>

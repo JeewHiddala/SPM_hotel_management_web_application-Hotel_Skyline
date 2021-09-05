@@ -27,11 +27,11 @@ export default function CartScreen(props) {
     };
 
     const checkoutHandler = () => {
-        props.history.push('/signin?redirect=shipping');
+        props.history.push('/shipping');
     };
 
     return (
-        <div className="row top">
+        <div className="row top" id="container-c">
             <div className="col-2">
                 <br></br>
                 <h4>Food Cart</h4>
@@ -40,12 +40,12 @@ export default function CartScreen(props) {
                         cart is empty. <Link to="/">Go Shopping</Link>
                     </MessageBox>
                 ) : (
-                    <ul>
+                    <ul id="cart-desc">
                         {
                             cartItems.map((item) => (
                                 <li key={item.product}>
                                     <div className="row">
-                                        <div>
+                                        <div id="img-cart">
                                             <img
                                                 src={item.image}
                                                 alt={item.name}
@@ -55,8 +55,10 @@ export default function CartScreen(props) {
                                         <div className="min-30">
                                             <Link to={`/product/${item.product}`}>{item.name}</Link>
                                         </div>
-                                        <div>
+                                        <div className="col">
+                                            <br/>
                                             <select
+                                                id="select-qty"
                                                 value={item.qty}
                                                 onChange={(e) =>
                                                     dispatch(
@@ -71,8 +73,8 @@ export default function CartScreen(props) {
                                                 ))}
                                             </select>
                                         </div>
-                                        <div>Rs.{item.price}</div>
-                                        <div><button type="button" className="btn btn-danger" onClick={() => removeFromCartHandler(item.product)}
+                                        <div className="col"><br/>Rs.{item.price}</div>
+                                        <div><br/><button type="button" className="btn btn-danger" onClick={() => removeFromCartHandler(item.product)}
                                         >Delete</button>
                                         </div>
                                     </div>
@@ -82,10 +84,10 @@ export default function CartScreen(props) {
                     </ul>
                 )}
             </div>
-            <div className="col-4">
+            <div className="col-6">
                 <br></br>
-                <div className="card1 card-body1">
-                    <ul>
+                <div className="card1 card-body1" id="cart-proceed">
+                    <ul >
                         <li>
                             <h3>
                                 Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : Rs.

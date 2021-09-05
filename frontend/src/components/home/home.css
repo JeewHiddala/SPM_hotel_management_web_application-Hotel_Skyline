@@ -242,7 +242,7 @@ body {
     background-size: cover;
     position: relative;
     padding: 0;
-    top: 50px;
+    top: 0;
   }
   
   #hero:before {

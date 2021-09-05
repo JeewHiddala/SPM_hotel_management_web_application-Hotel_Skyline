@@ -24,7 +24,7 @@ class CustomerHome extends Component {
                 <h2>Delivering you the great food!</h2>
 
                 <div className="btns">
-                  <a href="/foods-customer" className="btn-menu animated fadeInUp scrollto">Our Menu</a>
+                  <a href="/foods-customer" className="btn-menu animated fadeInUp scrollto" id="a">Our Menu</a>
 
                 </div>
               </div>

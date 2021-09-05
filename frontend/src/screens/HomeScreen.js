@@ -19,7 +19,7 @@ export default function HomeScreen() {
     return (
 
 
-        <div>
+        <div id="container-c">
             <br></br>
             <h2>Food Items</h2>
             {loading ? (

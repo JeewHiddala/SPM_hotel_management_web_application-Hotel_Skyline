@@ -41,7 +41,7 @@ export default function PlaceOrderScreen(props) {
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
-      <div className="row top">
+      <div className="row top" id="container-c">
         <div className="col-2">
           <ul>
             <li>
@@ -96,13 +96,13 @@ export default function PlaceOrderScreen(props) {
         </div>
         <div className="col-5">
           <div className="card2 card-body2">
-            <ul>
+            <ul id="c-desc">
               <li>
                 <h4>Order Summary</h4>
               </li>
               <li>
                 <div className="row">
-                  <div><h4>Fod Items</h4></div>
+                  <div><h4>Food Items</h4></div>
                   <div><h5>Rs.{cart.itemsPrice.toFixed(2)}</h5></div>
                 </div>
               </li>

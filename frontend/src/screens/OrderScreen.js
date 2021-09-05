@@ -59,7 +59,7 @@ export default function OrderScreen(props) {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div>
+    <div >
       <h3>Order {order._id}</h3>
       <div className="row top">
         <div className="col-2">

@@ -29,13 +29,13 @@ export default function ProductScreen(props) {
             ) : error ? (
                 <MessageBox varient="danger">{error}</MessageBox>
             ) : (
-                <div>
-                    <Link to="/">Back to result</Link>
+                <div id="container-c">
+                    <Link to="/foods-customer">Back to result</Link>
                     <div className="row top">
-                        <div className="col-2">
+                        <div className="col-4">
                             <img className="large" src={product.image} alt={product.name}></img>
                         </div>
-                        <div className="col-1">
+                        <div className="col-2" id="p-desc">
                             <ul>
                                 <li>
                                     <h3>{product.name}</h3>
@@ -53,17 +53,17 @@ export default function ProductScreen(props) {
                         </div>
                         <div className="col-4">
                             <div className="card1 card-body1">
-                                <ul>
+                                <ul id="c-desc">
                                     <li>
                                         <div className="row">
-                                            <div><h3>Price</h3></div>
-                                            <div className="price">Rs.{product.price}</div>
+                                            <div className="col" id="col">Price</div>
+                                            <div className="col" id="col">Rs.{product.price}</div>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="row">
-                                            <div><h4>Status</h4></div>
-                                            <div>
+                                            <div className="col" id="col">Status</div>
+                                            <div className="col" id="col">
                                                 {product.countInStock > 0 ? (
                                                     <span className="success">In Stock</span>
                                                 ) : (
@@ -77,9 +77,9 @@ export default function ProductScreen(props) {
                                             <>
                                                 <li>
                                                     <div className="row">
-                                                        <div><h4>Qty</h4></div>
-                                                        <div>
-                                                            <select value={qty} onChange={(e) => setQty(e.target.value)}
+                                                        <div className="col" id="col">Qty</div>
+                                                        <div className="col" id="col">
+                                                            <select id="select-qty" value={qty} onChange={(e) => setQty(e.target.value)}
                                                             >
                                                                 {[...Array(product.countInStock).keys()].map(
                                                                     (x) => (
