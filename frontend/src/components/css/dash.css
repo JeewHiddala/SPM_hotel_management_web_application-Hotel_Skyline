@@ -101,3 +101,12 @@
   #button{
     margin: 10px;
   }
+
+  #active-button{
+    z-index: 1;
+  }
+
+  #description{
+    width: 788px;
+    /* height: 100px; */
+  }
