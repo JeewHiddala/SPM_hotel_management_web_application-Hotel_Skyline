@@ -129,16 +129,16 @@ class createBooking extends Component {
       if (result.isConfirmed) {
 
         axios.post('http://localhost:8100/booking/create', booking)
-        .then(response => {
-          Swal.fire(
-            ' Booking!',
-            'success'
-          )
-        })
-        .catch(error => {
+          .then(response => {
+            Swal.fire(
+              ' Booking!',
+              'success'
+            )
+          })
+          .catch(error => {
             console.log(error.message);
             alert(error.message)
-        })
+          })
       }
     })
 
@@ -154,71 +154,73 @@ class createBooking extends Component {
 
         <form onSubmit={this.onSubmit} onChange={this.onHandle}>
 
-          <div className={"row"}>
-            <div className={"col-md-6"}>
+
+          <div className="row mb-3">
+            <div className="col" style={{ textAlign: "left" }}>
+              <label htmlFor="bookingNo" className="form-label">Booking No</label>
+              <input type="text"
+                className="form-control"
+                id="bookingNo"
+                name="bookingNo"
+                placeholder="Booking Number"
+                value={this.state.bookingNo}
+                onChange={this.onChange}
+              />
+            </div>
 
 
-              <div className="mb-3" style={{ textAlign: "left" }}>
-                <label htmlFor="bookingNo" className="form-label">Booking No</label>
-                <input type="text"
-                  className="form-control"
-                  id="bookingNo"
-                  name="bookingNo"
-                  placeholder="Booking Number"
-                  value={this.state.bookingNo}
-                  onChange={this.onChange}
-                />
-              </div>
+            <div className="col">
+              <label htmlFor="customerId" className="form-label">Customer Id</label>
 
+              <input type="text"
+                className="form-control"
+                id="customerId"
+                name="customerId"
+                placeholder="Enter customer ID"
+                value={this.state.customerId}
+                onChange={this.onChange}
+              />
+            </div>
+          </div>
 
-              <div className="mb-3">
-                <label htmlFor="customerId" className="form-label">Customer Id</label>
-
-                <input type="text"
-                  className="form-control"
-                  id="customerId"
-                  name="customerId"
-                  placeholder="Enter customer ID"
-                  value={this.state.customerId}
-                  onChange={this.onChange}
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="roomNo" className="form-label">Room No</label>
-                {/* <Select 
+          <div className="row mb-3">
+            <div className="col">
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="roomNo" className="form-label">Room No</label>
+                  {/* <Select 
                                 placeholder="Select Room Numbers"
                                 options={this.state.options}
                                 onChange={this.onRoomSelect}
                                 className="basic-multi-select"
                                 isMulti
                                 /> */}
-                <input type="roomNo"
-                  className="form-control"
-                  id="roomNo"
-                  name="roomNo"
-                  // placeholder="Enter room number"
-                  value={this.state.roomNo}
-                // onChange={this.onChange}
-                />
-              </div>
+                  <input type="roomNo"
+                    className="form-control"
+                    id="roomNo"
+                    name="roomNo"
+                    // placeholder="Enter room number"
+                    value={this.state.roomNo}
+                  // onChange={this.onChange}
+                  />
+                </div>
 
 
 
 
-              <div className="mb-3" style={{ textAlign: "left" }}>
-                <label htmlFor="boardingType" className="form-label">BoardingType</label>
-                <br></br>
-                <select className="form-select" id="lang"
-                  onChange={this.onChange}
-                  value={this.state.boardingType}
-                  name="boardingType">
-                  <option value="select">Select boarding type </option>
-                  <option value="fullboard">Full Board</option>
-                  <option value="halfboard">Half Board</option>
-                  <option value="breadnbreakfast">Bread And Breakfast</option>
-                </select>
-                {/* <input type="text"
+                <div className="col" style={{ textAlign: "left" }}>
+                  <label htmlFor="boardingType" className="form-label">BoardingType</label>
+                  <br></br>
+                  <select className="form-select" id="lang"
+                    onChange={this.onChange}
+                    value={this.state.boardingType}
+                    name="boardingType">
+                    <option value="select">Select boarding type </option>
+                    <option value="fullboard">Full Board</option>
+                    <option value="halfboard">Half Board</option>
+                    <option value="breadnbreakfast">Bread And Breakfast</option>
+                  </select>
+                  {/* <input type="text"
                   className="form-control"
                   id="boardingType"
                   name="boardingType"
@@ -226,83 +228,86 @@ class createBooking extends Component {
                   value={this.state.boardingType}
                   onChange={this.onChange}
                 /> */}
+                </div>
               </div>
+            </div>
 
 
+            <div className="col">
+              <label htmlFor="bookingDate" className="form-label">Booking Date</label>
 
-              <div className="mb-3">
-                <label htmlFor="bookingDate" className="form-label">Booking Date</label>
-
-                <input type="date"
-                  className="form-control"
-                  id="bookingDate"
-                  name="bookingDate"
-                  placeholder="Select Booking Date"
-                  value={this.state.bookingDate}
-                  onChange={this.onChange}
-                />
-              </div>
-
-
-              <div className="mb-3">
-                <label htmlFor="noOfGuests" className="form-label">No of Guests</label>
-                <input type="number"
-                  className="form-control"
-                  id="noOfGuests"
-                  name="noOfGuests"
-                  placeholder="Enter number of guests"
-                  value={this.state.noOfGuests}
-                  onChange={this.onChange}
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="days" className="form-label">Days</label>
-
-                <input type="number"
-                  className="form-control"
-                  id="days"
-                  name="days"
-                  placeholder="Enter no of days"
-                  value={this.state.days}
-                  onChange={this.onChange}
-                />
-              </div>
-
-
-              <div className="mb-3">
-                <label htmlFor="arrivalDate" className="form-label">Arrival Date</label>
-
-                <input type="date"
-                  className="form-control"
-                  id="arrivalDate"
-                  name="arrivalDate"
-                  placeholder="Select arrival date"
-                  value={this.state.arrivalDate}
-                  onChange={this.onChange}
-                />
-              </div>
-
-
-              <div className="mb-3">
-                <label htmlFor="remarks" className="form-label">Remarks</label>
-
-                <input type="text"
-                  className="form-control"
-                  id="remarks"
-                  name="remarks"
-                  placeholder="Enter remarks"
-                  value={this.state.remarks}
-                  onChange={this.onChange}
-                />
-              </div>
-
-
-
-              <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
-              <button type="submit" id="form-button" className="btn btn-primary">Book</button>
+              <input type="date"
+                className="form-control"
+                id="bookingDate"
+                name="bookingDate"
+                placeholder="Select Booking Date"
+                value={this.state.bookingDate}
+                onChange={this.onChange}
+              />
             </div>
           </div>
+
+          <div className="row mb-3">
+            <div className="col">
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="noOfGuests" className="form-label">No of Guests</label>
+                  <input type="number"
+                    className="form-control"
+                    id="noOfGuests"
+                    name="noOfGuests"
+                    placeholder="Enter number of guests"
+                    value={this.state.noOfGuests}
+                    onChange={this.onChange}
+                  />
+                </div>
+
+                <div className="col">
+                  <label htmlFor="days" className="form-label">Days</label>
+
+                  <input type="number"
+                    className="form-control"
+                    id="days"
+                    name="days"
+                    placeholder="Enter no of days"
+                    value={this.state.days}
+                    onChange={this.onChange}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col">
+              <label htmlFor="arrivalDate" className="form-label">Arrival Date</label>
+
+              <input type="date"
+                className="form-control"
+                id="arrivalDate"
+                name="arrivalDate"
+                placeholder="Select arrival date"
+                value={this.state.arrivalDate}
+                onChange={this.onChange}
+              />
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="remarks" className="form-label">Remarks</label>
+
+            <input type="text"
+              className="form-control"
+              id="remarks"
+              name="remarks"
+              placeholder="Enter remarks"
+              value={this.state.remarks}
+              onChange={this.onChange}
+            />
+          </div>
+
+
+
+          <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
+          <button type="submit" id="form-button" className="btn btn-primary">Book</button>
+
           <br>
           </br>
 

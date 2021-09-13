@@ -227,7 +227,7 @@ class Food extends Component {
                     <br></br>
                     <div className="mb-3">
                         <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoFoodManagement(e)}>Back</button>
-                        <button type="submit" id="form-button" className="btn btn-primary" onClick={e => this.backtoFoodManagement(e)}>Add New Food</button>
+                        <button type="submit" id="form-button" className="btn btn-primary" >Add New Food</button>
                     </div>
 
                     <br>

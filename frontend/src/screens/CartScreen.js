@@ -37,14 +37,14 @@ export default function CartScreen(props) {
                 <h4>Food Cart</h4>
                 {cartItems.length === 0 ? (
                     <MessageBox>
-                        cart is empty. <Link to="/">Go Shopping</Link>
+                        Cart is empty. <Link to="/customerhome">Go Shopping</Link>
                     </MessageBox>
                 ) : (
                     <ul id="cart-desc">
                         {
                             cartItems.map((item) => (
                                 <li key={item.product}>
-                                    <div className="row">
+                                    <div id="cart-card" className="row">
                                         <div id="img-cart">
                                             <img
                                                 src={item.image}
@@ -77,7 +77,7 @@ export default function CartScreen(props) {
                                         <div><br/><button type="button" className="btn btn-danger" onClick={() => removeFromCartHandler(item.product)}
                                         >Delete</button>
                                         </div>
-                                    </div>
+                                    </div><br/>
                                 </li>
                             ))
                         }

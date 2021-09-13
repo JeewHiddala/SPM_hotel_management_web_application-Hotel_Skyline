@@ -6,7 +6,6 @@ import axios from 'axios';
 // import CheckoutSteps from '../checkoutSteps/checkoutSteps';
 
 
-
 const initialState = {
 
   bookingNo: '',
@@ -97,11 +96,8 @@ class viewBookedRoom extends Component {
 
         <form >
 
-          <div className={"row"}>
-            <div className={"col-md-6"}>
-
-
-              <div className="mb-3" style={{ textAlign: "left" }}>
+            <div className="row mb-3">
+              <div className="col" style={{ textAlign: "left" }}>
                 <label htmlFor="bookingNo" className="form-label">Booking No</label>
                 <input type="text"
                   className="form-control"
@@ -114,7 +110,7 @@ class viewBookedRoom extends Component {
               </div>
 
 
-              <div className="mb-3">
+              <div className="col">
                 <label htmlFor="customerId" className="form-label">Customer Id</label>
 
                 <input type="text"
@@ -126,42 +122,45 @@ class viewBookedRoom extends Component {
 
                 />
               </div>
-
-              <div className="mb-3">
-                <label htmlFor="roomNo" className="form-label">Room No</label>
-                {/* <Select 
+            </div>
+            <div className="row mb-3">
+              <div className="col">
+                <div className="row">
+                  <div className="col">
+                    <label htmlFor="roomNo" className="form-label">Room No</label>
+                    {/* <Select 
                                     placeholder="Select Room Numbers"
                                     options={this.state.options}
                                     onChange={this.onRoomSelect}
                                     className="basic-multi-select"
                                     isMulti
                                     /> */}
-                <input type="roomNo"
-                  className="form-control"
-                  id="roomNo"
-                  name="roomNo"
-                  placeholder="Enter room number"
-                  value={this.state.roomNo}
-                  onChange={this.onChange}
-                />
+                    <input type="roomNo"
+                      className="form-control"
+                      id="roomNo"
+                      name="roomNo"
+                      placeholder="Enter room number"
+                      value={this.state.roomNo}
+                      onChange={this.onChange}
+                    />
+                  </div>
+
+                  <div className="col">
+                    <label htmlFor="boardingType" className="form-label">BoardingType</label>
+
+                    <input type="text"
+                      className="form-control"
+                      id="boardingType"
+                      name="boardingType"
+                      placeholder="Select Boarding type"
+                      value={this.state.boardingType}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="mb-3">
-                <label htmlFor="boardingType" className="form-label">BoardingType</label>
-
-                <input type="text"
-                  className="form-control"
-                  id="boardingType"
-                  name="boardingType"
-                  placeholder="Select Boarding type"
-                  value={this.state.boardingType}
-                  onChange={this.onChange}
-                />
-              </div>
-
-
-
-              <div className="mb-3">
+              <div className="col">
                 <label htmlFor="bookingDate" className="form-label">Booking Date</label>
 
                 <input type="text"
@@ -173,35 +172,37 @@ class viewBookedRoom extends Component {
 
                 />
               </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col">
+                <div className="row">
+                  <div className="col">
+                    <label htmlFor="noOfGuests" className="form-label">No of Guests</label>
+                    <input type="number"
+                      className="form-control"
+                      id="noOfGuests"
+                      name="noOfGuests"
+                      placeholder="Enter number of guests"
+                      value={this.state.noOfGuests}
 
+                    />
+                  </div>
 
-              <div className="mb-3">
-                <label htmlFor="noOfGuests" className="form-label">No of Guests</label>
-                <input type="number"
-                  className="form-control"
-                  id="noOfGuests"
-                  name="noOfGuests"
-                  placeholder="Enter number of guests"
-                  value={this.state.noOfGuests}
+                  <div className="col">
+                    <label htmlFor="days" className="form-label">Days</label>
 
-                />
+                    <input type="number"
+                      className="form-control"
+                      id="days"
+                      name="days"
+                      placeholder="Enter no of days"
+                      value={this.state.days}
+
+                    />
+                  </div>
+                </div>
               </div>
-
-              <div className="mb-3">
-                <label htmlFor="days" className="form-label">Days</label>
-
-                <input type="number"
-                  className="form-control"
-                  id="days"
-                  name="days"
-                  placeholder="Enter no of days"
-                  value={this.state.days}
-
-                />
-              </div>
-
-
-              <div className="mb-3">
+              <div className="col">
                 <label htmlFor="arrivalDate" className="form-label">Arrival Date</label>
 
                 <input type="text"
@@ -213,26 +214,24 @@ class viewBookedRoom extends Component {
 
                 />
               </div>
-
-
-              <div className="mb-3">
-                <label htmlFor="remarks" className="form-label">Remarks</label>
-
-                <input type="text"
-                  className="form-control"
-                  id="remarks"
-                  name="remarks"
-                  placeholder="Enter remarks"
-                  value={this.state.remarks}
-
-                />
-              </div>
-
-
-              <button type="button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
-
             </div>
-          </div>
+
+            <div className="mb-3">
+              <label htmlFor="remarks" className="form-label">Remarks</label>
+
+              <input type="text"
+                className="form-control"
+                id="remarks"
+                name="remarks"
+                placeholder="Enter remarks"
+                value={this.state.remarks}
+
+              />
+            </div>
+
+
+            <button type="button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
+
           <br>
           </br>
 

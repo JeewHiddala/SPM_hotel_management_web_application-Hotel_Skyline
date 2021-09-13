@@ -5,14 +5,19 @@ import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 
 import logo from '../../images/logo.jpg';
+//import { connect } from 'react-redux';
+import store from '../../store';
+
+// const cart = useSelector((state) => state.cart);
+// const { cartItems } = cart;
+
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
-        // const cart = useSelector((state) => state.cart);
-        // const { cartItems } = cart;
 
         this.logOut = this.logOut.bind(this);
+        this.getCurrentStateFromStore = this.getCurrentStateFromStore.bind(this);
 
         this.state = {
             currentUser: undefined,
@@ -21,9 +26,18 @@ class Navbar extends Component {
             isKitchenHead: false,
             isCustomer: false
         };
+        this.state = this.getCurrentStateFromStore();
+        console.log("cart", this.state.cart);
+    }
+
+    getCurrentStateFromStore() {
+        return {
+            cart: store.getState().cart,
+        }
     }
 
     componentDidMount() {
+
         const user = AuthService.getCurrentUser();
 
         if (user) {
@@ -61,6 +75,8 @@ class Navbar extends Component {
     }
 
     logOut() {
+        localStorage.removeItem('cartItems');
+        localStorage.removeItem('shippingAddress');
         AuthService.logout();
     }
 
@@ -70,7 +86,9 @@ class Navbar extends Component {
         const { isReceptionist } = this.state;
         const { isKitchenHead } = this.state;
         const { isCustomer } = this.state;
-
+        const cart = this.state.cart;
+        const { cartItems } = cart;
+        console.log("123", cartItems);
         return (
             <div>
                 <Router>
@@ -116,13 +134,13 @@ class Navbar extends Component {
                                 )}
 
                                 {isCustomer && (
-                                      <li className="nav-item" >
-                                      {/* <a className="nav-link" href="/cart">Cart
-                                          {cartItems.length > 0 && (
-                                              <span className="badge">{cartItems.length}</span>
-                                          )}
-                                      </a> */}
-                                  </li>
+                                    <li className="nav-item" >
+                                        <a className="nav-link" href="/cart">Cart
+                                            {cartItems.length > 0 && (
+                                                <span className="badge">{cartItems.length}</span>
+                                            )}
+                                        </a>
+                                    </li>
                                 )}
                             </div>
 
@@ -155,5 +173,14 @@ class Navbar extends Component {
         )
     }
 }
+
+// const mapStateToProps = function (state) {
+//     // const cart = useSelector((state) => state.cart);
+//     // const { cartItems } = cart;
+//     return {
+//         cart: state.cart,
+
+//     }
+// }
 
 export default Navbar;
