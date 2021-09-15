@@ -11,8 +11,9 @@ module.exports = function () {
     router.get('/workingReceptionists/', employeeController.getAllWorkingReceptionistsDetails);       //get all working employees.
     router.get('/:id', employeeController.getSelectedEmployeeDetails);       //get selected employees details.
     router.get('/get-employee/:userData', employeeController.getEmployeeDetails);       //get employees.
-    router.delete('/:id', employeeController.deleteEmployee);         //delete selected employees details.
+    router.patch('/update/:id', employeeController.updateSelectedEmployeeDetails); //update selected employees details.
     router.patch('/resign/:id', employeeController.resignSelectedEmployee);         //resign selected employees details.
+    router.delete('/:id', employeeController.deleteEmployee);         //delete selected employees details.
 
     return router;
 }
