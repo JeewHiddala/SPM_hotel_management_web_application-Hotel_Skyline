@@ -131,6 +131,17 @@ const resignSelectedEmployee = async (req, res) => {       //retire selected emp
     }
 }
 
+const updateSelectedEmployeeDetails = async (req, res) => {       //update selected editor
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the editor.
+        const employee = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No employee With That id');      // validating the employee id
+        const updatedEmployee = await Employee.findByIdAndUpdate(id, employee,{new : true});      // find employee and employee editor
+        res.json(updatedEmployee);
+    }
+}
+
 module.exports = {
     createEmployee,
     getAllEmployeesDetails,
@@ -142,5 +153,6 @@ module.exports = {
     getAllWorkingChefsDetails,
     getAllWorkingReceptionistsDetails,
     resignSelectedEmployee,
+    updateSelectedEmployeeDetails,
     getEmployeeDetails
 };
