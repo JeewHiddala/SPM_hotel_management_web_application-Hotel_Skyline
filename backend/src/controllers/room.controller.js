@@ -121,7 +121,7 @@ const updateSelectedRoomDetails = async (req, res) => {       //update selected 
         const {id} = req.params;        // fetching the id of the editor.
         const room = req.body;
 
-        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No editor With That id');      // validating the room id
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No room With That id');      // validating the room id
         const updatedRoom = await Room.findByIdAndUpdate(id, room,{new : true});      // find room and room editor
         res.json(updatedRoom);
     }
