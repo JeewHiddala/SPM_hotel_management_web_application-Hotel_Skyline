@@ -192,8 +192,8 @@ class RoomManagement extends Component {
                                                     <td>{item.airConditioningCategory}</td>
                                                     <td>{item.description}</td>
                                                     <td>{item.isAvailable.toString() === 'true'
-                                                        ? <div><span className="badge badge-pill badge-success"> Available </span></div>
-                                                        : <div><span className="badge badge-pill badge-danger"> Unavailable </span></div>}
+                                                        ? <div><span className="badge bg-success"> Available </span></div>
+                                                        : <div><span className="badge bg-danger"> Unavailable </span></div>}
                                                     </td>
                                                     <td>{item.price}</td>
                                                     <td><button type="button" className="btn btn-warning" onClick={e => this.navigateEditRoomPage(e, item._id)}>Edit</button></td>
