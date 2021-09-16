@@ -9,6 +9,7 @@ import RoomManagement from './components/managerComponents/views/roomManagement/
 import CreateRoom from './components/managerComponents/createForms/roomManagement/createRoom';    //IT19007502 - Hiddalarachchi J.
 import ServiceManagement from './components/managerComponents/views/serviceManagement/serviceManagement';    //IT19007502 - Hiddalarachchi J.
 import CreateService from './components/managerComponents/createForms/serviceManagement/createService';    //IT19007502 - Hiddalarachchi J.
+import UpdateRoom from './components/managerComponents/updateForms/roomManagement/editRoom';  //IT19007502 - Hiddalarachchi J.
 // import ManagerDashboard from './components/managerComponents/views/dashboard/managerDashboard';
 import Login from "./components/login/login.component";
 import Home from "./components/home/home.component";
@@ -97,6 +98,7 @@ function App() {
             <Route path="/createRoom" component={CreateRoom} />
             <Route path="/serviceManagement" component={ServiceManagement} />
             <Route path="/createService" component={CreateService} />
+            <Route path="/updateRoom/:id" component={UpdateRoom} />
             {/* </ManagerDashboard>  */}
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
