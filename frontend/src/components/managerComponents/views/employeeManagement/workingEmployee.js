@@ -39,9 +39,9 @@ class WorkingEmployee extends Component {
         })
     }
 
-    // navigateEditAdminPage(e, adminId) {
-    //     window.location = `/updateAdmin/${adminId}`
-    // }
+    navigateEditWorkingEmployeePage(e, employeeId) {
+        window.location = `/updateWorkingEmployee/${employeeId}`
+    }
 
     navigateCreateEmployeePage(e) {
         window.location = '/createEmployee'
@@ -201,7 +201,7 @@ class WorkingEmployee extends Component {
                                                     <td>{item.salary}</td>
                                                     <td>{item.userName}</td>
                                                     <td>{item.password}</td>
-                                                    <td><button type="button" className="btn btn-warning">Update</button></td>
+                                                    <td><button type="button" className="btn btn-warning" onClick={e => this.navigateEditWorkingEmployeePage(e, item._id)}>Edit</button></td>
                                                     <td><button type="button" className="btn btn-danger" onClick={e => this.resignEmployee(e, item._id)}>Retire</button></td>
                                                 </tr>
                                             ))}
