@@ -20,7 +20,7 @@ class EditEmployee extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
-        // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
+        this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
     }
@@ -56,101 +56,101 @@ class EditEmployee extends Component {
         window.location = '/workingEmployee'
     }
 
-    // onSubmit(e) {      //submit details
-    //     e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-    //     if (!this.state.position.localeCompare("Manager") || !this.state.position.localeCompare("Receptionist") || !this.state.position.localeCompare("Kitchen Head")) {
-    //         AuthService.register(
-    //             this.state.userName,
-    //             this.state.password,
-    //             this.state.position
-    //         ).then(
-    //             response => {
-    //                 this.setState({
-    //                     userData: response.data.data._id,
-    //                 });
-    //                 let employee = {
-    //                     name: this.state.name,
-    //                     position: this.state.position,
-    //                     email: this.state.email,
-    //                     mobileNumber: this.state.mobileNumber,
-    //                     nicNo: this.state.nicNo,
-    //                     salary: this.state.salary,
-    //                     userName: this.state.userName,
-    //                     password: this.state.password,
-    //                     userData: this.state.userData
-    //                 }
-    //                 console.log('DATA TO SEND', employee);
-    //                 axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
-    //                     .then(response => {
-    //                         // alert('Employee Data successfully inserted')
-    //                         this.setState({
-    //                             name: '',
-    //                             position: '',
-    //                             email: '',
-    //                             mobileNumber: 0,
-    //                             nicNo: '',
-    //                             salary: 0,
-    //                             userName: '',
-    //                             password: '',
-    //                             userData: ''
-    //                         })
-    //                         Swal.fire({
-    //                             position: 'center',
-    //                             icon: 'success',
-    //                             title: 'Updated Employee details has been saved',
-    //                             showConfirmButton: false,
-    //                             timer: 1500
-    //                         })
-    //                     })
-    //                     .catch(error => {
-    //                         console.log(error.message);
-    //                         alert(error.message)
-    //                     })
-    //             },
-    //             error => {
-    //                 alert('Auth signup failed');
-    //             }
-    //         );
-    //     }else{
-    //         let employee = {
-    //             name: this.state.name,
-    //             position: this.state.position,
-    //             email: this.state.email,
-    //             mobileNumber: this.state.mobileNumber,
-    //             nicNo: this.state.nicNo,
-    //             salary: this.state.salary,
-    //             userName: this.state.userName,
-    //             password: this.state.password
-    //         }
-    //         console.log('DATA TO SEND', employee);
-    //         axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
-    //             .then(response => {
-    //                 // alert('Employee Data successfully inserted')
-    //                 // this.setState({
-    //                 //     name: '',
-    //                 //     position: '',
-    //                 //     email: '',
-    //                 //     mobileNumber: 0,
-    //                 //     nicNo: '',
-    //                 //     salary: 0,
-    //                 //     userName: '',
-    //                 //     password: ''
-    //                 // })
-    //                 Swal.fire({
-    //                     position: 'center',
-    //                     icon: 'success',
-    //                     title: 'Updated Employee details has been saved',
-    //                     showConfirmButton: false,
-    //                     timer: 1500
-    //                 })
-    //             })
-    //             .catch(error => {
-    //                 console.log(error.message);
-    //                 alert(error.message)
-    //             })
-    //         }
+    onSubmit(e) {      //submit details
+        e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
+        if (!this.state.position.localeCompare("Manager") || !this.state.position.localeCompare("Receptionist") || !this.state.position.localeCompare("Kitchen Head")) {
+            AuthService.register(
+                this.state.userName,
+                this.state.password,
+                this.state.position
+            ).then(
+                response => {
+                    this.setState({
+                        userData: response.data.data._id,
+                    });
+                    let employee = {
+                        name: this.state.name,
+                        position: this.state.position,
+                        email: this.state.email,
+                        mobileNumber: this.state.mobileNumber,
+                        nicNo: this.state.nicNo,
+                        salary: this.state.salary,
+                        userName: this.state.userName,
+                        password: this.state.password,
+                        userData: this.state.userData
+                    }
+                    console.log('DATA TO SEND', employee);
+                    axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
+                        .then(response => {
+                            // alert('Employee Data successfully inserted')
+                            this.setState({
+                                name: '',
+                                position: '',
+                                email: '',
+                                mobileNumber: 0,
+                                nicNo: '',
+                                salary: 0,
+                                userName: '',
+                                password: '',
+                                userData: ''
+                            })
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Updated Employee details has been saved',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        })
+                        .catch(error => {
+                            console.log(error.message);
+                            alert(error.message)
+                        })
+                },
+                error => {
+                    alert('Auth signup failed');
+                }
+            );
+        }else{
+            let employee = {
+                name: this.state.name,
+                position: this.state.position,
+                email: this.state.email,
+                mobileNumber: this.state.mobileNumber,
+                nicNo: this.state.nicNo,
+                salary: this.state.salary,
+                userName: this.state.userName,
+                password: this.state.password
+            }
+            console.log('DATA TO SEND', employee);
+            axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
+                .then(response => {
+                    // alert('Employee Data successfully inserted')
+                    // this.setState({
+                    //     name: '',
+                    //     position: '',
+                    //     email: '',
+                    //     mobileNumber: 0,
+                    //     nicNo: '',
+                    //     salary: 0,
+                    //     userName: '',
+                    //     password: ''
+                    // })
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Updated Employee details has been saved',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+                .catch(error => {
+                    console.log(error.message);
+                    alert(error.message)
+                })
+            }
 
-    // }
+    }
 
 
     render() {
