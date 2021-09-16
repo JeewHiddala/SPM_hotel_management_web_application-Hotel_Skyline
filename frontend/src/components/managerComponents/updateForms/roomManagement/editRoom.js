@@ -15,7 +15,7 @@ class EditRoom extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
-        // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
+        this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
     }
@@ -48,39 +48,39 @@ class EditRoom extends Component {
         window.location = '/roomManagement'
     }
 
-    // onSubmit(e) {      //submit details
-    //     e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-    //     let room = {
-    //         roomNo: this.state.roomNo,
-    //         category: this.state.category,
-    //         airConditioningCategory: this.state.airConditioningCategory,
-    //         description: this.state.description,
-    //         price: this.state.price
-    //     }
-    //     console.log('DATA TO SEND', room);    
-    //     axios.patch(`http://localhost:8100/room/update/${this.state.id}`, room)
-    //         .then(response => {
-    //             // alert('Room Data successfully inserted')
-    //             // this.setState({ 
-    //             //     roomNo: '',
-    //             //     category: '',
-    //             //     airConditioningCategory: '',
-    //             //     description: '',
-    //             //     price: 0
-    //             //  })
-    //             Swal.fire({
-    //                 position: 'center',
-    //                 icon: 'success',
-    //                 title: 'Updated Room details has been saved',
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //               })
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message);
-    //             alert(error.message)
-    //         })
-    // }
+    onSubmit(e) {      //submit details
+        e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
+        let room = {
+            roomNo: this.state.roomNo,
+            category: this.state.category,
+            airConditioningCategory: this.state.airConditioningCategory,
+            description: this.state.description,
+            price: this.state.price
+        }
+        console.log('DATA TO SEND', room);    
+        axios.patch(`http://localhost:8100/room/update/${this.state.id}`, room)
+            .then(response => {
+                // alert('Room Data successfully inserted')
+                // this.setState({ 
+                //     roomNo: '',
+                //     category: '',
+                //     airConditioningCategory: '',
+                //     description: '',
+                //     price: 0
+                //  })
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Updated Room details has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            })
+            .catch(error => {
+                console.log(error.message);
+                alert(error.message)
+            })
+    }
 
 
     render() {
