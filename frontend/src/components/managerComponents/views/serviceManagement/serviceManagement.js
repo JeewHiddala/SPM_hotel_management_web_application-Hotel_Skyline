@@ -10,11 +10,14 @@ class ServiceManagement extends Component {
         this.state = {
             totalPages: 0,
             page: 0,
+            serviceNumber:'',
             services: [],
             isDropdownClicked: false
         }
         this.deleteService = this.deleteService.bind(this);
         this.navigateCreateServicePage = this.navigateCreateServicePage.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.navigateSearchServicePage = this.navigateSearchServicePage.bind(this);
         this.dropdown = this.dropdown.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.retrieveServices = this.retrieveServices.bind(this);     //pagination
@@ -33,6 +36,18 @@ class ServiceManagement extends Component {
             this.setState({ totalPages: response.data.data.totalPages });          //pagination
         })
 
+    }
+
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+
+    navigateSearchServicePage(e) {      //search
+        e.preventDefault();   
+        console.log("abcd", this.state.serviceNumber);
+        let serviceNo = this.state.serviceNumber;        
+        window.location = `/searchService/${serviceNo}`
     }
 
     navigateEditServicePage(e, serviceId) {
@@ -157,8 +172,16 @@ class ServiceManagement extends Component {
                                     </div>
                                     
                                     <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                                        <form className="d-flex" onSubmit={this.navigateSearchServicePage}>
+                                            <input
+                                             className="form-control me-2" 
+                                             type="search" 
+                                             placeholder="Enter service number" 
+                                             aria-label="Search"
+                                             name="serviceNumber"
+                                             value={this.state.serviceNumber}      //bind state value
+                                             onChange={this.onChange}    //don't call function. only give a reference.
+                                             />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
                                     </div>
