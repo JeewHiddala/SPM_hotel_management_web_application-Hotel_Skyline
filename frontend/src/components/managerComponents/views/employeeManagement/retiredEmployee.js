@@ -72,7 +72,7 @@ class RetiredEmployee extends Component {
         e.preventDefault();   
         console.log("abcd", this.state.nicNumber);
         let nicNo = this.state.nicNumber;        
-        window.location = `/SearchEmployee/${nicNo}`
+        window.location = `/searchEmployeeInRetiredEmployeeSection/${nicNo}`
     }
 
     handlePageChange = (data) => {          //pagination
