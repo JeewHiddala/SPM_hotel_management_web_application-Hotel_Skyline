@@ -15,6 +15,7 @@ import UpdateService from './components/managerComponents/updateForms/serviceMan
 import SearchRoom from './components/managerComponents/searchViews/roomManagement/searchRoom';  //IT19007502 - Hiddalarachchi J.
 import SearchService from './components/managerComponents/searchViews/serviceManagement/searchService';  //IT19007502 - Hiddalarachchi J.
 import SearchEmployee from './components/managerComponents/searchViews/employeeManagement/searchEmployee';  //IT19007502 - Hiddalarachchi J.
+import SearchEmployeeInRetiredEmployeeSection from './components/managerComponents/searchViews/employeeManagement/searchEmployeeInRetiredSection';  //IT19007502 - Hiddalarachchi J.
 // import ManagerDashboard from './components/managerComponents/views/dashboard/managerDashboard';
 import Login from "./components/login/login.component";
 import Home from "./components/home/home.component";
@@ -109,6 +110,7 @@ function App() {
             <Route path="/searchRoom/:id" component={SearchRoom} />
             <Route path="/searchService/:id" component={SearchService} />
             <Route path="/searchEmployee/:id" component={SearchEmployee} />
+            <Route path="/searchEmployeeInRetiredEmployeeSection/:id" component={SearchEmployeeInRetiredEmployeeSection} />
             {/* </ManagerDashboard>  */}
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
