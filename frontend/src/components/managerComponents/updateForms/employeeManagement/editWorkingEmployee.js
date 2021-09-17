@@ -320,6 +320,7 @@ class EditEmployee extends Component {
                                                 <div className="col">
                                                     <label htmlFor="password" className="form-label sub-topic">Username</label>
                                                     <input
+                                                        readOnly
                                                         type="text"
                                                         className="form-control"
                                                         placeholder="Enter username"
