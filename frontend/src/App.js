@@ -14,6 +14,7 @@ import UpdateWorkingEmployee from './components/managerComponents/updateForms/em
 import UpdateService from './components/managerComponents/updateForms/serviceManagement/editService';  //IT19007502 - Hiddalarachchi J.
 import SearchRoom from './components/managerComponents/searchViews/roomManagement/searchRoom';  //IT19007502 - Hiddalarachchi J.
 import SearchService from './components/managerComponents/searchViews/serviceManagement/searchService';  //IT19007502 - Hiddalarachchi J.
+import SearchEmployee from './components/managerComponents/searchViews/employeeManagement/searchEmployee';  //IT19007502 - Hiddalarachchi J.
 // import ManagerDashboard from './components/managerComponents/views/dashboard/managerDashboard';
 import Login from "./components/login/login.component";
 import Home from "./components/home/home.component";
@@ -107,6 +108,7 @@ function App() {
             <Route path="/updateService/:id" component={UpdateService} />
             <Route path="/searchRoom/:id" component={SearchRoom} />
             <Route path="/searchService/:id" component={SearchService} />
+            <Route path="/searchEmployee/:id" component={SearchEmployee} />
             {/* </ManagerDashboard>  */}
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
