@@ -84,6 +84,17 @@ const getSelectedRoomDetails = async (req, res) => {          //get selected roo
     }
 }
 
+const getSearchedRoomDetailsByNo = async (req, res) => {          //get selected room details. //search
+        var roomNo = req.params.roomNo;
+        await Room.findOne({roomNo: roomNo})
+            .then(data => {
+                res.status(200).send({ data: data });
+            })
+            .catch(error => {
+                res.status(500).send({ error: error.message });
+            });
+    }
+
 const getSelectedAvailableRoomDetails = async (req, res) => {          //get selected available room details.
     if (req.params && req.params.id) {
         await Room.findById(req.params.id)
@@ -136,6 +147,7 @@ module.exports = {
     getSelectedRoomDetails,
     getSelectedAvailableRoomDetails,
     getRoomsDetailsByNo,
+    getSearchedRoomDetailsByNo,
     updateSelectedRoomDetails,
     deleteRoom
 };
