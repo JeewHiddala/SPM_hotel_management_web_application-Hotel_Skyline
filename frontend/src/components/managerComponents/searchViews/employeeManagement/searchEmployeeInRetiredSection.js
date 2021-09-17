@@ -28,7 +28,7 @@ class SearchEmployeeInRetiredSection extends Component {
     componentDidMount() {
         const searchEmployeedetails = this.props.match.params.id;
         console.log("rrrr" + searchEmployeedetails);
-        axios.get(`http://localhost:8100/employee/search/${searchEmployeedetails}`)
+        axios.get(`http://localhost:8100/employee/searchRetiredEmployee/${searchEmployeedetails}`)
           .then(response => {
             this.setState({ id: response.data.data._id })
             this.setState({ name: response.data.data.name })
@@ -43,7 +43,19 @@ class SearchEmployeeInRetiredSection extends Component {
             console.log("stat"+response.data.data)
           })
           .catch(error => {
-            alert(error.message)
+            // alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Sorry. There is no data according to this NIC number!',
+                footer: '<a href="/retiredEmployee"/>'
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                    window.location = '/retiredEmployee'
+                }
+    
+            })
           })
     
       }
