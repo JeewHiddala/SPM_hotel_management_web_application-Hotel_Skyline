@@ -11,6 +11,7 @@ import ServiceManagement from './components/managerComponents/views/serviceManag
 import CreateService from './components/managerComponents/createForms/serviceManagement/createService';    //IT19007502 - Hiddalarachchi J.
 import UpdateRoom from './components/managerComponents/updateForms/roomManagement/editRoom';  //IT19007502 - Hiddalarachchi J.
 import UpdateWorkingEmployee from './components/managerComponents/updateForms/employeeManagement/editWorkingEmployee';  //IT19007502 - Hiddalarachchi J.
+import UpdateService from './components/managerComponents/updateForms/serviceManagement/editService';  //IT19007502 - Hiddalarachchi J.
 // import ManagerDashboard from './components/managerComponents/views/dashboard/managerDashboard';
 import Login from "./components/login/login.component";
 import Home from "./components/home/home.component";
@@ -101,6 +102,7 @@ function App() {
             <Route path="/createService" component={CreateService} />
             <Route path="/updateRoom/:id" component={UpdateRoom} />
             <Route path="/updateWorkingEmployee/:id" component={UpdateWorkingEmployee} />
+            <Route path="/updateService/:id" component={UpdateService} />
             {/* </ManagerDashboard>  */}
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />

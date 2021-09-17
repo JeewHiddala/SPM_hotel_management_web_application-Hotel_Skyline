@@ -35,9 +35,9 @@ class ServiceManagement extends Component {
 
     }
 
-    // navigateEditAdminPage(e, adminId) {
-    //     window.location = `/updateAdmin/${adminId}`
-    // }
+    navigateEditServicePage(e, serviceId) {
+        window.location = `/updateService/${serviceId}`
+    }
 
     navigateCreateServicePage(e) {
         window.location = '/createService'
@@ -189,7 +189,7 @@ class ServiceManagement extends Component {
                                                     <td>{item.pricePerHour}</td>
                                                     <td>{item.description}</td>
                                                     <td>{item.employeeCount}</td>
-                                                    <td><button type="button" className="btn btn-warning" >Update</button></td>
+                                                    <td><button type="button" className="btn btn-warning" onClick={e => this.navigateEditServicePage(e, item._id)}>Edit</button></td>
                                                     <td><button type="button" className="btn btn-danger" onClick={e => this.deleteService(e, item._id)}>Delete</button></td>
                                                 </tr>
                                                 ))}
