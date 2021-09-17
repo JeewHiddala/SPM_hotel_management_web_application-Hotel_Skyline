@@ -10,11 +10,14 @@ class RetiredEmployee extends Component {
         this.state = {
             totalPages: 0,
             page: 0,
+            nicNumber:'',
             employees: [],
             isDropdownClicked: false
         }
         this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
         this.dropdown = this.dropdown.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.navigateSearchEmployeePage = this.navigateSearchEmployeePage.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.retiredEmployee = this.retiredEmployee.bind(this);     //pagination
         // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
@@ -59,6 +62,18 @@ class RetiredEmployee extends Component {
                 console.log("WPF", response.data.data);
             })
     };
+
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+
+    navigateSearchEmployeePage(e) {      //search
+        e.preventDefault();   
+        console.log("abcd", this.state.nicNumber);
+        let nicNo = this.state.nicNumber;        
+        window.location = `/SearchEmployee/${nicNo}`
+    }
 
     handlePageChange = (data) => {          //pagination
         let selected = data.selected + 1;
@@ -161,8 +176,16 @@ class RetiredEmployee extends Component {
                                     </div> */}
                                     
                                     <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                                        <form className="d-flex" onSubmit={this.navigateSearchEmployeePage}>
+                                            <input 
+                                                className="form-control me-2" 
+                                                type="search" 
+                                                placeholder="Enter NIC no" 
+                                                aria-label="Search" 
+                                                name="nicNumber"
+                                                value={this.state.nicNumber}      //bind state value
+                                                onChange={this.onChange}    //don't call function. only give a reference.
+                                            />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
                                     </div>
