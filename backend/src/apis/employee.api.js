@@ -12,6 +12,7 @@ module.exports = function () {
     router.get('/:id', employeeController.getSelectedEmployeeDetails);       //get selected employees details.
     router.get('/get-employee/:userData', employeeController.getEmployeeDetails);       //get employees.
     router.get('/search/:nicNo', employeeController.getSearchedEmployeeDetailsByNIC); // get search employee details using employee nic number.
+    router.get('/searchRetiredEmployee/:nicNo', employeeController.getSearchedRetiredEmployeeDetailsByNIC); // get search retired employee details using employee nic number.
     router.patch('/update/:id', employeeController.updateSelectedEmployeeDetails); //update selected employees details.
     router.patch('/resign/:id', employeeController.resignSelectedEmployee);         //resign selected employees details.
     router.delete('/:id', employeeController.deleteEmployee);         //delete selected employees details.
