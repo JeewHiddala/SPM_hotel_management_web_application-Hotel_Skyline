@@ -16,7 +16,7 @@ class EditService extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
-        // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
+        this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
     }
@@ -50,41 +50,41 @@ class EditService extends Component {
         window.location = '/serviceManagement'
     }
 
-    // onSubmit(e) {      //submit details
-    //     e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-    //     let service = {
-    //         serviceNo: this.state.serviceNo,
-    //         name: this.state.name,
-    //         addedDate: this.state.addedDate,
-    //         pricePerHour: this.state.pricePerHour,
-    //         description: this.state.description,
-    //         employeeCount: this.state.employeeCount
-    //     }
-    //     console.log('DATA TO SEND', service);    
-    //     axios.patch(`http://localhost:8100/service/update/${this.state.id}`, service)
-    //         .then(response => {
-    //             // alert('Service Data successfully inserted')
-    //             // this.setState({ 
-    //             //     serviceNo: '',
-    //             //     name: '',
-    //             //     addedDate: '',
-    //             //     pricePerHour: 0,
-    //             //     description: '',
-    //             //     employeeCount: 0
-    //             //  })
-    //             Swal.fire({
-    //                 position: 'center',
-    //                 icon: 'success',
-    //                 title: 'Updated Service details has been saved',
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //               })
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message);
-    //             alert(error.message)
-    //         })
-    // }
+    onSubmit(e) {      //submit details
+        e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
+        let service = {
+            serviceNo: this.state.serviceNo,
+            name: this.state.name,
+            addedDate: this.state.addedDate,
+            pricePerHour: this.state.pricePerHour,
+            description: this.state.description,
+            employeeCount: this.state.employeeCount
+        }
+        console.log('DATA TO SEND', service);    
+        axios.patch(`http://localhost:8100/service/update/${this.state.id}`, service)
+            .then(response => {
+                // alert('Service Data successfully inserted')
+                // this.setState({ 
+                //     serviceNo: '',
+                //     name: '',
+                //     addedDate: '',
+                //     pricePerHour: 0,
+                //     description: '',
+                //     employeeCount: 0
+                //  })
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Updated Service details has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            })
+            .catch(error => {
+                console.log(error.message);
+                alert(error.message)
+            })
+    }
 
 
     render() {
