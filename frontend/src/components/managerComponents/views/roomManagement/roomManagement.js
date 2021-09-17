@@ -10,12 +10,17 @@ class RoomManagement extends Component {
         this.state = {
             totalPages: 0,
             page: 0,
+            roomNumber : "",
             rooms: [],
             isDropdownClicked: false
+            
         }
         this.deleteRoom = this.deleteRoom.bind(this);
         this.navigateCreateRoomPage = this.navigateCreateRoomPage.bind(this);
+        this.navigateSearchRoomPage = this.navigateSearchRoomPage.bind(this);
+
         this.dropdown = this.dropdown.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.retrieveRooms = this.retrieveRooms.bind(this);     //pagination
         // this.back = this.back.bind(this);
@@ -23,6 +28,10 @@ class RoomManagement extends Component {
 
     componentDidMount() {   //inbuild function
         this.fetchRoomDetails_Manager();
+    }
+
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     fetchRoomDetails_Manager() {
@@ -36,6 +45,13 @@ class RoomManagement extends Component {
 
     navigateEditRoomPage(e, roomId) {                 //edit
         window.location = `/updateRoom/${roomId}`
+    }
+
+    navigateSearchRoomPage(e) {      //search
+        e.preventDefault();   
+        console.log("abcd", this.state.roomNumber);
+        let roomNo = this.state.roomNumber;        
+        window.location = `/searchRoom/${roomNo}`
     }
 
     navigateCreateRoomPage(e) {
@@ -161,9 +177,17 @@ class RoomManagement extends Component {
                                     </div>
 
                                     <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
+                                        <form className="d-flex" onSubmit={this.navigateSearchRoomPage}>
+                                            <input 
+                                                className="form-control me-2" 
+                                                type="text" 
+                                                placeholder="Enter room number" 
+                                                aria-label="Search"
+                                                name="roomNumber"
+                                                value={this.state.roomNumber}      //bind state value
+                                                onChange={this.onChange}    //don't call function. only give a reference.
+                                             />
+                                            <button className="btn btn-primary" type="submit" >Search</button>
                                         </form>
                                     </div>
                                     <div className="col-4">
