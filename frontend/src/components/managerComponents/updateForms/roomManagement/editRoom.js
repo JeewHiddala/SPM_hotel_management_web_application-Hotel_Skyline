@@ -156,6 +156,7 @@ class EditRoom extends Component {
                                         <div className="col-6">
                                             <label htmlFor="roomNo" className="form-label sub-topic">Room Number</label>
                                             <input
+                                                readOnly
                                                 type="text"
                                                 className="form-control"
                                                 placeholder = "Enter Room Number"
