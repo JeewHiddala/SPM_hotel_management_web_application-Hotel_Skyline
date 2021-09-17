@@ -160,6 +160,7 @@ class EditService extends Component {
                                         <div className="col-6">
                                             <label htmlFor="serviceNo" className="form-label sub-topic">Service Number</label>
                                             <input
+                                                readOnly
                                                 type="text"
                                                 className="form-control"
                                                 placeholder = "Enter Service Number"
@@ -189,6 +190,7 @@ class EditService extends Component {
                                         <div className="col-6">
                                             <label htmlFor="addedDate" className="form-label sub-topic">Added Date</label>
                                             <input
+                                                readOnly
                                                 type="date"
                                                 className="form-control"
                                                 id="addedDate"
