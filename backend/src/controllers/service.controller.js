@@ -51,6 +51,17 @@ const getSelectedServiceDetails = async (req, res) => {          //get selected 
     }
 }
 
+const getSearchedServiceDetailsByNo = async (req, res) => {          //get selected search details. //search
+    var serviceNo = req.params.serviceNo;
+    await Service.findOne({serviceNo: serviceNo})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 const deleteService = async (req, res) => {               // delete selected service.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the service
@@ -76,6 +87,7 @@ module.exports = {
     getAllServicesDetails,
     getSelectedServiceDetails,
     getAllServicesDetailsForReceptionist,
+    getSearchedServiceDetailsByNo,
     updateSelectedServiceDetails,
     deleteService
 };
