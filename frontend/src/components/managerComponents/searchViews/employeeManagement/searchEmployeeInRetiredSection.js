@@ -24,6 +24,7 @@ class SearchEmployeeInRetiredSection extends Component {
         // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
+        this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
     }
 
     componentDidMount() {
@@ -64,6 +65,35 @@ class SearchEmployeeInRetiredSection extends Component {
 
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
+    }
+
+    deleteRetiredEmployee(e , employeeId) {
+        console.log("I am on Delete", employeeId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it permanently!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/employee/${employeeId}`)
+                Swal.fire(
+                    'Deleted!',
+                    'Employee has been deleted.',
+                    'success'
+                )
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/retiredEmployee'
+                    }
+        
+                })
+                // window.location.reload(false);
+            }
+        })
     }
 
     back(e) {
@@ -350,6 +380,7 @@ class SearchEmployeeInRetiredSection extends Component {
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
                                                     <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
+                                                    <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteRetiredEmployee(e, this.state.id)}>Delete</button>
                                                     {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
                                                 </div>
                                                 <div className="col mb-3">
