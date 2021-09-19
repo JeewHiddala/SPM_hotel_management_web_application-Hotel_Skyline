@@ -11,6 +11,7 @@ const initialState = {      //initiate states
     mobileNumber: 0,
     nicNo: '',
     salary: 0,
+    isWorking: 1,
     userName: '',
     password: '',
     userData: "",
@@ -39,6 +40,7 @@ class EditEmployee extends Component {
             this.setState({ salary: response.data.data.salary })
             this.setState({ userName: response.data.data.userName })
             this.setState({ password: response.data.data.password })
+            this.setState({ isWorking: response.data.data.isWorking })
     
             console.log("stat"+response.data.data)
           })
@@ -324,6 +326,13 @@ class EditEmployee extends Component {
                                                         value={this.state.password}
                                                         onChange={this.onChange}
                                                     />
+                                                </div>
+                                                <div className="col">
+                                                    <label htmlFor="states" className="form-label sub-topic">Status</label><br/>
+                                                        {this.state.isWorking == true
+                                                            ? <span className="badge bg-success"> Working </span>
+                                                            : <span className="badge bg-danger"> Retired </span>
+                                                        }
                                                 </div>
                                             </div>
                                             <div className="row mb-3">
