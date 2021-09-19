@@ -131,7 +131,7 @@ class RoomManagement extends Component {
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
@@ -168,9 +168,9 @@ class RoomManagement extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <br /><br /><br /><br />
+                                <br/>
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateRoomPage(e)}>Create New Room</button>

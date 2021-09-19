@@ -8,6 +8,7 @@ const initialState = {      //initiate states
     category: '',
     airConditioningCategory: '',
     description: '',
+    isAvailable: 1,
     price: 0
 }
 
@@ -15,6 +16,7 @@ class SearchRoom extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
+        this.deleteRoom = this.deleteRoom.bind(this);
         // this.navigateEditRoomPage = this.onChange.bind(this);
         // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
@@ -32,11 +34,24 @@ class SearchRoom extends Component {
             this.setState({ airConditioningCategory: response.data.data.airConditioningCategory })
             this.setState({ description: response.data.data.description })
             this.setState({ price: response.data.data.price })
+            this.setState({ isAvailable: response.data.data.isAvailable })
     
             console.log("stat"+response.data.data)
           })
           .catch(error => {
-            alert(error.message)
+            // alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Sorry. There is no data according to this Room number!',
+                footer: '<a href="/retiredEmployee"/>'
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                    window.location = '/roomManagement'
+                }
+    
+            })
           })
     
       }
@@ -53,39 +68,37 @@ class SearchRoom extends Component {
         window.location = '/roomManagement'
     }
 
-    // onSubmit(e) {      //submit details
-    //     e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-    //     let room = {
-    //         roomNo: this.state.roomNo,
-    //         category: this.state.category,
-    //         airConditioningCategory: this.state.airConditioningCategory,
-    //         description: this.state.description,
-    //         price: this.state.price
-    //     }
-    //     console.log('DATA TO SEND', room);    
-    //     axios.patch(`http://localhost:8100/room/update/${this.state.id}`, room)
-    //         .then(response => {
-    //             // alert('Room Data successfully inserted')
-    //             // this.setState({ 
-    //             //     roomNo: '',
-    //             //     category: '',
-    //             //     airConditioningCategory: '',
-    //             //     description: '',
-    //             //     price: 0
-    //             //  })
-    //             Swal.fire({
-    //                 position: 'center',
-    //                 icon: 'success',
-    //                 title: 'Updated Room details has been saved',
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //               })
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message);
-    //             alert(error.message)
-    //         })
-    // }
+    navigateEditRoomPage(e, roomId) {                 //edit
+        window.location = `/updateRoom/${roomId}`
+    }
+
+    deleteRoom(e, roomId) {
+        console.log("I am on Delete", roomId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it permanently!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/room/${roomId}`)
+                Swal.fire(
+                    'Deleted!',
+                    'Room has been deleted.',
+                    'success'
+                )
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/roomManagement'
+                    }
+                })
+                // window.location.reload(false);
+            }
+        })
+    }
 
 
     render() {
@@ -107,7 +120,7 @@ class SearchRoom extends Component {
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                             <div className="row">
                                     <div className="container" >
@@ -135,9 +148,9 @@ class SearchRoom extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <br /><br /><br /><br />
+                                <br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     {/* <div className="float-end">
                                         <button type="button" className="btn btn-success">Create Employee</button>
@@ -224,10 +237,18 @@ class SearchRoom extends Component {
                                                    onChange={this.onChange}    //don't call function. only give a reference. 
                                                 />
                                             </div>
-                                            <br></br>
+                                            <div className="col mb-3">
+                                                    <label htmlFor="states" className="form-label sub-topic">Status</label><br/>
+                                                        {this.state.isAvailable == true
+                                                            ? <span className="badge bg-success"> Available </span>
+                                                            : <span className="badge bg-danger"> Unavailable </span>
+                                                        }
+                                            </div>
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
                                                     <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
+                                                    <button type="button" id="button" className="btn btn-warning" onClick={e => this.navigateEditRoomPage(e, this.state.id)}>Edit</button>
+                                                    <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteRoom(e, this.state.id)}>Delete</button>
                                                     {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
                                                 </div>
                                                 <div className="col mb-3">
