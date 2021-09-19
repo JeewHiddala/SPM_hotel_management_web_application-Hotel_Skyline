@@ -75,7 +75,20 @@ const getAllWorkingReceptionistsDetails = async (req, res) => {       //get all 
         });
 }
 
-
+const getAllWorkingEmployeesSalaryCount = async (req, res) => {       //get all Working Employees Salary Count
+    await Employee.find({isWorking:true})
+        .then(data => {
+            let totalsalary = 0;
+            for(var i=0; i < data.length; i++){
+                totalsalary += parseFloat(data[i].salary);
+            }
+            console.log("totsal", totalsalary)
+            res.status(200).send({ cummulativeTotalSalary: totalsalary, employeeCount: data.length, employees: data});
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
 
 const getAllWorkingChefDetails = async (req, res) => {       //get all working employee details.
     await Employee.find({isWorking:true, position:"Chef"})
@@ -170,6 +183,7 @@ module.exports = {
     getAllWorkingEmployeesDetails,
     getAllRetiredEmployeesDetails,
     getAllWorkingChefDetails,
+    getAllWorkingEmployeesSalaryCount,
     getSelectedEmployeeDetails,
     getSearchedEmployeeDetailsByNIC,
     getSearchedRetiredEmployeeDetailsByNIC,
