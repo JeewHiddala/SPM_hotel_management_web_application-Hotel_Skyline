@@ -111,6 +111,28 @@ const getEmployeeDetails = async (req, res) => {       //get employee details
 
 }
 
+const getSearchedEmployeeDetailsByNIC = async (req, res) => {          //get selected search details. //search
+    var nicNo = req.params.nicNo;
+    await Employee.findOne({nicNo: nicNo})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
+const getSearchedRetiredEmployeeDetailsByNIC = async (req, res) => {          //get selected search retired employee details. //search
+    var nicNo = req.params.nicNo;
+    await Employee.findOne({$and: [{isWorking:false},{nicNo: nicNo}]})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 const deleteEmployee = async (req, res) => {               // delete selected employee.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the employee
@@ -149,6 +171,8 @@ module.exports = {
     getAllRetiredEmployeesDetails,
     getAllWorkingChefDetails,
     getSelectedEmployeeDetails,
+    getSearchedEmployeeDetailsByNIC,
+    getSearchedRetiredEmployeeDetailsByNIC,
     deleteEmployee,
     getAllWorkingChefsDetails,
     getAllWorkingReceptionistsDetails,
