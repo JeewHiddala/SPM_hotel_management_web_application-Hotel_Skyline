@@ -26,9 +26,9 @@ class EditEmployee extends Component {
     }
 
     componentDidMount() {
-        const editRoomdetails = this.props.match.params.id;
-        console.log("rrrr" + editRoomdetails);
-        axios.get(`http://localhost:8100/employee/${editRoomdetails}`)
+        const editEmployeedetails = this.props.match.params.id;
+        console.log("rrrr" + editEmployeedetails);
+        axios.get(`http://localhost:8100/employee/${editEmployeedetails}`)
           .then(response => {
             this.setState({ id: response.data.data._id })
             this.setState({ name: response.data.data.name })
