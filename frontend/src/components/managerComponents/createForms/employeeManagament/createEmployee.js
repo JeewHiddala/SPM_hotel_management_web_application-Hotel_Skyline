@@ -172,7 +172,7 @@ class CreateEmployee extends Component {
                                             </button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Ingredient Ordering</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Employee Attendence</button></a>
-                                            <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Monthly Salary Management</button></a>
+                                            <a href="/salaryManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Salary Management</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Price Lists</button></a>
                                         </div>
                                     </div>
@@ -225,7 +225,7 @@ class CreateEmployee extends Component {
                                                         <option value="Receptionist">Receptionist</option>
                                                         <option value="Kitchen Head">Kitchen Head</option>
                                                         <option value="Chef">Chef</option>
-                                                        <option value="Assistant Cook">Cook</option>
+                                                        <option value="Cook">Cook</option>
                                                         <option value="Assistant Manager">Assistant Manager</option>
                                                         <option value="Bar Man">Bar Man</option>
                                                         <option value="Bar Manager">Bar Manager</option>
