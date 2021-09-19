@@ -9,6 +9,7 @@ module.exports = function () {
     router.get('/retiredEmployees/', employeeController.getAllRetiredEmployeesDetails);       //get all retired employees.
     router.get('/workingChefs/', employeeController.getAllWorkingChefsDetails);       //get all working employees.
     router.get('/workingReceptionists/', employeeController.getAllWorkingReceptionistsDetails);       //get all working employees.
+    router.get('/totalWorkingEmployeeSalary/', employeeController.getAllWorkingEmployeesSalaryCount);       //get total salary amount all employees.
     router.get('/:id', employeeController.getSelectedEmployeeDetails);       //get selected employees details.
     router.get('/get-employee/:userData', employeeController.getEmployeeDetails);       //get employees.
     router.get('/search/:nicNo', employeeController.getSearchedEmployeeDetailsByNIC); // get search employee details using employee nic number.

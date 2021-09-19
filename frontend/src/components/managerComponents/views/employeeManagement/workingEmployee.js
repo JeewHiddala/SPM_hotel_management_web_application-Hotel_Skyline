@@ -20,6 +20,7 @@ class WorkingEmployee extends Component {
         this.dropdown = this.dropdown.bind(this);
         this.onChange = this.onChange.bind(this);
         this.navigateSearchEmployeePage = this.navigateSearchEmployeePage.bind(this);
+        this.navigateHRSalaryReportPage = this.navigateHRSalaryReportPage.bind(this);
         this.resignEmployee = this.resignEmployee.bind(this);           //change working state of employee
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.workingEmployee = this.workingEmployee.bind(this);     //pagination
@@ -65,6 +66,10 @@ class WorkingEmployee extends Component {
     // back(e) {
     //     window.location = '/adminSubcategories'
     // }
+
+    navigateHRSalaryReportPage(e) {
+        window.location = '/salaryManagement'
+    }
 
     workingEmployee(page) {               //pagination
         console.log("Pagef", page);
@@ -165,7 +170,7 @@ class WorkingEmployee extends Component {
                                             </button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Ingredient Ordering</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Employee Attendence</button></a>
-                                            <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Monthly Salary Management</button></a>
+                                            <a href="/salaryManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Salary Management</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Price Lists</button></a>
                                         </div>
                                     </div>
@@ -244,7 +249,7 @@ class WorkingEmployee extends Component {
                                         activeClassName={'active'}
                                     />
                                     <div className= "generateReportbtn">
-                                    <button type="button" className="btn btn-dark">Generate Report</button>
+                                    <button type="button" className="btn btn-dark" onClick={e => this.navigateHRSalaryReportPage(e)}>Generate Human Resourse Report</button>
                                     </div>
                                 </div>
                             </div>
