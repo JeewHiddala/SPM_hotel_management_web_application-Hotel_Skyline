@@ -138,12 +138,12 @@ html{
     font-size: 1.2rem;
   }
   
-  input:hover,
+  /* input:hover,
   select:hover,
   textarea:hover,
   button:hover{
     border: 0.1rem #404040 solid;
-  }
+  } */
   
   /* Header */
   .header a{
