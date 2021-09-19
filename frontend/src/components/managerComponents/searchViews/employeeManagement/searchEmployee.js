@@ -11,6 +11,7 @@ const initialState = {      //initiate states
     mobileNumber: 0,
     nicNo: '',
     salary: 0,
+    isWorking: 1,
     userName: '',
     password: '',
     userData: "",
@@ -23,6 +24,8 @@ class EditEmployee extends Component {
         // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
+        this.resignEmployee = this.resignEmployee.bind(this);           //change working state of employee
+        this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
     }
 
     componentDidMount() {
@@ -39,6 +42,7 @@ class EditEmployee extends Component {
             this.setState({ salary: response.data.data.salary })
             this.setState({ userName: response.data.data.userName })
             this.setState({ password: response.data.data.password })
+            this.setState({ isWorking: response.data.data.isWorking })
     
             console.log("stat"+response.data.data)
           })
@@ -52,105 +56,70 @@ class EditEmployee extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    resignEmployee(e , employeeId) {
+        console.log("I am on Delete", employeeId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Resign that Employee!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.patch(`http://localhost:8100/employee/resign/${employeeId}`)
+                Swal.fire(
+                    'Resigned!',
+                    'Employee has been resigned.',
+                    'success'
+                )
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/workingEmployee'
+                    }
+        
+                })
+                // // window.location.reload(false);
+                // window.location = '/workingEmployee'
+            }
+        })
+    }
+
+    deleteRetiredEmployee(e , employeeId) {
+        console.log("I am on Delete", employeeId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it permanently!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/employee/${employeeId}`)
+                Swal.fire(
+                    'Deleted!',
+                    'Employee has been deleted.',
+                    'success'
+                )
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/workingEmployee'
+                    }
+                })
+            }
+        })
+    }
+
+    navigateEditWorkingEmployeePage(e, employeeId) {
+        window.location = `/updateWorkingEmployee/${employeeId}`
+    }
+
     back(e) {
         window.location = '/workingEmployee'
     }
-
-    // onSubmit(e) {      //submit details
-    //     e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-    //     if (!this.state.position.localeCompare("Manager") || !this.state.position.localeCompare("Receptionist") || !this.state.position.localeCompare("Kitchen Head")) {
-    //         AuthService.register(
-    //             this.state.userName,
-    //             this.state.password,
-    //             this.state.position
-    //         ).then(
-    //             response => {
-    //                 this.setState({
-    //                     userData: response.data.data._id,
-    //                 });
-    //                 let employee = {
-    //                     name: this.state.name,
-    //                     position: this.state.position,
-    //                     email: this.state.email,
-    //                     mobileNumber: this.state.mobileNumber,
-    //                     nicNo: this.state.nicNo,
-    //                     salary: this.state.salary,
-    //                     userName: this.state.userName,
-    //                     password: this.state.password,
-    //                     userData: this.state.userData
-    //                 }
-    //                 console.log('DATA TO SEND', employee);
-    //                 axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
-    //                     .then(response => {
-    //                         // alert('Employee Data successfully inserted')
-    //                         this.setState({
-    //                             name: '',
-    //                             position: '',
-    //                             email: '',
-    //                             mobileNumber: 0,
-    //                             nicNo: '',
-    //                             salary: 0,
-    //                             userName: '',
-    //                             password: '',
-    //                             userData: ''
-    //                         })
-    //                         Swal.fire({
-    //                             position: 'center',
-    //                             icon: 'success',
-    //                             title: 'Updated Employee details has been saved',
-    //                             showConfirmButton: false,
-    //                             timer: 1500
-    //                         })
-    //                     })
-    //                     .catch(error => {
-    //                         console.log(error.message);
-    //                         alert(error.message)
-    //                     })
-    //             },
-    //             error => {
-    //                 alert('Auth signup failed');
-    //             }
-    //         );
-    //     }else{
-    //         let employee = {
-    //             name: this.state.name,
-    //             position: this.state.position,
-    //             email: this.state.email,
-    //             mobileNumber: this.state.mobileNumber,
-    //             nicNo: this.state.nicNo,
-    //             salary: this.state.salary,
-    //             userName: this.state.userName,
-    //             password: this.state.password
-    //         }
-    //         console.log('DATA TO SEND', employee);
-    //         axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
-    //             .then(response => {
-    //                 // alert('Employee Data successfully inserted')
-    //                 // this.setState({
-    //                 //     name: '',
-    //                 //     position: '',
-    //                 //     email: '',
-    //                 //     mobileNumber: 0,
-    //                 //     nicNo: '',
-    //                 //     salary: 0,
-    //                 //     userName: '',
-    //                 //     password: ''
-    //                 // })
-    //                 Swal.fire({
-    //                     position: 'center',
-    //                     icon: 'success',
-    //                     title: 'Updated Employee details has been saved',
-    //                     showConfirmButton: false,
-    //                     timer: 1500
-    //                 })
-    //             })
-    //             .catch(error => {
-    //                 console.log(error.message);
-    //                 alert(error.message)
-    //             })
-    //         }
-
-    // }
 
 
     render() {
@@ -325,14 +294,26 @@ class EditEmployee extends Component {
                                                         onChange={this.onChange}
                                                     />
                                                 </div>
+                                                <div className="col">
+                                                    <label htmlFor="states" className="form-label sub-topic">Status</label><br/>
+                                                        {this.state.isWorking == true
+                                                            ? <span className="badge bg-success"> Working </span>
+                                                            : <span className="badge bg-danger"> Retired </span>
+                                                        }
+                                                </div>
                                             </div>
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
                                                     <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
                                                     {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
-                                                </div>
-                                                <div className="col mb-3">
-                                                    {/* <button type="submit" id="button" className="btn btn-success float-end">Update</button> */}
+                                                    {this.state.isWorking == true
+                                                            ? <button type="button" id="button" className="btn btn-warning" onClick={e => this.navigateEditWorkingEmployeePage(e,this.state.id)}>Edit</button>
+                                                            : <button type="button" id="button" className="btn btn-warning" disabled onClick={e => this.navigateEditWorkingEmployeePage(e,this.state.id)}>Edit</button>
+                                                    }
+                                                    {this.state.isWorking == true
+                                                                    ? <button type="button" id="button" className="btn btn-danger" onClick={e => this.resignEmployee(e, this.state.id)}>Retire</button>
+                                                                    : <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteRetiredEmployee(e, this.state.id)}>Delete</button>
+                                                                }
                                                 </div>
                                             </div>
                                         </form>
