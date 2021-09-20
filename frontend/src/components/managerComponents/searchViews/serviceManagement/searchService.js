@@ -16,7 +16,8 @@ class SearchService extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
-        // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
+        this.deleteService = this.deleteService.bind(this);
+        this.navigateEditServicePage = this.navigateEditServicePage.bind(this);
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
     }
@@ -25,92 +26,87 @@ class SearchService extends Component {
         const searchServicedetails = this.props.match.params.id;
         console.log("rrrr" + searchServicedetails);
         axios.get(`http://localhost:8100/service/search/${searchServicedetails}`)
-          .then(response => {
-            this.setState({ id: response.data.data._id })
-            this.setState({ serviceNo: response.data.data.serviceNo })
-            this.setState({ name: response.data.data.name })
-            this.setState({ addedDate: response.data.data.addedDate })
-            this.setState({ pricePerHour: response.data.data.pricePerHour })
-            this.setState({ description: response.data.data.description })
-            this.setState({ employeeCount: response.data.data.employeeCount })
-    
-            console.log("stat"+response.data.data)
-          })
-          .catch(error => {
-            alert(error.message)
-          })
-    
-      }
+            .then(response => {
+                this.setState({ id: response.data.data._id })
+                this.setState({ serviceNo: response.data.data.serviceNo })
+                this.setState({ name: response.data.data.name })
+                this.setState({ addedDate: response.data.data.addedDate })
+                this.setState({ pricePerHour: response.data.data.pricePerHour })
+                this.setState({ description: response.data.data.description })
+                this.setState({ employeeCount: response.data.data.employeeCount })
+
+                console.log("stat" + response.data.data)
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Sorry. There is no data according to this Room number!',
+                    footer: '<a href="/serviceManagement"/>'
+                })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = '/serviceManagement'
+                        }
+
+                    })
+            })
+    }
 
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
+    }
+
+    navigateEditServicePage(e, serviceId) {
+        window.location = `/updateService/${serviceId}`
+    }
+
+    deleteService(e, serviceId) {
+        console.log("I am on Delete", serviceId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it permanently!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/service/${serviceId}`)
+                Swal.fire(
+                    'Deleted!',
+                    'Service has been deleted.',
+                    'success'
+                )
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = '/serviceManagement'
+                        }
+                    })
+            }
+        })
     }
 
     back(e) {
         window.location = '/serviceManagement'
     }
 
-    // onSubmit(e) {      //submit details
-    //     e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-    //     let service = {
-    //         serviceNo: this.state.serviceNo,
-    //         name: this.state.name,
-    //         addedDate: this.state.addedDate,
-    //         pricePerHour: this.state.pricePerHour,
-    //         description: this.state.description,
-    //         employeeCount: this.state.employeeCount
-    //     }
-    //     console.log('DATA TO SEND', service);    
-    //     axios.patch(`http://localhost:8100/service/update/${this.state.id}`, service)
-    //         .then(response => {
-    //             // alert('Service Data successfully inserted')
-    //             // this.setState({ 
-    //             //     serviceNo: '',
-    //             //     name: '',
-    //             //     addedDate: '',
-    //             //     pricePerHour: 0,
-    //             //     description: '',
-    //             //     employeeCount: 0
-    //             //  })
-    //             Swal.fire({
-    //                 position: 'center',
-    //                 icon: 'success',
-    //                 title: 'Updated Service details has been saved',
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //               })
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message);
-    //             alert(error.message)
-    //         })
-    // }
-
 
     render() {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
-                        <h3><b className ="super-topic">Manager Dashboard</b></h3>
+                        <h3><b className="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
-                            <div className="row">
+                                <div className="row">
                                     <div className="container" >
-                                    <h5><b className="sub-topic">Creations</b></h5>
+                                        <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Room Management</button></a>
                                             <button type="button" className="list-group-item list-group-item-action " >
@@ -136,97 +132,87 @@ class SearchService extends Component {
                                 </div>
                                 <br /><br /><br /><br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    {/* <div className="float-end">
-                                        <button type="button" className="btn btn-success">Create Employee</button>
-                                    </div> */}
-                                    
-                                    {/* <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
-                                        </form>
-                                    </div> */}
                                     <div className="col-4">
-                                        <br/>
+                                        <br />
                                         <h4 className="topic"><b>Searched Service Details</b></h4>
                                     </div>
 
                                     <br />
                                     <div className="container">
-                                    <form onSubmit={this.onSubmit}>
-                                        <div className = "row mb-3">
-                                        <div className="col-6">
-                                            <label htmlFor="serviceNo" className="form-label sub-topic">Service Number</label>
-                                            <input
-                                                readOnly
-                                                type="text"
-                                                className="form-control"
-                                                placeholder = "Enter Service Number"
-                                                id="serviceNo"
-                                                name="serviceNo"    //give state name
-                                                pattern="[A-Z]{2}[0-9]{3}"
-                                                required
-                                                value={this.state.serviceNo}      //bind state value
-                                                onChange={this.onChange}    //don't call function. only give a reference.
-                                            />
-                                        </div>
-                                        <div className="col-6">
-                                            <label htmlFor="name" className="form-label sub-topic">Service Name</label>
-                                            <input
-                                                readOnly
-                                                type="text"
-                                                className="form-control"
-                                                placeholder = "Enter Service Number"
-                                                id="name"
-                                                name="name"    //give state name
-                                                required
-                                                value={this.state.name}      //bind state value
-                                                onChange={this.onChange}    //don't call function. only give a reference.
-                                            />
-                                        </div>
-                                        </div>
-                                        <div className = "row mb-3">
-                                        <div className="col-6">
-                                            <label htmlFor="addedDate" className="form-label sub-topic">Added Date</label>
-                                            <input
-                                                readOnly
-                                                type="date"
-                                                className="form-control"
-                                                id="addedDate"
-                                                name="addedDate"    //give state name
-                                                required
-                                                value={this.state.addedDate}      //bind state value
-                                                onChange={this.onChange}    //don't call function. only give a reference.
-                                            />
-                                        </div>
-                                            <div className="col-6">
-                                                <label htmlFor="pricePerHour" className="form-label sub-topic">Price Per Hour</label>
-                                                <input
-                                                    readOnly
-                                                    type="number"
-                                                    className="form-control"
-                                                    id="pricePerHour"
-                                                    name="pricePerHour"
-                                                    step="0.01"
-                                                    required
-                                                    value={this.state.pricePerHour}
-                                                    onChange={this.onChange}
-                                                />
+                                        <form onSubmit={this.onSubmit}>
+                                            <div className="row mb-3">
+                                                <div className="col-6">
+                                                    <label htmlFor="serviceNo" className="form-label sub-topic">Service Number</label>
+                                                    <input
+                                                        readOnly
+                                                        type="text"
+                                                        className="form-control"
+                                                        placeholder="Enter Service Number"
+                                                        id="serviceNo"
+                                                        name="serviceNo"    //give state name
+                                                        pattern="[A-Z]{2}[0-9]{3}"
+                                                        required
+                                                        value={this.state.serviceNo}      //bind state value
+                                                        onChange={this.onChange}    //don't call function. only give a reference.
+                                                    />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label htmlFor="name" className="form-label sub-topic">Service Name</label>
+                                                    <input
+                                                        readOnly
+                                                        type="text"
+                                                        className="form-control"
+                                                        placeholder="Enter Service Number"
+                                                        id="name"
+                                                        name="name"    //give state name
+                                                        required
+                                                        value={this.state.name}      //bind state value
+                                                        onChange={this.onChange}    //don't call function. only give a reference.
+                                                    />
+                                                </div>
                                             </div>
+                                            <div className="row mb-3">
+                                                <div className="col-6">
+                                                    <label htmlFor="addedDate" className="form-label sub-topic">Added Date</label>
+                                                    <input
+                                                        readOnly
+                                                        type="date"
+                                                        className="form-control"
+                                                        id="addedDate"
+                                                        name="addedDate"    //give state name
+                                                        required
+                                                        value={this.state.addedDate}      //bind state value
+                                                        onChange={this.onChange}    //don't call function. only give a reference.
+                                                    />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label htmlFor="pricePerHour" className="form-label sub-topic">Price Per Hour</label>
+                                                    <input
+                                                        readOnly
+                                                        type="number"
+                                                        className="form-control"
+                                                        id="pricePerHour"
+                                                        name="pricePerHour"
+                                                        step="0.01"
+                                                        required
+                                                        value={this.state.pricePerHour}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </div>
                                             </div>
                                             <div className="col mb-3">
                                                 <label htmlFor="description" className="form-label sub-topic">Description</label>
                                                 <textarea
-                                                   readOnly
-                                                   className="form-control"
-                                                   placeholder = "Enter Description"
-                                                   id="description"
-                                                   name="description"    //give state name
-                                                   maxLength="100"
-                                                   value={this.state.description}      //bind state value
-                                                   onChange={this.onChange}    //don't call function. only give a reference. 
+                                                    readOnly
+                                                    className="form-control"
+                                                    placeholder="Enter Description"
+                                                    id="description"
+                                                    name="description"    //give state name
+                                                    maxLength="100"
+                                                    value={this.state.description}      //bind state value
+                                                    onChange={this.onChange}    //don't call function. only give a reference. 
                                                 />
                                             </div>
                                             <div className="col-6">
@@ -246,27 +232,17 @@ class SearchService extends Component {
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
                                                     <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
-                                                    {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
-                                                </div>
-                                                <div className="col mb-3">
-                                                    {/* <button type="submit" id="button" className="btn btn-success float-end">Update</button> */}
+                                                    <button type="button" id="button" className="btn btn-warning" onClick={e => this.navigateEditServicePage(e, this.state.id)}>Edit</button>
+                                                    <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteService(e, this.state.id)}>Delete</button>
                                                 </div>
                                             </div>
-                                    </form>
-                                </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>

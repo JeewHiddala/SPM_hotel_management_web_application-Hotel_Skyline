@@ -18,10 +18,10 @@ class ServiceManagement extends Component {
         this.navigateCreateServicePage = this.navigateCreateServicePage.bind(this);
         this.onChange = this.onChange.bind(this);
         this.navigateSearchServicePage = this.navigateSearchServicePage.bind(this);
+        this.navigateEditServicePage = this.navigateEditServicePage.bind(this);
         this.dropdown = this.dropdown.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.retrieveServices = this.retrieveServices.bind(this);     //pagination
-        // this.back = this.back.bind(this);
     }
 
     componentDidMount() {   //inbuild function
@@ -57,10 +57,6 @@ class ServiceManagement extends Component {
     navigateCreateServicePage(e) {
         window.location = '/createService'
     }
-
-    // back(e) {
-    //     window.location = '/adminSubcategories'
-    // }
 
     retrieveServices(page) {               //pagination
         console.log("Pagef", page);
@@ -100,7 +96,11 @@ class ServiceManagement extends Component {
                     'Service has been deleted.',
                     'success'
                 )
-                window.location.reload(false);
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/serviceManagement'
+                    }
+                })
             }
         })
     }
@@ -116,22 +116,12 @@ class ServiceManagement extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
@@ -165,7 +155,7 @@ class ServiceManagement extends Component {
                                 </div>
                                 <br /><br /><br /><br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateServicePage(e)}>Add New Service</button>
@@ -236,14 +226,6 @@ class ServiceManagement extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>
