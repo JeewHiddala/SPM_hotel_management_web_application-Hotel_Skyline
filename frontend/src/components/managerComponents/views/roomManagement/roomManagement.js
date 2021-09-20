@@ -17,13 +17,12 @@ class RoomManagement extends Component {
         }
         this.deleteRoom = this.deleteRoom.bind(this);
         this.navigateCreateRoomPage = this.navigateCreateRoomPage.bind(this);
+        this.navigateEditRoomPage = this.navigateEditRoomPage.bind(this);
         this.navigateSearchRoomPage = this.navigateSearchRoomPage.bind(this);
-
         this.dropdown = this.dropdown.bind(this);
         this.onChange = this.onChange.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.retrieveRooms = this.retrieveRooms.bind(this);     //pagination
-        // this.back = this.back.bind(this);
     }
 
     componentDidMount() {   //inbuild function
@@ -57,10 +56,6 @@ class RoomManagement extends Component {
     navigateCreateRoomPage(e) {
         window.location = '/createRoom'
     }
-
-    // back(e) {
-    //     window.location = '/adminSubcategories'
-    // }
 
     retrieveRooms(page) {               //pagination
         console.log("Pagef", page);
@@ -100,7 +95,11 @@ class RoomManagement extends Component {
                     'Room has been deleted.',
                     'success'
                 )
-                window.location.reload(false);
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/roomManagement'
+                    }
+                })
             }
         })
     }
@@ -116,16 +115,6 @@ class RoomManagement extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
@@ -138,10 +127,6 @@ class RoomManagement extends Component {
                                         <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" id="active-button" aria-current="true">Room Management</button></a>
-                                            {/* <button type="button" className="list-group-item list-group-item-action " >
-                                                Employee Management
-                                            </button> */}
-
                                             <button type="button" className="list-group-item list-group-item-action" data-bs-toggle="dropdown" aria-expanded="false" onClick={e => this.dropdown(e)}>
                                                 Employee Management
                                             </button>
@@ -244,14 +229,6 @@ class RoomManagement extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>
