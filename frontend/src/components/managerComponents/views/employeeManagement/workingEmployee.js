@@ -19,13 +19,12 @@ class WorkingEmployee extends Component {
         this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
         this.dropdown = this.dropdown.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.navigateEditWorkingEmployeePage = this.navigateEditWorkingEmployeePage.bind(this);
         this.navigateSearchEmployeePage = this.navigateSearchEmployeePage.bind(this);
         this.navigateHRSalaryReportPage = this.navigateHRSalaryReportPage.bind(this);
         this.resignEmployee = this.resignEmployee.bind(this);           //change working state of employee
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.workingEmployee = this.workingEmployee.bind(this);     //pagination
-        // this.deleteAdmin = this.deleteAdmin.bind(this);
-        // this.back = this.back.bind(this);
     }
 
     componentDidMount() {   //inbuild function
@@ -62,10 +61,6 @@ class WorkingEmployee extends Component {
     navigateCreateEmployeePage(e) {
         window.location = '/createEmployee'
     }
-
-    // back(e) {
-    //     window.location = '/adminSubcategories'
-    // }
 
     navigateHRSalaryReportPage(e) {
         window.location = '/salaryManagement'
@@ -115,7 +110,11 @@ class WorkingEmployee extends Component {
                     'Employee has been resigned.',
                     'success'
                 )
-                window.location.reload(false);
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/workingEmployee'
+                    }
+                })
             }
         })
     }
@@ -128,23 +127,12 @@ class WorkingEmployee extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
-
+                            <div className="col-3 align-self-stretch">
                                 <div className="row">
                                     <div className="container" >
                                     <h5><b className="sub-topic">Creations</b></h5>
@@ -177,7 +165,7 @@ class WorkingEmployee extends Component {
                                 </div>
                                 <br /><br /><br /><br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateEmployeePage(e)}>Create Employee</button>
@@ -256,14 +244,6 @@ class WorkingEmployee extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>
