@@ -93,16 +93,6 @@ class SalaryManagement extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
@@ -115,10 +105,6 @@ class SalaryManagement extends Component {
                                         <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Room Management</button></a>
-                                            {/* <button type="button" className="list-group-item list-group-item-action " >
-                                                Employee Management
-                                            </button> */}
-
                                             <button type="button" className="list-group-item list-group-item-action" data-bs-toggle="dropdown" aria-expanded="false" onClick={e => this.dropdown(e)}>
                                                 Employee Management
                                             </button>
@@ -192,8 +178,6 @@ class SalaryManagement extends Component {
                                     <div className= "generateReportbtn">
                                         <button type="button" className="btn btn-dark">Generate Report</button>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
