@@ -41,7 +41,7 @@ class SearchService extends Component {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Sorry. There is no data according to this Room number!',
+                    text: 'Sorry. There is no data according to this Service number!',
                     footer: '<a href="/serviceManagement"/>'
                 })
                     .then((result) => {
