@@ -17,8 +17,7 @@ class SearchRoom extends Component {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
         this.deleteRoom = this.deleteRoom.bind(this);
-        // this.navigateEditRoomPage = this.onChange.bind(this);
-        // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
+        this.navigateEditRoomPage = this.navigateEditRoomPage.bind(this);
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
     }
@@ -44,7 +43,7 @@ class SearchRoom extends Component {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Sorry. There is no data according to this Room number!',
-                footer: '<a href="/retiredEmployee"/>'
+                footer: '<a href="/roomManagement"/>'
               })
               .then((result) => {
                 if (result.isConfirmed) {
@@ -59,10 +58,6 @@ class SearchRoom extends Component {
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
     }
-
-    // navigateEditRoomPage(e) {                 //edit
-    //     window.location = `/updateRoom/${roomId}`
-    // }
 
     back(e) {
         window.location = '/roomManagement'
@@ -105,16 +100,6 @@ class SearchRoom extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
@@ -152,16 +137,6 @@ class SearchRoom extends Component {
                             </div>
                             <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    {/* <div className="float-end">
-                                        <button type="button" className="btn btn-success">Create Employee</button>
-                                    </div> */}
-                                    
-                                    {/* <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
-                                        </form>
-                                    </div> */}
                                     <div className="col-4">
                                         <br/>
                                         <h4 className="topic"><b>Searched Room Details</b></h4>
@@ -249,11 +224,6 @@ class SearchRoom extends Component {
                                                     <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
                                                     <button type="button" id="button" className="btn btn-warning" onClick={e => this.navigateEditRoomPage(e, this.state.id)}>Edit</button>
                                                     <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteRoom(e, this.state.id)}>Delete</button>
-                                                    {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
-                                                </div>
-                                                <div className="col mb-3">
-                                                    {/* <button type="submit" id="button" className="btn btn-danger float-end">Delete</button>
-                                                    <button type="submit" id="button" className="btn btn-warning float-end" onClick={e => this.navigateEditRoomPage(e)}>Edit</button>   */}
                                                 </div>
                                             </div>
                                     </form>
@@ -263,14 +233,6 @@ class SearchRoom extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>
