@@ -21,7 +21,6 @@ class SearchEmployeeInRetiredSection extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
-        // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
         this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
@@ -104,22 +103,12 @@ class SearchEmployeeInRetiredSection extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
@@ -149,18 +138,8 @@ class SearchEmployeeInRetiredSection extends Component {
                                 </div>
                                 <br /><br /><br /><br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    {/* <div className="float-end">
-                                        <button type="button" className="btn btn-success">Create Employee</button>
-                                    </div> */}
-
-                                    {/* <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
-                                        </form>
-                                    </div> */}
                                     <div className="col-6">
                                         <br />
                                         <h4 className="topic"><b>Searched Employee Details</b></h4>
@@ -286,9 +265,6 @@ class SearchEmployeeInRetiredSection extends Component {
                                                     <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteRetiredEmployee(e, this.state.id)}>Delete</button>
                                                     {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
                                                 </div>
-                                                <div className="col mb-3">
-                                                    {/* <button type="submit" id="button" className="btn btn-success float-end">Update</button> */}
-                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -297,14 +273,6 @@ class SearchEmployeeInRetiredSection extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>

@@ -20,8 +20,6 @@ class RetiredEmployee extends Component {
         this.navigateSearchEmployeePage = this.navigateSearchEmployeePage.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.retiredEmployee = this.retiredEmployee.bind(this);     //pagination
-        // this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
-        // this.back = this.back.bind(this);
     }
 
     componentDidMount() {   //inbuild function
@@ -37,18 +35,6 @@ class RetiredEmployee extends Component {
         })
 
     }
-
-    // navigateEditAdminPage(e, adminId) {
-    //     window.location = `/updateAdmin/${adminId}`
-    // }
-
-    // navigateCreateEmployeePage(e) {
-    //     window.location = '/createEmployee'
-    // }
-
-    // back(e) {
-    //     window.location = '/adminSubcategories'
-    // }
 
     retiredEmployee(page) {               //pagination
         console.log("Pagef", page);
@@ -100,7 +86,11 @@ class RetiredEmployee extends Component {
                     'Employee has been deleted.',
                     'success'
                 )
-                window.location.reload(false);
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/retiredEmployee'
+                    }
+                })
             }
         })
     }
@@ -116,32 +106,18 @@ class RetiredEmployee extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
                                     <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Room Management</button></a>
-                                            {/* <button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
-                                                Employee Management
-                                            </button> */}
-
                                             <button type="button" className="list-group-item list-group-item-action active" id="active-button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="true" onClick={e => this.dropdown(e)}>
                                                 Employee Management
                                             </button>
@@ -169,12 +145,8 @@ class RetiredEmployee extends Component {
                                 </div>
                                 <br /><br /><br /><br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    {/* <div className="float-end">
-                                        <button type="button" className="btn btn-success" onClick={e => this.navigateCreateEmployeePage(e)}>Create Employee</button>
-                                    </div> */}
-                                    
                                     <div className="float-end">
                                         <form className="d-flex" onSubmit={this.navigateSearchEmployeePage}>
                                             <input 
@@ -242,14 +214,6 @@ class RetiredEmployee extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>

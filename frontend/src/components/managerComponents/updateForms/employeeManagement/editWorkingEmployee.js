@@ -125,17 +125,6 @@ class EditEmployee extends Component {
             console.log('DATA TO SEND', employee);
             axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
                 .then(response => {
-                    // alert('Employee Data successfully inserted')
-                    // this.setState({
-                    //     name: '',
-                    //     position: '',
-                    //     email: '',
-                    //     mobileNumber: 0,
-                    //     nicNo: '',
-                    //     salary: 0,
-                    //     userName: '',
-                    //     password: ''
-                    // })
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -157,22 +146,12 @@ class EditEmployee extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
@@ -202,18 +181,8 @@ class EditEmployee extends Component {
                                 </div>
                                 <br /><br /><br /><br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    {/* <div className="float-end">
-                                        <button type="button" className="btn btn-success">Create Employee</button>
-                                    </div> */}
-
-                                    {/* <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
-                                        </form>
-                                    </div> */}
                                     <div className="col-4">
                                         <br />
                                         <h4 className="topic"><b>Edit Employee Details</b></h4>
@@ -362,14 +331,6 @@ class EditEmployee extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>
