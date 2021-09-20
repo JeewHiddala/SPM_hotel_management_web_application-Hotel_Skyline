@@ -17,13 +17,13 @@ const initialState = {      //initiate states
     userData: "",
 }
 
-class EditEmployee extends Component {
+class SearchEmployee extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
-        // this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
+        this.navigateEditWorkingEmployeePage = this.navigateEditWorkingEmployeePage.bind(this);
         this.resignEmployee = this.resignEmployee.bind(this);           //change working state of employee
         this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
     }
@@ -47,7 +47,17 @@ class EditEmployee extends Component {
             console.log("stat"+response.data.data)
           })
           .catch(error => {
-            alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Sorry. There is no data according to this NIC number!',
+                footer: '<a href="/workingEmployee"/>'
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/workingEmployee'
+                    }
+                })
           })
     
       }
@@ -126,22 +136,12 @@ class EditEmployee extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
@@ -171,18 +171,8 @@ class EditEmployee extends Component {
                                 </div>
                                 <br /><br /><br /><br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    {/* <div className="float-end">
-                                        <button type="button" className="btn btn-success">Create Employee</button>
-                                    </div> */}
-
-                                    {/* <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
-                                        </form>
-                                    </div> */}
                                     <div className="col-6">
                                         <br />
                                         <h4 className="topic"><b>Searched Employee Details</b></h4>
@@ -305,7 +295,6 @@ class EditEmployee extends Component {
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
                                                     <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
-                                                    {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
                                                     {this.state.isWorking == true
                                                             ? <button type="button" id="button" className="btn btn-warning" onClick={e => this.navigateEditWorkingEmployeePage(e,this.state.id)}>Edit</button>
                                                             : <button type="button" id="button" className="btn btn-warning" disabled onClick={e => this.navigateEditWorkingEmployeePage(e,this.state.id)}>Edit</button>
@@ -323,14 +312,6 @@ class EditEmployee extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>
@@ -338,4 +319,4 @@ class EditEmployee extends Component {
     }
 }
 
-export default EditEmployee;
+export default SearchEmployee;
