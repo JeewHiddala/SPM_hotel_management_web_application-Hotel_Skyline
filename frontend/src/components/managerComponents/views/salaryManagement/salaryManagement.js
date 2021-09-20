@@ -183,12 +183,6 @@ class SalaryManagement extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>
