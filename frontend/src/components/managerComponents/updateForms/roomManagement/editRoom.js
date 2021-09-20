@@ -60,14 +60,6 @@ class EditRoom extends Component {
         console.log('DATA TO SEND', room);    
         axios.patch(`http://localhost:8100/room/update/${this.state.id}`, room)
             .then(response => {
-                // alert('Room Data successfully inserted')
-                // this.setState({ 
-                //     roomNo: '',
-                //     category: '',
-                //     airConditioningCategory: '',
-                //     description: '',
-                //     price: 0
-                //  })
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -87,16 +79,6 @@ class EditRoom extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center">
                     <div className="container-dash">
@@ -134,16 +116,6 @@ class EditRoom extends Component {
                             </div>
                             <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    {/* <div className="float-end">
-                                        <button type="button" className="btn btn-success">Create Employee</button>
-                                    </div> */}
-                                    
-                                    {/* <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
-                                        </form>
-                                    </div> */}
                                     <div className="col-4">
                                         <br/>
                                         <h4 className="topic"><b>Edit Room Details</b></h4>
@@ -246,14 +218,6 @@ class EditRoom extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>
