@@ -235,9 +235,6 @@ class SearchService extends Component {
                                                     <button type="button" id="button" className="btn btn-warning" onClick={e => this.navigateEditServicePage(e, this.state.id)}>Edit</button>
                                                     <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteService(e, this.state.id)}>Delete</button>
                                                 </div>
-                                                <div className="col mb-3">
-                                                    {/* <button type="submit" id="button" className="btn btn-success float-end">Update</button> */}
-                                                </div>
                                             </div>
                                         </form>
                                     </div>
