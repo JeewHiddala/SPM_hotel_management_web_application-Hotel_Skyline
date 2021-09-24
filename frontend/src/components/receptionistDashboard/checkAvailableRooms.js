@@ -15,6 +15,8 @@ class CheckAvailableRooms extends Component {
             id: '',
             roomNo: '',
             room: [],
+            searchValue: '',
+
             
 
 
@@ -72,6 +74,26 @@ class CheckAvailableRooms extends Component {
         this.setState({ isAvailable: false });
     }
 
+    searchHandler = (event) => {
+
+
+
+        let searchResults = this.state.room;
+        searchResults = searchResults.filter(result => {
+            return result.roomNo.toLowerCase().search(
+                event.target.value.toLowerCase()) !== -1;
+
+        });
+
+        this.setState({
+            room: searchResults,
+            searchValue: event.target.value.toLowerCase()
+
+        }, () => console.log('state', this.state))
+
+
+    };
+
 
 
     render() {
@@ -116,7 +138,15 @@ class CheckAvailableRooms extends Component {
 
                                     <div className="float-end">
                                         <form className="d-flex" >
-                                          
+                                        <input
+                                                className="form-control me-2"
+                                                type="search"
+                                                placeholder="Enter room number"
+                                                aria-label="Search"
+                                                name="roomNo"
+                                                value={this.state.searchValue}
+                                                onChange={this.searchHandler}
+                                            />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
 
