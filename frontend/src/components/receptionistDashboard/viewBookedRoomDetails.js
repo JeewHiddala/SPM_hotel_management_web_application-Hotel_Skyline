@@ -1,10 +1,7 @@
 import './createBooking.css';
-// import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
-// import image from '../images/w1.jpg';
-// import CheckoutSteps from '../checkoutSteps/checkoutSteps';
-
+import moment from 'moment';
 
 const initialState = {
 
@@ -22,39 +19,10 @@ const initialState = {
 class viewBookedRoom extends Component {
   constructor(props) {
     super(props);
-    // this.onChange = this.onChange.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
-    // this.onEditorSelect = this.onEditorSelect.bind(this);
-    //  this.onAdminSelect = this.onAdminSelect.bind(this);
+
     this.state = initialState;
   }
 
-  // componentDidMount() {
-  //     axios.get('http://localhost:7000/editor/')
-  //         .then(response => {
-  //             this.setState({ editors: response.data.data }, () => {
-  //                 let data = [];
-  //                 this.state.editors.map((item, index) => {
-  //                     let editors = {
-  //                         value: item._id,
-  //                         label: item.name
-  //                     }
-  //                     data.push(editors)
-  //                     console.log("a" + editors);
-  //                 });
-  //                 this.setState({ options1: data });
-  //             })
-  //         })
-
-  // }
-
-  // onChange(e) {
-  //     this.setState({ [e.target.name]: e.target.value });
-  // }
-
-  // onEditorSelect(e) {
-  //     this.setState({ selectedEditors: e ? e.map(item => item.value) : [] });
-  // }
 
   componentDidMount() {
 
@@ -84,165 +52,196 @@ class viewBookedRoom extends Component {
   }
 
 
-
   render() {
     return (
-      <div className="container-box"><br />
 
-        <h2>View Booking Details</h2>
-        <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
+      <div>
+        <br /><br />
+        <div className="row justify-content-center" id="dash-box">
+          <div className="container-dash">
+            <h2><b>Receptionist Dashboard</b></h2>
+            <div className="row justify-content-evenly">
+              <div className="col-3 align-self-stretch">
 
-        </h5>
-
-        <form >
-
-            <div className="row mb-3">
-              <div className="col" style={{ textAlign: "left" }}>
-                <label htmlFor="bookingNo" className="form-label">Booking No</label>
-                <input type="text"
-                  className="form-control"
-                  id="bookingNo"
-                  name="bookingNo"
-                  placeholder="Booking Number"
-                  value={this.state.bookingNo}
-
-                />
-              </div>
-
-
-              <div className="col">
-                <label htmlFor="customerId" className="form-label">Customer Id</label>
-
-                <input type="text"
-                  className="form-control"
-                  id="customerId"
-                  name="customerId"
-                  placeholder="Enter customer ID"
-                  value={this.state.customerId}
-
-                />
-              </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col">
                 <div className="row">
-                  <div className="col">
-                    <label htmlFor="roomNo" className="form-label">Room No</label>
-                    {/* <Select 
-                                    placeholder="Select Room Numbers"
-                                    options={this.state.options}
-                                    onChange={this.onRoomSelect}
-                                    className="basic-multi-select"
-                                    isMulti
-                                    /> */}
-                    <input type="roomNo"
-                      className="form-control"
-                      id="roomNo"
-                      name="roomNo"
-                      placeholder="Enter room number"
-                      value={this.state.roomNo}
-                      onChange={this.onChange}
-                    />
+                  <div className="container" >
+                    <h3 className="h3"><b>Creations</b></h3>
+                    <div className="list-group">
+                      <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Check Available Rooms</button></a>
+                      <a href="/roomBookingManagement" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true" >
+                        Room Booking Management
+                      </button></a>
+                      <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
+                      <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                      <a href="/foodorder" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action">Food Ordering</button></a>
+                      <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service List Bill</button></a>
+                      <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <div className="col-8 align-self-stretch">
+                <div className="container" >
+
+                  <div className="col-4">
+                    <h4 className="topic"><h2>View Booking Details</h2></h4>
                   </div>
 
-                  <div className="col">
-                    <label htmlFor="boardingType" className="form-label">BoardingType</label>
+                  <div className="container">
+                    <form onSubmit={this.onSubmit} onChange={this.onHandle}>
+                      <div className="row mb-3">
+                        <div className="col-6">
+                          <label htmlFor="bookingNo" className="form-label">Booking No</label>
+                          <input type="text"
+                            className="form-control"
+                            id="bookingNo"
+                            name="bookingNo"
+                            placeholder="Booking Number"
+                            value={this.state.bookingNo}
+                            disabled
 
-                    <input type="text"
-                      className="form-control"
-                      id="boardingType"
-                      name="boardingType"
-                      placeholder="Select Boarding type"
-                      value={this.state.boardingType}
-                      onChange={this.onChange}
-                    />
+                          />
+                        </div>
+
+
+                        <div className="col-6">
+                          <label htmlFor="customerId" className="form-label">Customer Id</label>
+
+                          <input type="text"
+                            className="form-control"
+                            id="customerId"
+                            name="customerId"
+                            placeholder="Enter customer ID"
+                            value={this.state.customerId}
+                            disabled
+
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row mb-3">
+                        <div className="col-6">
+                          <label htmlFor="roomNo" className="form-label">Room No</label>
+
+                          <input type="roomNo"
+                            className="form-control"
+                            id="roomNo"
+                            name="roomNo"
+                            placeholder="Enter room number"
+                            value={this.state.roomNo}
+                            onChange={this.onChange}
+                            disabled
+                          />
+                        </div>
+
+                        <div className="col-6">
+                          <label htmlFor="boardingType" className="form-label">BoardingType</label>
+
+                          <input type="text"
+                            className="form-control"
+                            id="boardingType"
+                            name="boardingType"
+                            placeholder="Select Boarding type"
+                            value={this.state.boardingType}
+                            onChange={this.onChange}
+                            disabled
+                          />
+                        </div>
+                      </div>
+
+
+                      <div className="row mb-3">
+                        <div className="col-6">
+                          <label htmlFor="bookingDate" className="form-label">Booking Date</label>
+
+                          <input type="date"
+                            className="form-control"
+                            id="bookingDate"
+                            name="bookingDate"
+                            disabled
+                            placeholder="Select Booking Date"
+                            value={moment(this.state.bookingDate).locale('en').format('YYYY-MM-DD')}
+
+
+                          />
+                        </div>
+
+
+                        <div className="col-6">
+                          <label htmlFor="noOfGuests" className="form-label">No of Guests</label>
+                          <input type="number"
+                            className="form-control"
+                            id="noOfGuests"
+                            name="noOfGuests"
+                            placeholder="Enter number of guests"
+                            value={this.state.noOfGuests}
+                            disabled
+
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row mb-3">
+                        <div className="col-6">
+                          <label htmlFor="days" className="form-label">Days</label>
+
+                          <input type="number"
+                            className="form-control"
+                            id="days"
+                            name="days"
+                            placeholder="Enter no of days"
+                            value={this.state.days}
+                            disabled
+                          />
+                        </div>
+                        <div className="col-6">
+                          <label htmlFor="arrivalDate" className="form-label">Arrival Date</label>
+
+                          <input type="date"
+                            className="form-control"
+                            id="arrivalDate"
+                            name="arrivalDate"
+                            placeholder="Select arrival date"
+                            value={moment(this.state.arrivalDate).locale('en').format('YYYY-MM-DD')}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-3">
+                        <div className="col-6">
+                          <label htmlFor="remarks" className="form-label">Remarks</label>
+                          <input type="text"
+                            className="form-control"
+                            id="remarks"
+                            name="remarks"
+                            placeholder="Enter remarks"
+                            value={this.state.remarks}
+                            disabled
+
+                          />
+                        </div>
+                        <div>
+                          <br></br>
+                          <button type="button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
-
-              <div className="col">
-                <label htmlFor="bookingDate" className="form-label">Booking Date</label>
-
-                <input type="text"
-                  className="form-control"
-                  id="bookingDate"
-                  name="bookingDate"
-                  placeholder="Select Booking Date"
-                  value={this.state.bookingDate}
-
-                />
-              </div>
             </div>
-            <div className="row mb-3">
-              <div className="col">
-                <div className="row">
-                  <div className="col">
-                    <label htmlFor="noOfGuests" className="form-label">No of Guests</label>
-                    <input type="number"
-                      className="form-control"
-                      id="noOfGuests"
-                      name="noOfGuests"
-                      placeholder="Enter number of guests"
-                      value={this.state.noOfGuests}
-
-                    />
-                  </div>
-
-                  <div className="col">
-                    <label htmlFor="days" className="form-label">Days</label>
-
-                    <input type="number"
-                      className="form-control"
-                      id="days"
-                      name="days"
-                      placeholder="Enter no of days"
-                      value={this.state.days}
-
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <label htmlFor="arrivalDate" className="form-label">Arrival Date</label>
-
-                <input type="text"
-                  className="form-control"
-                  id="arrivalDate"
-                  name="arrivalDate"
-                  placeholder="Select arrival date"
-                  value={this.state.arrivalDate}
-
-                />
-              </div>
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="remarks" className="form-label">Remarks</label>
-
-              <input type="text"
-                className="form-control"
-                id="remarks"
-                name="remarks"
-                placeholder="Enter remarks"
-                value={this.state.remarks}
-
-              />
-            </div>
+          </div>
+        </div >
 
 
-            <button type="button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
 
-          <br>
-          </br>
-
-        </form>
-
-
-      </div>
-
-
+        <br /><br />
+      </div >
     )
   }
 }
+
 
 export default viewBookedRoom;
