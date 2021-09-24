@@ -17,7 +17,7 @@ class CheckUnAvailableRooms extends Component {
             id: '',
             roomNo: '',
             room: [],
-            
+            searchValue: '',
 
         }
 
@@ -106,6 +106,26 @@ class CheckUnAvailableRooms extends Component {
 
 
 
+    searchHandler = (event) => {
+
+
+
+        let searchResults = this.state.room;
+        searchResults = searchResults.filter(result => {
+            return result.roomNo.toLowerCase().search(
+                event.target.value.toLowerCase()) !== -1;
+
+        });
+
+        this.setState({
+            room: searchResults,
+            searchValue: event.target.value.toLowerCase()
+
+        }, () => console.log('state', this.state))
+
+
+    };
+
 
 
 
@@ -154,7 +174,8 @@ class CheckUnAvailableRooms extends Component {
                                                 placeholder="Enter room number"
                                                 aria-label="Search"
                                                 name="roomNo"
-                                               
+                                                value={this.state.searchValue}
+                                                onChange={this.searchHandler}
                                             />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
