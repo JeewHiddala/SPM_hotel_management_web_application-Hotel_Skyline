@@ -77,6 +77,25 @@ import ServiceList from './components/receptionistComponents/createForms/service
 import ViewFood from './components/kitchenHeadComponents/views/foodManagement/viewFood';
 import ServiceList1 from './components/receptionistComponents/createForms/serviceList/serviceList1';
 import ViewIngredientOrder from './components/kitchenHeadComponents/views/ingredientOrderManagement/viewIngredientOrder';
+import updateRoomBooking from './components/receptionistDashboard/updateRoomBookingDetails';
+import CheckUnAvailableRooms from './components/receptionistDashboard/checkUnAvailableRooms';
+import updateFoodOrder from './components/receptionistDashboard/updateFoodOrder';
+import createFoodOrders from './components/receptionistDashboard/createFoodOrders';
+import addfoodproduct from './components/receptionistDashboard/addfoodproduct';
+import updateFoodOrder1 from './components/receptionistDashboard/updateFoodOrde1';
+import updateaddedfoodproduct from './components/receptionistDashboard/updateaddedfoodproduct';
+import kitchentransferredOrderManagement from './components/receptionistDashboard/KitchenTransfreedOrdersManagement';
+import cashPaymentManagement from './components/payment-bill/cashpaymentManagemnt';
+import creditPaymentManagement from './components/payment-bill/creditpaymentManagement';
+import viewCreditPaymentForm from './components/payment-bill/viewcreditpaymentDetails';
+import viewSearchedAvailableRoom from './components/receptionistDashboard/searchViews/viewdsearchedAvailableRoom';
+import viewSearchedUnAvailableRoom from './components/receptionistDashboard/searchViews/viewdsearchedUnAvailableRoom';
+import viewSearchedBookedRoomDetails from './components/receptionistDashboard/searchViews/viewSearchedBookedRoomDetails';
+import viewSearchedCashPayment from './components/receptionistDashboard/searchViews/viewdsearchedCashPayment';
+import viewSearchedCreditPayment from './components/receptionistDashboard/searchViews/viewdsearchedCreditPayment';
+import viewSearchedFoodorder from './components/receptionistDashboard/searchViews/viewSearchedFoodOrder';
+import viewSearchedTransferredFoodorder from './components/receptionistDashboard/searchViews/viewSearchedTransferredFoodOrder';
+
 
 
 function App() {
@@ -108,7 +127,9 @@ function App() {
             <Route path="/checkAvailableRooms" component={CheckAvailableRooms} />
             <Route path="/createBooking" component={createBooking} />
             <Route path="/roomBookingManagement" component={roomBookingManagement} />
+            <Route path="/kitchentransferredOrderManagement" component={kitchentransferredOrderManagement} />
             <Route path="/viewbooking/:id" component={viewBookedRoom} />
+            <Route path="/viewcreditPaymentDetails/:id" component={viewCreditPaymentForm} />
             <Route path="/cashpaymentform/:id" component={PaymentForm} />
             <Route path="/creditpaymentform/:id" component={CreditPaymentForm} />
             {/* <Route path="/paymenthandling" component={PaymentHandling} /> */}
@@ -127,8 +148,23 @@ function App() {
             <Route exact path="/reception/checkout" component={CheckoutHandling} />
             <Route exact path="/reception/createCheckoutBill" component={CreateCheckoutBill} />
             <Route exact path="/reception/viewBill/:id" component={ViewCheckoutBill} />
-
-
+            <Route path="/updateBooking/:id" component={updateRoomBooking} />
+            <Route path="/updateFoodorder/:id" component={updateFoodOrder1} />
+            <Route path="/checkUnAvailableRooms" component={CheckUnAvailableRooms} />
+            <Route path="/cashpaymentManagement" component={cashPaymentManagement} />
+            <Route path="/creditpaymentManagement" component={creditPaymentManagement} />
+            <Route path="/searchAvailableRoom/:id" component={viewSearchedAvailableRoom} />
+            <Route path="/searchUnAvailableRoom/:id" component={viewSearchedUnAvailableRoom} />
+            <Route path="/searchbooking/:id" component={viewSearchedBookedRoomDetails} />
+            <Route path="/searchcashpayment/:id" component={viewSearchedCashPayment} />
+            <Route path="/searchcreditpayment/:id" component={viewSearchedCreditPayment} />
+            <Route path="/searchfoodorder/:id" component={viewSearchedFoodorder} />
+            <Route path="/searchkitchenorder/:id" component={viewSearchedTransferredFoodorder} />
+            <Route path="/create-foodOrder" component={addfoodproduct} />
+            <Route path="/create-foodOrder1" component={updateaddedfoodproduct} />
+            <Route path="/create-foodOrder-continue" component={createFoodOrders} />
+            <Route path="/create-foodOrder1-continue" component={updateFoodOrder} />
+             
             <Route path="/kitchenHeadDashboard" component={IngredientOrderManagement} />
                         <Route path="/create-foodManagement" component={FoodManagement} />
                         <Route path="/create-ingredientOrder" component={IngredientOrder} />
