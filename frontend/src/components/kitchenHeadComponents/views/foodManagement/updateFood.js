@@ -1,41 +1,69 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Swal from "sweetalert2";
 import Select from 'react-select';
 
-const initialState = {
-    selectedChef: [],
+
+const initialState = {      //initiate states
     foodNumber: '',
     foodName: '',
     category: '',
-    price: '',
     description: '',
+    status: '',
     createDate: '',
-    status: 'Available',
     options1: [],
     options2: [],
     options3: [],
+    selectedChef: [],
+    price: 0,
     employees: []
-
 }
 
-class Food extends Component {
+class updateFood extends Component {
     constructor(props) {
         super(props);
-        this.state = initialState;
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.state = initialState;     
+        this.onChange = this.onChange.bind(this);  //bind onChange function.
+        this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.onChefNameSelect = this.onChefNameSelect.bind(this);
-        this.backtoFoodManagement = this.backtoFoodManagement.bind(this);
 
+        this.backtoFoodManagement = this.backtoFoodManagement.bind(this);
+    }
+
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     backtoFoodManagement(e) {
         window.location = '/create-foodManagement'
     }
 
+    onChefNameSelect(e) {
+        this.setState({ selectedChef: e ? e.map(item => item.value) : [] });
+    }
 
     componentDidMount() {
-        axios.get('http://localhost:8100/employee/')
+        const food = this.props.match.params.id;
+        console.log("cccc" + food);
+        axios.get(`http://localhost:8100/food/${food}`)
+            .then(response => {
+                this.setState({ id: response.data.data._id })
+                this.setState({ foodNumber: response.data.data.foodNumber })
+                this.setState({ foodName: response.data.data.foodName })
+                this.setState({ category: response.data.data.category })
+                this.setState({ price: response.data.data.price })
+                this.setState({ description: response.data.data.description })
+                this.setState({ createDate: response.data.data.createDate })
+                this.setState({ status: response.data.data.status })
+                this.setState({ chefName: response.data.data.selectedChef })
+
+                console.log("tttt" + response.data.data)
+            })
+            .catch(error => {
+                alert(error.message)
+            })
+
+            axios.get('http://localhost:8100/employee/')
             .then(response => {
                 this.setState({ employees: response.data.data }, () => {
                     let data = [];
@@ -45,25 +73,15 @@ class Food extends Component {
                             label: item.name
                         }
                         data.push(employees)
-                        console.log("a" + employees);
+                        console.log("abc" + employees);
                     });
                     this.setState({ options1: data });
                 })
             })
-
     }
 
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
-    onChefNameSelect(e) {
-        this.setState({ selectedChef: e ? e.map(item => item.value) : [] });
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
+    onSubmit(e) {      //submit details
+        e.preventDefault();     //avoid browser refresh. 
         let food = {
             foodNumber: this.state.foodNumber,
             foodName: this.state.foodName,
@@ -75,33 +93,31 @@ class Food extends Component {
             chefName: this.state.selectedChef
         }
         console.log('DATA TO SEND', food);
-        axios.post('http://localhost:8100/food/create', food)
-            .then(response => {
-                alert('Data successfully inserted')
-                console.log("a");
-            })
 
+        axios.patch(`http://localhost:8100/food/update/${this.state.id}`, food)
+            .then(response => {
+                // alert('Food Data successfully updated')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Updated Food details has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
             .catch(error => {
                 console.log(error.message);
                 alert(error.message)
             })
 
-
     }
-
-
     render() {
         return (
-            
             <div className="container-box">
 
-                <h2>Add New Food</h2><br></br>
-                {/* <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
+                <h1>Update Food Details</h1>
 
-                </h5> */}
-
-                <form onSubmit={this.onSubmit} >
-
+                <form onSubmit={this.onSubmit}>
                     <div className="row mb-3">
 
                         <div className="col-6" style={{ textAlign: "left" }}>
@@ -114,7 +130,7 @@ class Food extends Component {
                                 name="foodNumber"
                                 pattern="[A-Z]{1}[0-9]{5}"
                                 maxLength="6"
-                                required
+                                disabled
                                 value={this.state.foodNumber}          
                                 onChange={this.onChange}
                             />
@@ -128,7 +144,7 @@ class Food extends Component {
                                 placeholder="Enter Food Name"
                                 id="foodName"
                                 name="foodName"
-                                required
+                                disabled
                                 value={this.state.foodName}
                                 onChange={this.onChange}
                             />
@@ -144,7 +160,7 @@ class Food extends Component {
                                 placeholder="Enter Food Category"
                                 id="category"
                                 name="category"
-                                required
+                                disabled
                                 value={this.state.category}
                                 onChange={this.onChange}
                             />
@@ -187,7 +203,7 @@ class Food extends Component {
                                 className="form-control"
                                 id="createDate"
                                 name="createDate"
-                                required
+                                disabled
                                 value={this.state.createDate}
                                 onChange={this.onChange}
 
@@ -222,25 +238,18 @@ class Food extends Component {
                         />
                     </div>
                     <br />
-
-
                     <br></br>
                     <br></br>
                     <div className="mb-3">
                         <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoFoodManagement(e)}>Back</button>
-                        <button type="submit" id="form-button" className="btn btn-primary" onClick={e => this.backtoFoodManagement(e)}>Add New Food</button>
+                        <button type="submit" id="form-button" className="btn btn-success" >Update Food </button>
                     </div>
 
                     <br>
                     </br>
-                    <br></br>
-                    <br></br>
                 </form>
-
-
             </div>
         )
     }
 }
-
-export default Food;
+export default updateFood;
