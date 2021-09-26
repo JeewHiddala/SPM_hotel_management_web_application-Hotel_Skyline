@@ -16,6 +16,7 @@ module.exports = function () {
     router.get('/searchRetiredEmployee/:nicNo', employeeController.getSearchedRetiredEmployeeDetailsByNIC); // get search retired employee details using employee nic number.
     router.patch('/update/:id', employeeController.updateSelectedEmployeeDetails); //update selected employees details.
     router.patch('/resign/:id', employeeController.resignSelectedEmployee);         //resign selected employees details.
+    router.patch('/update-profile/:id', employeeController.updateEmployeeProfile);         //update employee profile
     router.delete('/:id', employeeController.deleteEmployee);         //delete selected employees details.
 
     return router;

@@ -146,6 +146,21 @@ const getSearchedRetiredEmployeeDetailsByNIC = async (req, res) => {          //
         });
 }
 
+const updateEmployeeProfile = async (req, res) => {       //update selected employee
+    if (req.params && req.params.id) {
+        const { id } = req.params;        // fetching the employee id 
+        const employee = req.body;
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No employee With that id');      // validating the employee id
+        const updatedemployee = await Employee.findByIdAndUpdate(id, {$set: {
+            name: employee.name,
+            mobileNumber: employee.mobileNumber,
+            email: employee.email,
+            password: employee.password
+        }});      // find and update employee
+        res.json(updatedemployee);
+    }
+}
+
 const deleteEmployee = async (req, res) => {               // delete selected employee.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the employee
@@ -192,5 +207,6 @@ module.exports = {
     getAllWorkingReceptionistsDetails,
     resignSelectedEmployee,
     updateSelectedEmployeeDetails,
+    updateEmployeeProfile,
     getEmployeeDetails
 };
