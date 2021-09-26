@@ -10,12 +10,19 @@ class IngredientOrderManagement extends Component {
         this.state = {
             // totalPages: 0,
             // page: 0,
+            id: '',
+            orderNumber:'',
             ingredientOrders: []
         }
         this.deleteIngredientOrder = this.deleteIngredientOrder.bind(this);
         this.navigateCreateIngredientOrderPage = this.navigateCreateIngredientOrderPage.bind(this);
+        this.navigateUpdateIngredientOrderPage = this.navigateUpdateIngredientOrderPage.bind(this);
         // this.retrieveIngredientOrder = this.retrieveIngredientOrder.bind(this);
         // this.handlePageChange = this.handlePageChange.bind(this);
+        this.navigateSearchIngredientOrderPage = this.navigateSearchIngredientOrderPage.bind(this);
+        this.onChange = this.onChange.bind(this);
+
+
     }
 
     componentDidMount() {
@@ -56,6 +63,28 @@ class IngredientOrderManagement extends Component {
     //     this.retrieveIngredientOrder(selected);
     // };
 
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    navigateSearchIngredientOrderPage(e) {      //search
+        e.preventDefault();
+        console.log("nnnn", this.state.orderNumber);
+        let orderNumber = this.state.orderNumber;
+
+        axios.get(`http://localhost:8100/ingredientOrder/search/${orderNumber}`)
+            .then(response => {
+                
+                let id = response.data.data._id
+                console.log("oop" + id)
+
+                window.location = `/ingredientOrder-View/${id}`
+            })
+            .catch(error => {
+                alert(error.message)
+            })
+       
+    }
 
     ViewIngredientOrder(e, ingredientOrderId) {
         this.props.history.push({
@@ -65,7 +94,11 @@ class IngredientOrderManagement extends Component {
 
     }
 
-
+    navigateUpdateIngredientOrderPage(e, ingredientOrderId) {      //edit
+        localStorage.setItem('ingredientOrderId', ingredientOrderId);
+        
+        window.location = `/update-IngredientOrder/${ingredientOrderId}`
+    }
 
     navigateCreateIngredientOrderPage(e) {
         window.location = '/create-ingredientOrder'
@@ -74,8 +107,8 @@ class IngredientOrderManagement extends Component {
     deleteIngredientOrder(e, ingredientId) {
         console.log("I am on Delete", ingredientId)
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Are you sure you want to delete this Ingredient Order?',
+            text: "This item will be deleted immediently. You can't undo this action!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -86,7 +119,7 @@ class IngredientOrderManagement extends Component {
                 axios.delete(`http://localhost:8100/ingredientOrder/${ingredientId}`)
                 Swal.fire(
                     'Deleted!',
-                    'Ingredient Order has been deleted.',
+                    'Ingredient Order is successfully deleted.',
                     'success'
                 )
             }
@@ -101,7 +134,7 @@ class IngredientOrderManagement extends Component {
                     <div className="container-dash">
                         <h2><b>Kitchen Head Dashboard</b></h2>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
@@ -114,17 +147,25 @@ class IngredientOrderManagement extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <br /><br /><br /><br />
+                                <br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="float-end">
                                         <button type="button" class="btn btn-success" onClick={e => this.navigateCreateIngredientOrderPage(e)}>Add New Ingredient Order</button>
                                     </div>
 
                                     <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                                    <form className="d-flex" onSubmit={this.navigateSearchIngredientOrderPage}>
+                                            <input
+                                                className="form-control me-2"
+                                                type="search"
+                                                placeholder="Enter Ingredient Order number"
+                                                aria-label="Search"
+                                                name="orderNumber"
+                                                value={this.state.orderNumber}      //bind state value
+                                                onChange={this.onChange}    //don't call function. only give a reference.
+                                            />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -155,25 +196,25 @@ class IngredientOrderManagement extends Component {
                                                         <td>{item.orderNumber}</td>
                                                         <td>
                                                             {item.ingredients.map((item, index) => (
-                                                                <p>{item.ingredientName}</p>
+                                                                <p id="food-tbl">{item.ingredientName}</p>
 
                                                             ))}
                                                         </td>
                                                         <td>
                                                             {item.ingredients.map((item, index) => (
-                                                                <p>{item.quantity}</p>
+                                                                <p id="food-tbl">{item.quantity}</p>
                                                             ))}
                                                         </td>
 
                                                         <td>
                                                             {item.ingredients.map((item, index) => (
-                                                                <p>{item.chefName.name}</p>
+                                                                <p id="food-tbl">{item.chefName.name}</p>
                                                             ))}
                                                         </td>
                                                         <td>{item.createdDate}</td>
                                                         {/* <td></td> */}
                                                         <td><button type="button" className="btn btn-primary" onClick={e => this.ViewIngredientOrder(e, item._id)}>View</button></td>
-                                                        <td><button type="button" className="btn btn-warning">Update</button></td>
+                                                        <td><button type="button" className="btn btn-warning" onClick={e => this.navigateUpdateIngredientOrderPage(e, item._id)}>Update</button></td>
                                                         <td><button type="button" className="btn btn-danger" onClick={e => this.deleteIngredientOrder(e, item._id)}>Delete</button></td>
                                                     </tr>
                                                 ))}
