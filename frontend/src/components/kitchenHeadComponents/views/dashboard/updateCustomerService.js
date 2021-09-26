@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
-import "../../../../App.css";
+import Swal from "sweetalert2";
+
 
 const initialState = {
     selectedService: '',
@@ -19,25 +20,18 @@ const initialState = {
 
 }
 
-class CustomerService extends Component {
+class updateCustomerService extends Component {
     constructor(props) {
         super(props);
         this.state = initialState;
         this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
         this.onHoursChange = this.onHoursChange.bind(this);
         this.handleServiceChange = this.handleServiceChange.bind(this);
-        //this.onBookingIDSelect = this.onBookingIDSelect.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
     }
 
     componentDidMount() {
-        const { data } = this.props.location;
-        this.setState({ selectedBookingID: data });
-
-        const id = this.props.match.params.id;
-        console.log("booking ID: " + id);
-        this.setState({ bookingID: id });
-
         axios.get('http://localhost:8100/service/get/')
             .then(response => {
                 this.setState({ services: response.data.data }, () => {
@@ -54,65 +48,31 @@ class CustomerService extends Component {
                 })
             })
 
-        // axios.get('http://localhost:8100/booking')
-        // .then(response => {
-        //     this.setState({ bookings: response.data.data }, () => {
-        //         let data = [];
-        //         this.setState({ bookingOptions: data });
-        //         this.state.bookings.map((item, index) => {
-        //             if (!item.bookingNo.localeCompare(data)) {
-        //                 this.setState({ bookingID: item._id });  
-        //             }
-        //             return 0;
-        //         });
-        //         this.setState({ bookingOptions: data });
-
-        //     })
+        const customerService = this.props.match.params.id;
+        console.log("bbb" + customerService);
+        axios.get(`http://localhost:8100/customerService/${customerService}`)
+            .then(response => {
+                this.setState({ id: response.data.data._id })
+                this.setState({ selectedBookingID: response.data.data.bookingID.bookingNo })
+                this.setState({ serviceName: response.data.data.serviceName })
+                this.setState({ date: response.data.data.date })
+                this.setState({ noOfHours: response.data.data.noOfHours })
+                this.setState({ price: response.data.data.price })
+                this.setState({ cost: response.data.data.cost })
 
 
-        // })
-
-        // console.log("aaaaaaaaaaa",this.state.bookings)
-        // this.state.bookings.map((item, index) => {
-
-        //     if (!item.bookingNo.localeCompare(data)) {
-        //         this.setState({ bookingID: item._id });
-        //     }
-        //     return 0;
-        // });
-
-        //const orderNo = this.props.match.params.id;
-        //  this.setState({ [e.target.name]: e.target.value });
-        // axios.get('http://localhost:8100/booking/')
-        //     .then(response => {
-        //         this.setState({ bookings: response.data.data }, () => {
-        //             let data = [];
-        //             this.setState({ options2: data });
-        //             this.state.bookings.map((item, index) => {
-        //                 let bookings = {
-        //                     value: item._id,
-        //                     label: item.bookingNo
-        //                 }
-        //                 data.push(bookings)
-        //                 console.log("b" + bookings);
-        //             });
-        //             this.setState({ options2: data });
-        //         })
-        //     })
+                // console.log("iiiii" + this.state.chefName)
+                // console.log("asd" + this.state.chefValue)
+            })
+            .catch(error => {
+                alert(error.message)
+            })
 
     }
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-
-    // onServiceNameSelect(e) {
-    //     this.setState({ selectedService: e ? e.map(item => item.value) : [] });
-    // }
-
-    // onBookingIDSelect(e) {
-    //     this.setState({ selectedBookingID: e ? e.map(item => item.value) : [] });
-    // }
 
     handleServiceChange = selectedService => {
         this.setState({ selectedService });
@@ -140,64 +100,92 @@ class CustomerService extends Component {
             });
         }
     }
-    onSubmit(e) {
-        e.preventDefault();
-        const { data } = this.props.location;
-        console.log("Booking ID to send: " + data);
 
+    // onChefNameSelect(e) {
+    //     this.setState({ selectedChef: e ? e.map(item => item.value) : [] });
+    // }
+
+    // onChangeSelect(e) {
+    //     this.setState({ selectedChef: e.target.value });
+    // }
+    // handleChange = selectedChef => {
+    //     this.setState({ selectedChef });
+    //     console.log('Option selected:', selectedChef);
+    // };
+
+    onSubmit(e) {      //submit details
+        e.preventDefault();     //avoid browser refresh. 
+        const { data } = this.props.location;
+
+        console.log("bookingID to send: " + data);
+        localStorage.setItem('bookingID', data);
+        this.setState({ bookingID: data });
 
         let customerService = {
+            bookingID: data,
             serviceName: this.state.selectedService.value,
-            bookingID: this.state.bookingID,
             date: this.state.date,
             noOfHours: this.state.noOfHours,
             price: this.state.price,
-            cost: this.state.cost,
-
+            cost: this.state.cost
         }
         console.log('DATA TO SEND', customerService);
-        axios.post('http://localhost:8100/customerService/create', customerService)
+
+        axios.patch(`http://localhost:8100/customerService/update/${this.state.id}`, customerService)
             .then(response => {
-                this.props.history.push({
-
-                    pathname: '/create-serviceList-continue',
-
-                    data3: response.data.data._id
-
+                // alert('Food Data successfully updated')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Updated customer Service details has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
                 })
-                alert('Data successfully inserted')
-                console.log("added customer service");
+                var data1 = localStorage.getItem('serviceListId') || 1;
+                window.location = `/update-ServiceList/${data1}`
             })
-
             .catch(error => {
                 console.log(error.message);
                 alert(error.message)
             })
 
-
     }
-
 
     render() {
         const { data } = this.props.location;
+        //this.setState({ orderNumber: orderNo });
+        console.log("bookingID: " + data);
+
+        const { data1 } = this.props.location;
 
         const { selectedService } = this.state.selectedService;
-        // const { selectedBookingID } = selectedBookingID;
+        // const { selectedChef } = this.state.selectedChef;
+        // console.log("qqqqq " + this.state.selectedChef.label);
+
+        // let chefName = this.state.chefName;
+        // const chefValue = this.state.chefValue;
+
+        // console.log("rrrrrrrrrrr " + chefName);
+
+
 
         return (
-            <div className="container-box">
 
-                <h2>Add Service to Service List</h2>
+
+            <div className="container-box"><br />
+
+                <h2>Edit Customer Service Details</h2>
                 <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
 
                 </h5>
 
                 <form onSubmit={this.onSubmit} >
 
+
                     <div className="row mb-3">
 
-                        <div className="col-6" style={{ textAlign: "left" }}>
 
+                        <div className="col-6" style={{ textAlign: "left" }}>
                             <label htmlFor="bookingID" className="form-label">Booking Number</label>
                             <input
                                 type="text"
@@ -207,8 +195,8 @@ class CustomerService extends Component {
                                 value={this.state.selectedBookingID}
                                 disabled
                             />
-                            <br />
                         </div>
+                        <br /> <br /> <br />
                         <div className="col-6" style={{ textAlign: "left" }}>
                             <label htmlFor="serviceName" className="form-label">Service Name</label>
                             <Select
@@ -220,6 +208,7 @@ class CustomerService extends Component {
                                 className="basic-single"
 
                             />
+
                             <br />
                             <div className="row mb-3">
                                 <div className="col-6" style={{ textAlign: "left" }}>
@@ -275,11 +264,16 @@ class CustomerService extends Component {
 
                             </div>
 
-                            <br></br>
-                            <br></br>
+                            <br />
 
-                            {/* <button type="submit" className="btn btn-secondary">Back</button> */}
-                            <button type="submit" className="btn btn-primary">Add Service</button>
+                            <br />
+
+
+
+                            <div className="mb-3">
+                                {/* <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrder(e)}>Back</button> */}
+                                <button type="submit" id="form-button" className="btn btn-warning">Update Customer Service</button>
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -294,4 +288,4 @@ class CustomerService extends Component {
     }
 }
 
-export default CustomerService;
+export default updateCustomerService;

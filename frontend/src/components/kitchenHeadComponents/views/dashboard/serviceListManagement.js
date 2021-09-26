@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 //import ReactPaginate from 'react-paginate';
 import '../../../css/dash.css';
 
+
 class ServiceListManagement extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +15,8 @@ class ServiceListManagement extends Component {
         }
         this.deleteServiceBill = this.deleteServiceBill.bind(this);
         this.navigateCreateServiceBillPage = this.navigateCreateServiceBillPage.bind(this);
+        this.navigateUpdateServiceListPage = this.navigateUpdateServiceListPage.bind(this);
+
         // this.retrieveServiceList = this.retrieveServiceList.bind(this);
         // this.handlePageChange = this.handlePageChange.bind(this);
     }
@@ -57,15 +60,19 @@ class ServiceListManagement extends Component {
 
 
 
-    // ViewServiceList(e, serviceListId) {
-    //     this.props.history.push({
-    //         pathname: `/serviceList-View/${serviceListId}`,
-    //         data: `${serviceListId}`
-    //     });
+    ViewSericeList(e, serviceListId) {
+        this.props.history.push({
+            pathname: `/serviceList-View/${serviceListId}`,
+            data: `${serviceListId}`
+        });
 
-    // }
+    }
 
-
+   navigateUpdateServiceListPage(e, serviceListId) {      //edit
+        localStorage.setItem('serviceListId', serviceListId);
+        
+        window.location = `/update-ServiceList/${serviceListId}`
+    }
 
     navigateCreateServiceBillPage(e) {
         window.location = '/create-serviceList'
@@ -75,8 +82,8 @@ class ServiceListManagement extends Component {
     deleteServiceBill(e, serviceListId) {
         console.log("I am on Delete", serviceListId)
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Are you sure you want to delete this Service List bill?',
+            text: "This item will be deleted immediently. You can't undo this action!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -87,7 +94,7 @@ class ServiceListManagement extends Component {
                 axios.delete(`http://localhost:8100/serviceList/${serviceListId}`)
                 Swal.fire(
                     'Deleted!',
-                    'Service Bill has been deleted.',
+                    'Service Bill is successfully deleted.',
                     'success'
                 )
             }
@@ -102,7 +109,7 @@ class ServiceListManagement extends Component {
                     <div className="container-dash">
                         <h2><b>Receptionist Dashboard</b></h2>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
@@ -120,9 +127,9 @@ class ServiceListManagement extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <br /><br /><br /><br />
+                                <br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateServiceBillPage(e)}>Create Service List Bill</button>
@@ -148,11 +155,11 @@ class ServiceListManagement extends Component {
                                                     <th>Service Name</th>
                                                     <th>Ser.Used.Date</th>
                                                     <th>No of Hours</th>
-                                                    <th>Cost</th>
+                                                    <th>Price/ Hour</th>
                                                     <th>Total</th>
                                                     <th></th>
                                                     <th></th>
-                                                    {/* <th></th> */}
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -186,14 +193,17 @@ class ServiceListManagement extends Component {
                                                         <td>{item.total}</td>
 
 
-                                                        {/* <td><button type="button" className="btn btn-primary" onClick={e => this.ViewServiceList(e, item._id)}>View</button></td> */}
-                                                        <td><button type="button" className="btn btn-warning">Update</button></td>
+                                                        <td><button type="button" className="btn btn-primary" onClick={e => this.ViewSericeList(e, item._id)}>View</button></td>
+                                                        <td><button type="button" className="btn btn-warning" onClick={e => this.navigateUpdateServiceListPage(e, item._id)}>Update</button></td>
                                                         <td><button type="button" className="btn btn-danger" onClick={e => this.deleteServiceBill(e, item._id)}>Delete</button></td>
                                                     </tr>
                                                 ))}
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    {/* <button type="button" className="btn btn-dark">Generate Report</button> */}
+
                                     {/* <ReactPaginate
                                         previousLabel={'Previous'}
                                         nextLabel={'Next'}
