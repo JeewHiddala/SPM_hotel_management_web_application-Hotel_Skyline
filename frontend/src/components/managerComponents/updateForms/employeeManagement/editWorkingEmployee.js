@@ -16,7 +16,7 @@ const initialState = {      //initiate states
     userData: "",
 }
 
-class CreateEmployee extends Component {
+class EditEmployee extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
@@ -24,6 +24,29 @@ class CreateEmployee extends Component {
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
     }
+
+    componentDidMount() {
+        const editEmployeedetails = this.props.match.params.id;
+        console.log("rrrr" + editEmployeedetails);
+        axios.get(`http://localhost:8100/employee/${editEmployeedetails}`)
+          .then(response => {
+            this.setState({ id: response.data.data._id })
+            this.setState({ name: response.data.data.name })
+            this.setState({ position: response.data.data.position })
+            this.setState({ email: response.data.data.email })
+            this.setState({ mobileNumber: response.data.data.mobileNumber })
+            this.setState({ nicNo: response.data.data.nicNo })
+            this.setState({ salary: response.data.data.salary })
+            this.setState({ userName: response.data.data.userName })
+            this.setState({ password: response.data.data.password })
+    
+            console.log("stat"+response.data.data)
+          })
+          .catch(error => {
+            alert(error.message)
+          })
+    
+      }
 
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
@@ -57,7 +80,7 @@ class CreateEmployee extends Component {
                         userData: this.state.userData
                     }
                     console.log('DATA TO SEND', employee);
-                    axios.post('http://localhost:8100/employee/create', employee)
+                    axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
                         .then(response => {
                             // alert('Employee Data successfully inserted')
                             this.setState({
@@ -74,7 +97,7 @@ class CreateEmployee extends Component {
                             Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: 'New Employee details has been saved',
+                                title: 'Updated Employee details has been saved',
                                 showConfirmButton: false,
                                 timer: 1500
                             })
@@ -100,23 +123,12 @@ class CreateEmployee extends Component {
                 password: this.state.password
             }
             console.log('DATA TO SEND', employee);
-            axios.post('http://localhost:8100/employee/create', employee)
+            axios.patch(`http://localhost:8100/employee/update/${this.state.id}`, employee)
                 .then(response => {
-                    // alert('Employee Data successfully inserted')
-                    this.setState({
-                        name: '',
-                        position: '',
-                        email: '',
-                        mobileNumber: 0,
-                        nicNo: '',
-                        salary: 0,
-                        userName: '',
-                        password: ''
-                    })
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
-                        title: 'New Employee details has been saved',
+                        title: 'Updated Employee details has been saved',
                         showConfirmButton: false,
                         timer: 1500
                     })
@@ -173,7 +185,7 @@ class CreateEmployee extends Component {
                                 <div className="container" >
                                     <div className="col-4">
                                         <br />
-                                        <h4 className="topic"><b>Recruit new Employee</b></h4>
+                                        <h4 className="topic"><b>Edit Employee Details</b></h4>
                                     </div>
 
                                     <br />
@@ -205,7 +217,7 @@ class CreateEmployee extends Component {
                                                         <option value="Receptionist">Receptionist</option>
                                                         <option value="Kitchen Head">Kitchen Head</option>
                                                         <option value="Chef">Chef</option>
-                                                        <option value="Cook">Cook</option>
+                                                        <option value="Assistant Cook">Cook</option>
                                                         <option value="Assistant Manager">Assistant Manager</option>
                                                         <option value="Bar Man">Bar Man</option>
                                                         <option value="Bar Manager">Bar Manager</option>
@@ -277,6 +289,7 @@ class CreateEmployee extends Component {
                                                 <div className="col">
                                                     <label htmlFor="password" className="form-label sub-topic">Username</label>
                                                     <input
+                                                        readOnly
                                                         type="text"
                                                         className="form-control"
                                                         placeholder="Enter username"
@@ -308,7 +321,7 @@ class CreateEmployee extends Component {
                                                     {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
                                                 </div>
                                                 <div className="col mb-3">
-                                                    <button type="submit" id="button" className="btn btn-success float-end">Submit</button>
+                                                    <button type="submit" id="button" className="btn btn-success float-end">Update</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -325,4 +338,4 @@ class CreateEmployee extends Component {
     }
 }
 
-export default CreateEmployee;
+export default EditEmployee;

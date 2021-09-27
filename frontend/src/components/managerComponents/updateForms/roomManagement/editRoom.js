@@ -4,15 +4,14 @@ import Swal from "sweetalert2";
 import '../../../css/dash.css';
 
 const initialState = {      //initiate states
-    serviceNo: '',
-    name: '',
-    addedDate: '',
-    pricePerHour: 0,
+    roomNo: '',
+    category: '',
+    airConditioningCategory: '',
     description: '',
-    employeeCount: 0
+    price: 0
 }
 
-class CreateService extends Component {
+class EditRoom extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
@@ -21,40 +20,50 @@ class CreateService extends Component {
         this.state = initialState;      //apply states.
     }
 
+    componentDidMount() {
+        const editRoomdetails = this.props.match.params.id;
+        console.log("rrrr" + editRoomdetails);
+        axios.get(`http://localhost:8100/room/${editRoomdetails}`)
+          .then(response => {
+            this.setState({ id: response.data.data._id })
+            this.setState({ roomNo: response.data.data.roomNo })
+            this.setState({ category: response.data.data.category })
+            this.setState({ airConditioningCategory: response.data.data.airConditioningCategory })
+            this.setState({ description: response.data.data.description })
+            this.setState({ price: response.data.data.price })
+    
+            console.log("stat"+response.data.data)
+          })
+          .catch(error => {
+            alert(error.message)
+          })
+    
+      }
+
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
     }
 
     back(e) {
-        window.location = '/serviceManagement'
+        window.location = '/roomManagement'
     }
 
     onSubmit(e) {      //submit details
         e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-        let service = {
-            serviceNo: this.state.serviceNo,
-            name: this.state.name,
-            addedDate: this.state.addedDate,
-            pricePerHour: this.state.pricePerHour,
+        let room = {
+            roomNo: this.state.roomNo,
+            category: this.state.category,
+            airConditioningCategory: this.state.airConditioningCategory,
             description: this.state.description,
-            employeeCount: this.state.employeeCount
+            price: this.state.price
         }
-        console.log('DATA TO SEND', service);    
-        axios.post('http://localhost:8100/service/create', service)
+        console.log('DATA TO SEND', room);    
+        axios.patch(`http://localhost:8100/room/update/${this.state.id}`, room)
             .then(response => {
-                // alert('Service Data successfully inserted')
-                this.setState({ 
-                    serviceNo: '',
-                    name: '',
-                    addedDate: '',
-                    pricePerHour: 0,
-                    description: '',
-                    employeeCount: 0
-                 })
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'New Service details has been saved',
+                    title: 'Updated Room details has been saved',
                     showConfirmButton: false,
                     timer: 1500
                   })
@@ -81,13 +90,13 @@ class CreateService extends Component {
                                     <div className="container" >
                                     <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
-                                            <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Room Management</button></a>
+                                            <a href="/roomManagement" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Room Management</button></a>
                                             <button type="button" className="list-group-item list-group-item-action " >
                                                 Employee Management
                                             </button>
                                             <a href="/workingEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Working Employees</button></a>
                                             <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employees</button></a>
-                                            <a href="/serviceManagement" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Service Management</button></a>
+                                            <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
                                         <h5><b className="sub-topic">Monitoring</b></h5>
@@ -103,13 +112,13 @@ class CreateService extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <br /><br /><br /><br />
+                                <br />
                             </div>
                             <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="col-4">
                                         <br/>
-                                        <h4 className="topic"><b>Add new Service</b></h4>
+                                        <h4 className="topic"><b>Edit Room Details</b></h4>
                                     </div>
 
                                     <br />
@@ -117,61 +126,70 @@ class CreateService extends Component {
                                     <form onSubmit={this.onSubmit}>
                                         <div className = "row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="serviceNo" className="form-label sub-topic">Service Number</label>
+                                            <label htmlFor="roomNo" className="form-label sub-topic">Room Number</label>
                                             <input
+                                                readOnly
                                                 type="text"
                                                 className="form-control"
-                                                placeholder = "Enter Service Number"
-                                                id="serviceNo"
-                                                name="serviceNo"    //give state name
-                                                pattern="[A-Z]{2}[0-9]{3}"
+                                                placeholder = "Enter Room Number"
+                                                id="roomNo"
+                                                name="roomNo"    //give state name
+                                                pattern="[A-Z]{1}[0-9]{3}"
+                                                maxLength="4"
                                                 required
-                                                value={this.state.serviceNo}      //bind state value
+                                                value={this.state.roomNo}      //bind state value
                                                 onChange={this.onChange}    //don't call function. only give a reference.
                                             />
                                         </div>
                                         <div className="col-6">
-                                            <label htmlFor="name" className="form-label sub-topic">Service Name</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder = "Enter Service Number"
-                                                id="name"
-                                                name="name"    //give state name
-                                                required
-                                                value={this.state.name}      //bind state value
-                                                onChange={this.onChange}    //don't call function. only give a reference.
-                                            />
+                                            <label htmlFor="category" className="form-label sub-topic">Category</label>
+                                            <select className="form-select" aria-label="Default select example"
+                                                onChange={this.onChange} 
+                                                value={this.state.category}
+                                                name="category"
+                                            >
+                                                <option selected>Open this select Room Category</option>
+                                                <option value="Single">Single</option>
+                                                <option value="Double">Double</option>
+                                                <option value="Triple">Triple</option>
+                                                <option value="Quad">Quad</option>
+                                                <option value="Summer Suite">Summer Suite</option>
+                                                <option value="Honeymoon Suite">Honeymoon Suite</option>
+                                                <option value="Presidential Suite">Presidential Suite</option>
+                                                <option value="Connecting rooms">Connecting room</option>
+                                                <option value="Accessible Room">Accessible Room</option>
+                                                <option value="Villa">Villa</option>
+                                                <option value="Hollywood Twin Room">Hollywood Twin Room</option>
+                                            </select>
                                         </div>
                                         </div>
                                         <div className = "row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="addedDate" className="form-label sub-topic">Added Date</label>
-                                            <input
-                                                type="date"
-                                                className="form-control"
-                                                id="addedDate"
-                                                name="addedDate"    //give state name
-                                                required
-                                                value={this.state.addedDate}      //bind state value
-                                                onChange={this.onChange}    //don't call function. only give a reference.
-                                            />
+                                            <label htmlFor="airConditioningCategory" className="form-label sub-topic">Air Conditioning Category</label>
+                                            <select className="form-select" aria-label="Default select example"
+                                                onChange={this.onChange} 
+                                                value={this.state.airConditioningCategory}
+                                                name="airConditioningCategory"
+                                            >
+                                                <option selected>Select Room Air Conditioning Category</option>
+                                                <option value="A/C">A/C</option>
+                                                <option value="Non A/C">Non A/C</option>
+                                            </select>
                                         </div>
                                             <div className="col-6">
-                                                <label htmlFor="pricePerHour" className="form-label sub-topic">Price Per Hour</label>
+                                                <label htmlFor="Price" className="form-label sub-topic">Price</label>
                                                 <input
                                                     type="number"
                                                     className="form-control"
-                                                    id="pricePerHour"
-                                                    name="pricePerHour"
-                                                    step="0.01"
+                                                    id="price"
+                                                    name="price"
                                                     required
-                                                    value={this.state.pricePerHour}
+                                                    value={this.state.price}
                                                     onChange={this.onChange}
                                                 />
                                             </div>
                                             </div>
-                                            <div className="col mb-3">
+                                            <div className="col">
                                                 <label htmlFor="description" className="form-label sub-topic">Description</label>
                                                 <textarea
                                                    className="form-control"
@@ -183,18 +201,6 @@ class CreateService extends Component {
                                                    onChange={this.onChange}    //don't call function. only give a reference. 
                                                 />
                                             </div>
-                                            <div className="col-6">
-                                                <label htmlFor="employeeCount" className="form-label sub-topic">Recruited number of employees</label>
-                                                <input
-                                                    type="number"
-                                                    className="form-control"
-                                                    id="employeeCount"
-                                                    name="employeeCount"
-                                                    required
-                                                    value={this.state.employeeCount}
-                                                    onChange={this.onChange}
-                                                />
-                                            </div>
                                             <br></br>
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
@@ -202,7 +208,7 @@ class CreateService extends Component {
                                                     {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
                                                 </div>
                                                 <div className="col mb-3">
-                                                    <button type="submit" id="button" className="btn btn-success float-end">Submit</button>
+                                                    <button type="submit" id="button" className="btn btn-success float-end">Update</button>
                                                 </div>
                                             </div>
                                     </form>
@@ -219,4 +225,4 @@ class CreateService extends Component {
     }
 }
 
-export default CreateService;
+export default EditRoom;

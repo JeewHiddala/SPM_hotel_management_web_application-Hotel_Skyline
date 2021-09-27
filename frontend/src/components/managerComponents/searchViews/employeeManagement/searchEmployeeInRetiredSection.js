@@ -11,124 +11,93 @@ const initialState = {      //initiate states
     mobileNumber: 0,
     nicNo: '',
     salary: 0,
+    isWorking: 1,
     userName: '',
     password: '',
     userData: "",
 }
 
-class CreateEmployee extends Component {
+class SearchEmployeeInRetiredSection extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
-        this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
+        this.deleteRetiredEmployee = this.deleteRetiredEmployee.bind(this);
     }
+
+    componentDidMount() {
+        const searchEmployeedetails = this.props.match.params.id;
+        console.log("rrrr" + searchEmployeedetails);
+        axios.get(`http://localhost:8100/employee/searchRetiredEmployee/${searchEmployeedetails}`)
+          .then(response => {
+            this.setState({ id: response.data.data._id })
+            this.setState({ name: response.data.data.name })
+            this.setState({ position: response.data.data.position })
+            this.setState({ email: response.data.data.email })
+            this.setState({ mobileNumber: response.data.data.mobileNumber })
+            this.setState({ nicNo: response.data.data.nicNo })
+            this.setState({ salary: response.data.data.salary })
+            this.setState({ userName: response.data.data.userName })
+            this.setState({ password: response.data.data.password })
+            this.setState({ isWorking: response.data.data.isWorking })
+    
+            console.log("stat"+response.data.data)
+          })
+          .catch(error => {
+            // alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Sorry. There is no data according to this NIC number!',
+                footer: '<a href="/retiredEmployee"/>'
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                    window.location = '/retiredEmployee'
+                }
+    
+            })
+          })
+    
+      }
 
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    back(e) {
-        window.location = '/workingEmployee'
-    }
-
-    onSubmit(e) {      //submit details
-        e.preventDefault();     //avoid browser refresh. because if browser refresh, erase all typed info in form automatically.
-        if (!this.state.position.localeCompare("Manager") || !this.state.position.localeCompare("Receptionist") || !this.state.position.localeCompare("Kitchen Head")) {
-            AuthService.register(
-                this.state.userName,
-                this.state.password,
-                this.state.position
-            ).then(
-                response => {
-                    this.setState({
-                        userData: response.data.data._id,
-                    });
-                    let employee = {
-                        name: this.state.name,
-                        position: this.state.position,
-                        email: this.state.email,
-                        mobileNumber: this.state.mobileNumber,
-                        nicNo: this.state.nicNo,
-                        salary: this.state.salary,
-                        userName: this.state.userName,
-                        password: this.state.password,
-                        userData: this.state.userData
+    deleteRetiredEmployee(e , employeeId) {
+        console.log("I am on Delete", employeeId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it permanently!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/employee/${employeeId}`)
+                Swal.fire(
+                    'Deleted!',
+                    'Employee has been deleted.',
+                    'success'
+                )
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/retiredEmployee'
                     }
-                    console.log('DATA TO SEND', employee);
-                    axios.post('http://localhost:8100/employee/create', employee)
-                        .then(response => {
-                            // alert('Employee Data successfully inserted')
-                            this.setState({
-                                name: '',
-                                position: '',
-                                email: '',
-                                mobileNumber: 0,
-                                nicNo: '',
-                                salary: 0,
-                                userName: '',
-                                password: '',
-                                userData: ''
-                            })
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: 'New Employee details has been saved',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        })
-                        .catch(error => {
-                            console.log(error.message);
-                            alert(error.message)
-                        })
-                },
-                error => {
-                    alert('Auth signup failed');
-                }
-            );
-        }else{
-            let employee = {
-                name: this.state.name,
-                position: this.state.position,
-                email: this.state.email,
-                mobileNumber: this.state.mobileNumber,
-                nicNo: this.state.nicNo,
-                salary: this.state.salary,
-                userName: this.state.userName,
-                password: this.state.password
-            }
-            console.log('DATA TO SEND', employee);
-            axios.post('http://localhost:8100/employee/create', employee)
-                .then(response => {
-                    // alert('Employee Data successfully inserted')
-                    this.setState({
-                        name: '',
-                        position: '',
-                        email: '',
-                        mobileNumber: 0,
-                        nicNo: '',
-                        salary: 0,
-                        userName: '',
-                        password: ''
-                    })
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'New Employee details has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+        
                 })
-                .catch(error => {
-                    console.log(error.message);
-                    alert(error.message)
-                })
+                // window.location.reload(false);
             }
-
+        })
     }
 
+    back(e) {
+        window.location = '/retiredEmployee'
+    }
 
     render() {
         return (
@@ -149,8 +118,8 @@ class CreateEmployee extends Component {
                                             <button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true" >
                                                 Employee Management
                                             </button>
-                                            <a href="/workingEmployee" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Working Employees</button></a>
-                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Retired Employees</button></a>
+                                            <a href="/workingEmployee" className="routeBtn"><button type="button"  className="list-group-item list-group-item-action">Working Employees</button></a>
+                                            <a href="/retiredEmployee" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Retired Employees</button></a>
                                             <a href="/serviceManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service Management</button></a>
                                         </div>
                                         <br></br>
@@ -171,9 +140,9 @@ class CreateEmployee extends Component {
                             </div>
                             <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    <div className="col-4">
+                                    <div className="col-6">
                                         <br />
-                                        <h4 className="topic"><b>Recruit new Employee</b></h4>
+                                        <h4 className="topic"><b>Searched Employee Details</b></h4>
                                     </div>
 
                                     <br />
@@ -183,49 +152,37 @@ class CreateEmployee extends Component {
                                                 <div className="col-6">
                                                     <label htmlFor="name" className="form-label sub-topic">Employee Name</label>
                                                     <input
+                                                        readOnly
                                                         type="text"
                                                         className="form-control"
-                                                        placeholder="Enter Employee name"
                                                         id="name"
                                                         name="name"    //give state name
-                                                        required
                                                         value={this.state.name}      //bind state value
                                                         onChange={this.onChange}    //don't call function. only give a reference.
                                                     />
                                                 </div>
                                                 <div className="col-6">
                                                     <label htmlFor="position" className="form-label sub-topic">Position</label>
-                                                    <select className="form-select" aria-label="Default select example"
-                                                        onChange={this.onChange}
-                                                        value={this.state.position}
-                                                        name="position"
-                                                    >
-                                                        <option selected>Open this select position</option>
-                                                        <option value="Manager">Manager</option>
-                                                        <option value="Receptionist">Receptionist</option>
-                                                        <option value="Kitchen Head">Kitchen Head</option>
-                                                        <option value="Chef">Chef</option>
-                                                        <option value="Cook">Cook</option>
-                                                        <option value="Assistant Manager">Assistant Manager</option>
-                                                        <option value="Bar Man">Bar Man</option>
-                                                        <option value="Bar Manager">Bar Manager</option>
-                                                        <option value="Housekeeper">Housekeeper</option>
-                                                        <option value="Bellman">Bellman</option>
-                                                        <option value="Waiter" selected>Waiter</option>
-                                                    </select>
+                                                    <input
+                                                        readOnly
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="position"
+                                                        name="position"    //give state name
+                                                        value={this.state.position}      //bind state value
+                                                        onChange={this.onChange}    //don't call function. only give a reference.
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="row mb-3">
                                                 <div className="col-6">
                                                     <label htmlFor="address" className="form-label sub-topic">Email Address</label>
                                                     <input
+                                                        readOnly
                                                         type="email"
                                                         className="form-control"
-                                                        placeholder="Enter Email Address"
-                                                        pattern=".+@skylight\.com"
                                                         id="email"
                                                         name="email"
-                                                        required
                                                         value={this.state.email}
                                                         onChange={this.onChange}
                                                     />
@@ -233,14 +190,11 @@ class CreateEmployee extends Component {
                                                 <div className="col-6">
                                                     <label htmlFor="mobileNumber" className="form-label sub-topic">Mobile Number</label>
                                                     <input
+                                                        readOnly
                                                         type="tel"
                                                         className="form-control"
                                                         id="mobileNumber"
                                                         name="mobileNumber"
-                                                        pattern="[0-9]{11}"
-                                                        maxLength="11"
-                                                        minLength="11"
-                                                        required
                                                         value={this.state.mobileNumber}
                                                         onChange={this.onChange}
                                                     />
@@ -250,13 +204,11 @@ class CreateEmployee extends Component {
                                                 <div className="col">
                                                     <label htmlFor="nic" className="form-label sub-topic">National Identity Card Number</label>
                                                     <input
+                                                        readOnly
                                                         type="text"
                                                         className="form-control"
-                                                        placeholder="Enter National Identity Card Number"
                                                         id="nicNo"
                                                         name="nicNo"    //give state name
-                                                        pattern="[0-9]{10}"
-                                                        required
                                                         value={this.state.nicNo}      //bind state value
                                                         onChange={this.onChange}    //don't call function. only give a reference. 
                                                     />
@@ -264,6 +216,7 @@ class CreateEmployee extends Component {
                                                 <div className="col">
                                                     <label htmlFor="userName" className="form-label sub-topic">Salary</label>
                                                     <input
+                                                        readOnly
                                                         type="number"
                                                         className="form-control"
                                                         id="salary"
@@ -277,12 +230,11 @@ class CreateEmployee extends Component {
                                                 <div className="col">
                                                     <label htmlFor="password" className="form-label sub-topic">Username</label>
                                                     <input
+                                                        readOnly
                                                         type="text"
                                                         className="form-control"
-                                                        placeholder="Enter username"
                                                         id="userName"
                                                         name="userName"
-                                                        minLength="5"
                                                         value={this.state.userName}
                                                         onChange={this.onChange}
                                                     />
@@ -290,25 +242,28 @@ class CreateEmployee extends Component {
                                                 <div className="col">
                                                     <label htmlFor="password" className="form-label sub-topic">Password</label>
                                                     <input
-                                                        type="password"
+                                                        readOnly
+                                                        type="text"
                                                         className="form-control"
-                                                        placeholder="Enter password"
                                                         id="password"
                                                         name="password"
-                                                        minLength="8"
-                                                        // required
                                                         value={this.state.password}
                                                         onChange={this.onChange}
                                                     />
+                                                </div>
+                                                <div className="col">
+                                                    <label htmlFor="states" className="form-label sub-topic">Status</label><br/>
+                                                        {this.state.isWorking == true
+                                                            ? <span className="badge bg-success"> Working </span>
+                                                            : <span className="badge bg-danger"> Retired </span>
+                                                        }
                                                 </div>
                                             </div>
                                             <div className="row mb-3">
                                                 <div className="col mb-3">
                                                     <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
+                                                    <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteRetiredEmployee(e, this.state.id)}>Delete</button>
                                                     {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
-                                                </div>
-                                                <div className="col mb-3">
-                                                    <button type="submit" id="button" className="btn btn-success float-end">Submit</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -325,4 +280,4 @@ class CreateEmployee extends Component {
     }
 }
 
-export default CreateEmployee;
+export default SearchEmployeeInRetiredSection;

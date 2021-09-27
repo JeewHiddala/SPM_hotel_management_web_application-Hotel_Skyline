@@ -12,7 +12,7 @@ const initialState = {      //initiate states
     employeeCount: 0
 }
 
-class CreateService extends Component {
+class EditService extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);  //bind onChange function.
@@ -20,6 +20,27 @@ class CreateService extends Component {
         this.back = this.back.bind(this);
         this.state = initialState;      //apply states.
     }
+
+    componentDidMount() {
+        const editServicedetails = this.props.match.params.id;
+        console.log("rrrr" + editServicedetails);
+        axios.get(`http://localhost:8100/service/${editServicedetails}`)
+          .then(response => {
+            this.setState({ id: response.data.data._id })
+            this.setState({ serviceNo: response.data.data.serviceNo })
+            this.setState({ name: response.data.data.name })
+            this.setState({ addedDate: response.data.data.addedDate })
+            this.setState({ pricePerHour: response.data.data.pricePerHour })
+            this.setState({ description: response.data.data.description })
+            this.setState({ employeeCount: response.data.data.employeeCount })
+    
+            console.log("stat"+response.data.data)
+          })
+          .catch(error => {
+            alert(error.message)
+          })
+    
+      }
 
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
@@ -40,21 +61,12 @@ class CreateService extends Component {
             employeeCount: this.state.employeeCount
         }
         console.log('DATA TO SEND', service);    
-        axios.post('http://localhost:8100/service/create', service)
+        axios.patch(`http://localhost:8100/service/update/${this.state.id}`, service)
             .then(response => {
-                // alert('Service Data successfully inserted')
-                this.setState({ 
-                    serviceNo: '',
-                    name: '',
-                    addedDate: '',
-                    pricePerHour: 0,
-                    description: '',
-                    employeeCount: 0
-                 })
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'New Service details has been saved',
+                    title: 'Updated Service details has been saved',
                     showConfirmButton: false,
                     timer: 1500
                   })
@@ -109,7 +121,7 @@ class CreateService extends Component {
                                 <div className="container" >
                                     <div className="col-4">
                                         <br/>
-                                        <h4 className="topic"><b>Add new Service</b></h4>
+                                        <h4 className="topic"><b>Edit Service Details</b></h4>
                                     </div>
 
                                     <br />
@@ -119,6 +131,7 @@ class CreateService extends Component {
                                         <div className="col-6">
                                             <label htmlFor="serviceNo" className="form-label sub-topic">Service Number</label>
                                             <input
+                                                readOnly
                                                 type="text"
                                                 className="form-control"
                                                 placeholder = "Enter Service Number"
@@ -148,6 +161,7 @@ class CreateService extends Component {
                                         <div className="col-6">
                                             <label htmlFor="addedDate" className="form-label sub-topic">Added Date</label>
                                             <input
+                                                readOnly
                                                 type="date"
                                                 className="form-control"
                                                 id="addedDate"
@@ -202,7 +216,7 @@ class CreateService extends Component {
                                                     {/* <button type="button" id="button" className="btn btn-info" > Clear</button> */}
                                                 </div>
                                                 <div className="col mb-3">
-                                                    <button type="submit" id="button" className="btn btn-success float-end">Submit</button>
+                                                    <button type="submit" id="button" className="btn btn-success float-end">Update</button>
                                                 </div>
                                             </div>
                                     </form>
@@ -219,4 +233,4 @@ class CreateService extends Component {
     }
 }
 
-export default CreateService;
+export default EditService;
