@@ -14,7 +14,7 @@ class ServiceListManagement extends Component {
         this.state = {
             // totalPages: 0,
             // page: 0,
-            id:'',
+            id: '',
             serviceLists: []
         }
         this.deleteServiceBill = this.deleteServiceBill.bind(this);
@@ -72,9 +72,9 @@ class ServiceListManagement extends Component {
 
     }
 
-   navigateUpdateServiceListPage(e, serviceListId) {      //edit
+    navigateUpdateServiceListPage(e, serviceListId) {      //edit
         localStorage.setItem('serviceListId', serviceListId);
-        
+
         window.location = `/update-ServiceList/${serviceListId}`
     }
 
@@ -118,30 +118,30 @@ class ServiceListManagement extends Component {
         var reportImg = new Image;
         reportImg.src = reportImage;
 
-        
+
         const title = "Service Bill Management Report";
-        const headers = [["Booking Number", "Created Date", "Service Name", "Used Date", "No Of Hours","Price","Total"]];
+        const headers = [["Booking Number", "Created Date", "Service Name", "Used Date", "No Of Hours", "Price", "Total"]];
 
         const data = [];
         this.state.serviceLists.map((item, index) => {
-            let serviceName =" ";
-                let noOfHours =" ";
-                let price =" ";
-let date ="";
+            let serviceName = " ";
+            let noOfHours = " ";
+            let price = " ";
+            let date = "";
             item.customerServices.map((item, index) => {
-                 serviceName =item.serviceName.name;
-                 noOfHours =item.noOfHours;
-                 price =item.price;
-                 date =item.date;
+                serviceName = item.serviceName.name;
+                noOfHours = item.noOfHours;
+                price = item.price;
+                date = item.date;
 
-                
+
             })
 
             let serviceLists1 = [
                 item.bookingID.bookingNo,
                 item.createdDate,
                 serviceName,
-              date,
+                date,
                 noOfHours,
                 price,
                 item.total,
@@ -158,24 +158,21 @@ let date ="";
         };
 
         doc.addImage(reportImg, 'JPEG', 40, 13, 70, 70);
-        doc.text("Skylight Hotel", marginLeft+80, 25);
-        doc.text("No.2 Main Street, Colombo", marginLeft+80, 40);
-        doc.text("info@skylight.com", marginLeft+80, 55);
-        doc.text("+94 255 255 111", marginLeft+80, 70);
+        doc.text("Skylight Hotel", marginLeft + 80, 25);
+        doc.text("No.2 Main Street, Colombo", marginLeft + 80, 40);
+        doc.text("info@skylight.com", marginLeft + 80, 55);
+        doc.text("+94 255 255 111", marginLeft + 80, 70);
 
         doc.line(40, 93, 558, 93);
 
         doc.text(title, marginLeft, 110);
         doc.autoTable(content);
 
-        // let finalY = doc.previousAutoTable.finalY;
+        let marginTop = doc.previousAutoTable.finalY + 45;
+        var today = new Date();
+        var newdate = "Date Printed : " + today;
+        doc.text(marginLeft, marginTop, newdate);
 
-        // let content1 = {
-        //     startY: finalY+10,
-        //     head: headers1,
-        //     body: data1
-        // };
-        // doc.autoTable(content1);
         doc.save("Service Management Report - Hotel SkyLight.pdf")
     }
 
@@ -210,7 +207,7 @@ let date ="";
                             </div>
                             <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    
+
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateServiceBillPage(e)}>Create Service List Bill</button>
                                     </div>
