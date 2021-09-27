@@ -66,63 +66,64 @@ class ViewIngredientOrder extends Component {
 
     render() {
         return (
-            <div className="row justify-content-center">
-                <div className="container-dash">
-                    <h2><b>Kitchen Head Dashboard</b></h2>
-                    <div className="row justify-content-evenly">
-                        <div className="col-3 align-self-stretch">
+            <div>
+                <div className="row justify-content-center" id="dash-food">
+                    <div className="container-dash">
+                        <h2><b>Kitchen Head Dashboard</b></h2>
+                        <div className="row justify-content-evenly">
+                            <div className="col-3 align-self-stretch">
 
-                            <div className="row">
-                                <div className="container" >
-                                    <h3 className="h3"><b>Creations</b></h3>
-                                    <div className="list-group">
-                                        <a href="/create-foodManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Management</button></a>
-                                        <a href="/kitchenHeadDashboard" className="routeBtn">  <button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true"> Ingredient Order Management</button></a>
+                                <div className="row">
+                                    <div className="container" >
+                                        <h3 className="h3"><b>Creations</b></h3>
+                                        <div className="list-group">
+                                            <a href="/create-foodManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Management</button></a>
+                                            <a href="/kitchenHeadDashboard" className="routeBtn">  <button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true"> Ingredient Order Management</button></a>
+                                        </div>
+                                        <br></br>
                                     </div>
-                                    <br></br>
                                 </div>
+                                <br /><br /><br /><br />
                             </div>
-                            <br /><br /><br /><br />
-                        </div>
-                        <div className="col-8 align-self-stretch">
-                            <div className="container"></div>
+                            <div className="col-8 align-self-stretch">
+                                <div className="container"></div>
 
-                            <h2> Ingredient Order Details</h2>
-                            
-                            <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
+                                <h2> Ingredient Order Details</h2>
 
-                            </h5>
+                                <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
 
-                            <form onSubmit={this.onSubmit} >
+                                </h5>
 
-                                <div className="container">
-                                    <div className="row mb-3">
-                                        <div className="col-6">
-                                            <label htmlFor="orderNumber" className="form-label">Ingredient Order Number</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="orderNumber"
-                                                name="orderNumber"
-                                                value={this.state.orderNumber}
-                                                disabled
-                                                onChange={this.onChange}
-                                            />
-                                        </div>
+                                <form onSubmit={this.onSubmit} >
 
-                                        <div className="col-6">
-                                            <label htmlFor="createdDate" className="form-label">Created Date</label>
-                                            <input
-                                                type="date"
-                                                className="form-control"
-                                                id="createdDate"
-                                                name="createdDate"
-                                                value={this.state.createdDate}
-                                                disabled
-                                                onChange={this.onChange}
+                                    <div className="container">
+                                        <div className="row mb-3">
+                                            <div className="col-6">
+                                                <label htmlFor="orderNumber" className="form-label">Ingredient Order Number</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="orderNumber"
+                                                    name="orderNumber"
+                                                    value={this.state.orderNumber}
+                                                    disabled
+                                                    onChange={this.onChange}
+                                                />
+                                            </div>
 
-                                            />
-                                        </div>
+                                            <div className="col-6">
+                                                <label htmlFor="createdDate" className="form-label">Created Date</label>
+                                                <input
+                                                    type="date"
+                                                    className="form-control"
+                                                    id="createdDate"
+                                                    name="createdDate"
+                                                    value={this.state.createdDate}
+                                                    disabled
+                                                    onChange={this.onChange}
+
+                                                />
+                                            </div>
                                         </div>
                                         <br />
 
@@ -156,13 +157,14 @@ class ViewIngredientOrder extends Component {
                                         <br></br>
                                         <button type="button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
 
-                                   
-                                </div>
-                                <br>
-                                </br>
-                                <br></br>
-                                <br></br>
-                            </form>
+
+                                    </div>
+                                    <br>
+                                    </br>
+                                    <br></br>
+                                    <br></br>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
