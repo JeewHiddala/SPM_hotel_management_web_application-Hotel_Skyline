@@ -46,10 +46,7 @@ class ServiceList extends Component {
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-    //  onBookingIDSelect(e) {
-    //         this.setState({ selectedBookingID: e ? e.map(item => item.value) : [] });
 
-    //     }
     onBookingIDSelect = selectedBookingID => {
         this.setState({ selectedBookingID });
         console.log('Option selected:', selectedBookingID);
@@ -67,47 +64,10 @@ class ServiceList extends Component {
             })
         }
 
-
     }
 
-
-
-    /*onSubmit(e) {
-        e.preventDefault();
-    
-        let serviceList = {
-            bookings: this.state.selectedBookingID,
-            createdDate: this.state.createdDate,
-            total: this.state.total,
-    
-        }
-        console.log('DATA TO SEND', serviceList);
-        axios.post('http://localhost:8100/serviceList/create', serviceList)
-            .then(response => {
-                alert('Data successfully inserted')
-                console.log("a");
-            })
-    
-            .catch(error => {
-                console.log(error.message);
-                alert(error.message)
-            })
-    
-    
-    }
-    componentDidMount() {
-    
-        this.setState(state => {
-            const { data } = this.props.location;
-            state.ingredients.push(this.props.location);
-    
-        });
-    }
-    */
 
     render() {
-        /*const { data } = this.props.location
-        console.log("ingredient: " + data); */
         const { selectedBookingID } = this.state.selectedBookingID;
         console.log("bid: " + selectedBookingID);
         return (
@@ -162,7 +122,7 @@ class ServiceList extends Component {
                                                 className="basic-single"
 
                                             />
-                                           
+
                                         </div>
                                         <div className="col-6">
 
@@ -185,12 +145,9 @@ class ServiceList extends Component {
                                     <button id="form-button" onClick={e => this.addService(e, this.state.selectedBookingID.label, this.state.selectedBookingID.value)} className="btn btn-primary">Add Service</button>
 
 
-
-
-
                                 </div>
-                                <br>
-                                </br>
+                                <br></br>
+
                                 <br></br>
                                 <br></br>
                             </form>

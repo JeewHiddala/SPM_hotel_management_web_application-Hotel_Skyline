@@ -27,7 +27,6 @@ class CustomerService extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onHoursChange = this.onHoursChange.bind(this);
         this.handleServiceChange = this.handleServiceChange.bind(this);
-        //this.onBookingIDSelect = this.onBookingIDSelect.bind(this);
     }
 
     componentDidMount() {
@@ -54,65 +53,11 @@ class CustomerService extends Component {
                 })
             })
 
-        // axios.get('http://localhost:8100/booking')
-        // .then(response => {
-        //     this.setState({ bookings: response.data.data }, () => {
-        //         let data = [];
-        //         this.setState({ bookingOptions: data });
-        //         this.state.bookings.map((item, index) => {
-        //             if (!item.bookingNo.localeCompare(data)) {
-        //                 this.setState({ bookingID: item._id });  
-        //             }
-        //             return 0;
-        //         });
-        //         this.setState({ bookingOptions: data });
-
-        //     })
-
-
-        // })
-
-        // console.log("aaaaaaaaaaa",this.state.bookings)
-        // this.state.bookings.map((item, index) => {
-
-        //     if (!item.bookingNo.localeCompare(data)) {
-        //         this.setState({ bookingID: item._id });
-        //     }
-        //     return 0;
-        // });
-
-        //const orderNo = this.props.match.params.id;
-        //  this.setState({ [e.target.name]: e.target.value });
-        // axios.get('http://localhost:8100/booking/')
-        //     .then(response => {
-        //         this.setState({ bookings: response.data.data }, () => {
-        //             let data = [];
-        //             this.setState({ options2: data });
-        //             this.state.bookings.map((item, index) => {
-        //                 let bookings = {
-        //                     value: item._id,
-        //                     label: item.bookingNo
-        //                 }
-        //                 data.push(bookings)
-        //                 console.log("b" + bookings);
-        //             });
-        //             this.setState({ options2: data });
-        //         })
-        //     })
-
     }
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-
-    // onServiceNameSelect(e) {
-    //     this.setState({ selectedService: e ? e.map(item => item.value) : [] });
-    // }
-
-    // onBookingIDSelect(e) {
-    //     this.setState({ selectedBookingID: e ? e.map(item => item.value) : [] });
-    // }
 
     handleServiceChange = selectedService => {
         this.setState({ selectedService });
@@ -305,7 +250,6 @@ class CustomerService extends Component {
                                             <br></br>
                                             <br></br>
 
-                                            {/* <button type="submit" className="btn btn-secondary">Back</button> */}
                                             <button type="submit" className="btn btn-primary">Add Service</button>
                                         </div>
                                     </div>

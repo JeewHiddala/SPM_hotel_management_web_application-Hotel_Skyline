@@ -60,9 +60,6 @@ class updateCustomerService extends Component {
                 this.setState({ price: response.data.data.price })
                 this.setState({ cost: response.data.data.cost })
 
-
-                // console.log("iiiii" + this.state.chefName)
-                // console.log("asd" + this.state.chefValue)
             })
             .catch(error => {
                 alert(error.message)
@@ -96,22 +93,10 @@ class updateCustomerService extends Component {
 
             this.setState({
                 noOfHours: hours,
-                cost: hours * this.state.price
+                cost: hours * this.state.price // total cost calculation
             });
         }
     }
-
-    // onChefNameSelect(e) {
-    //     this.setState({ selectedChef: e ? e.map(item => item.value) : [] });
-    // }
-
-    // onChangeSelect(e) {
-    //     this.setState({ selectedChef: e.target.value });
-    // }
-    // handleChange = selectedChef => {
-    //     this.setState({ selectedChef });
-    //     console.log('Option selected:', selectedChef);
-    // };
 
     onSubmit(e) {      //submit details
         e.preventDefault();     //avoid browser refresh. 
@@ -153,21 +138,12 @@ class updateCustomerService extends Component {
 
     render() {
         const { data } = this.props.location;
-        //this.setState({ orderNumber: orderNo });
+
         console.log("bookingID: " + data);
 
         const { data1 } = this.props.location;
 
         const { selectedService } = this.state.selectedService;
-        // const { selectedChef } = this.state.selectedChef;
-        // console.log("qqqqq " + this.state.selectedChef.label);
-
-        // let chefName = this.state.chefName;
-        // const chefValue = this.state.chefValue;
-
-        // console.log("rrrrrrrrrrr " + chefName);
-
-
 
         return (
 
@@ -297,7 +273,6 @@ class updateCustomerService extends Component {
 
 
                                             <div className="mb-3">
-                                                {/* <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrder(e)}>Back</button> */}
                                                 <button type="submit" id="form-button" className="btn btn-warning">Update Customer Service</button>
                                             </div>
                                         </div>

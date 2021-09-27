@@ -29,8 +29,6 @@ class updateServiceList extends Component {
         const data = this.props.match.params.id;
         console.log("rrrr" + data);
 
-        // var data1 = localStorage.getItem('serviceListID') || 1;
-
         axios.get(`http://localhost:8100/serviceList/${this.props.match.params.id}`)
             .then(response => {
                 this.setState({ id: response.data.data._id })
@@ -49,16 +47,6 @@ class updateServiceList extends Component {
         window.location = `/update-CustomerService/${serviceListId}`
     }
 
-
-    // updateIngredient(e, id) {
-    //         localStorage.setItem('createdDate', this.state.createdDate);
-    //         this.props.history.push({
-    //             pathname: `/update-Ingredient/${id}`,
-    //             data: `${orderNo}`
-    //         })
-    //     }
-
-
     backtoServiceListBillManagementDash(e) {
         window.location = '/create-serviceListBill'
     }
@@ -66,24 +54,6 @@ class updateServiceList extends Component {
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
     }
-
-    // componentDidMount() {
-    //     const ingredientOrder = this.props.match.params.id;
-    //     console.log("pppp" + ingredientOrder);
-
-    //     axios.get(`http://localhost:8100/ingredientOrder/${ingredientOrder}`)
-    //         .then(response => {
-    //             this.setState({ id: response.data.data._id })
-    //             this.setState({ orderNumber: response.data.data.orderNumber })
-    //             this.setState({ createdDate: response.data.data.createdDate })
-    //             this.setState({ ingredients: response.data.data.ingredients })
-
-    //             console.log("mmm" + response.data.data)
-    //         })
-    //         .catch(error => {
-    //             alert(error.message)
-    //         })
-    // }
 
     deleteServiceList(e, serviceListId) {
         console.log("I am on Delete", serviceListId)
@@ -139,9 +109,9 @@ class updateServiceList extends Component {
     }
 
     render() {
-        //const { data } = this.props.location;
-        console.log("aaaaaaqqq" + this.state.customerServices)
-        //console.log("orderNo1: " + data);
+
+        console.log("cus services" + this.state.customerServices)
+
         return (
             <div className="row justify-content-center" id="dash-food">
                 <div className="container-dash">
@@ -196,8 +166,6 @@ class updateServiceList extends Component {
                                         </div>
                                     </div>
                                     <br />
-
-                                    {/* <button onClick={e => this.updateIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add new Ingredient</button> */}
 
                                     <br></br>
 

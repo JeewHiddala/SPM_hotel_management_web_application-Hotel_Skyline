@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
-//import ReactPaginate from 'react-paginate';
 import '../../../css/dash.css';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -12,8 +11,6 @@ class ServiceListManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // totalPages: 0,
-            // page: 0,
             id: '',
             serviceLists: []
         }
@@ -21,8 +18,6 @@ class ServiceListManagement extends Component {
         this.navigateCreateServiceBillPage = this.navigateCreateServiceBillPage.bind(this);
         this.navigateUpdateServiceListPage = this.navigateUpdateServiceListPage.bind(this);
         this.exportServiceBillReportPDF = this.exportServiceBillReportPDF.bind(this);
-        // this.retrieveServiceList = this.retrieveServiceList.bind(this);
-        // this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     componentDidMount() {
@@ -31,38 +26,8 @@ class ServiceListManagement extends Component {
                 this.setState({ serviceLists: response.data.data });
                 console.log("abc", response.data.data);
                 console.log("fffff", this.state.serviceLists);
-                // this.setState({ serviceLists: response.data.data.docs });
-                // this.setState({ totalPages: response.data.data.totalPages });
-                // console.log("WPF", this.state.serviceLists);
-                // console.log("TP", this.state.totalPages);
             })
     }
-
-    // retrieveServiceList(page) {
-    //     console.log("Pagef", page);
-    //     axios.get('http://localhost:8100/serviceList/', {
-    //         params: {
-    //             page: page
-    //         }
-    //     })
-    //         .then(response => {
-    //             this.setState({ serviceLists: response.data.data.docs });
-    //             console.log("WPF", response.data.data);
-
-    //         })
-
-    // };
-
-
-
-    // handlePageChange = (data) => {
-    //     let selected = data.selected + 1;
-    //     console.log("val", selected);
-    //     this.setState({ page: selected });
-    //     this.retrieveServiceList(selected);
-    // };
-
-
 
     ViewSericeList(e, serviceListId) {
         this.props.history.push({
@@ -212,12 +177,6 @@ class ServiceListManagement extends Component {
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateServiceBillPage(e)}>Create Service List Bill</button>
                                     </div>
 
-                                    {/* <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
-                                        </form>
-                                    </div> */}
                                     <div className="col-6">
                                         <h2 className="h3"><b>Service List Bill Management</b></h2>
                                     </div>
@@ -283,31 +242,11 @@ class ServiceListManagement extends Component {
                                         <button type="button" className="btn btn-dark" onClick={() => this.exportServiceBillReportPDF()}>Generate Report</button>
                                     </div>
                                     <br /><br />
-                                    {/* <ReactPaginate
-                                        previousLabel={'Previous'}
-                                        nextLabel={'Next'}
-                                        breakLabel={'...'}
-                                        breakClassName={'break-me'}
-                                        pageCount={this.state.totalPages}
-                                        marginPagesDisplayed={2}
-                                        pageRangeDisplayed={5}
-                                        onPageChange={this.handlePageChange}
-                                        containerClassName={'pagination'}
-                                        activeClassName={'active'}
-                                    /> */}
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
 
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
