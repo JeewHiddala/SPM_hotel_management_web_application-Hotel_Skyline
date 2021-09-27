@@ -11,33 +11,7 @@ class ViewIngredientOrder extends Component {
             createdDate: 0
         }
         this.backtoIngredientOrderManagement = this.backtoIngredientOrderManagement.bind(this);
-        //           this.deleteIngredient = this.deleteIngredient.bind(this);
     }
-
-
-    // deleteIngredient(e, ingredientId) {
-    //     console.log("I am on Delete", ingredientId)
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, delete it!'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             axios.delete(`http://localhost:8100/ingredient/${ingredientId}`)
-
-    //             Swal.fire(
-    //                 'Deleted!',
-    //                 'Ingredient has been deleted.',
-    //                 'success'
-    //             )
-    //            window.location.reload(false);
-    //         }
-    //     })
-    // }
 
     backtoIngredientOrderManagement(e) {
         window.location = '/kitchenHeadDashboard'
@@ -57,13 +31,8 @@ class ViewIngredientOrder extends Component {
                 this.setState({ createdDate: response.data.data.createdDate });
                 this.setState({ ingredients: response.data.data.ingredients });
 
-
             })
-
     }
-
-
-
     render() {
         return (
             <div>
@@ -137,7 +106,6 @@ class ViewIngredientOrder extends Component {
                                                         <th>Ingredient Name</th>
                                                         <th>Quantity</th>
                                                         <th>Chef Name</th>
-                                                        {/* <th></th> */}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -147,7 +115,6 @@ class ViewIngredientOrder extends Component {
                                                             <td>{item.ingredientName}</td>
                                                             <th>{item.quantity}</th>
                                                             <td>{item.chefName.name}</td>
-                                                            {/* <td><button type="button" className="btn btn-danger" onClick={e => this.deleteIngredient(e, item._id)}>Delete</button></td> */}
                                                         </tr>
                                                     ))}
 

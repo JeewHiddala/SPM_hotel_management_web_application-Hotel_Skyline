@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
-//import ReactPaginate from 'react-paginate';
 import '../../../css/dash.css';
 
 class IngredientOrderManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // totalPages: 0,
-            // page: 0,
             id: '',
-            orderNumber:'',
+            orderNumber: '',
             ingredientOrders: []
         }
         this.deleteIngredientOrder = this.deleteIngredientOrder.bind(this);
         this.navigateCreateIngredientOrderPage = this.navigateCreateIngredientOrderPage.bind(this);
         this.navigateUpdateIngredientOrderPage = this.navigateUpdateIngredientOrderPage.bind(this);
-        // this.retrieveIngredientOrder = this.retrieveIngredientOrder.bind(this);
-        // this.handlePageChange = this.handlePageChange.bind(this);
         this.navigateSearchIngredientOrderPage = this.navigateSearchIngredientOrderPage.bind(this);
         this.onChange = this.onChange.bind(this);
 
@@ -31,37 +26,10 @@ class IngredientOrderManagement extends Component {
                 this.setState({ ingredientOrders: response.data.data });
                 console.log("abc", response.data.data);
                 console.log("fffff", this.state.ingredientOrders);
-                // this.setState({ ingredientOrders: response.data.data.docs });
-                // this.setState({ totalPages: response.data.data.totalPages });
-                // console.log("WPF", this.state.ingredientOrders);
-                // console.log("TP", this.state.totalPages);
 
             })
     }
 
-    // retrieveIngredientOrder(page) {
-    //     console.log("Pagef", page);
-    //     axios.get('http://localhost:8100/ingredientOrder/', {
-    //         params: {
-    //             page: page
-    //         }
-    //     })
-    //         .then(response => {
-    //             this.setState({ ingredientOrders: response.data.data.docs });
-    //             console.log("WPF", response.data.data);
-
-    //         })
-
-    // };
-
-
-
-    // handlePageChange = (data) => {
-    //     let selected = data.selected + 1;
-    //     console.log("val", selected);
-    //     this.setState({ page: selected });
-    //     this.retrieveIngredientOrder(selected);
-    // };
 
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
@@ -74,7 +42,7 @@ class IngredientOrderManagement extends Component {
 
         axios.get(`http://localhost:8100/ingredientOrder/search/${orderNumber}`)
             .then(response => {
-                
+
                 let id = response.data.data._id
                 console.log("oop" + id)
 
@@ -83,7 +51,7 @@ class IngredientOrderManagement extends Component {
             .catch(error => {
                 alert(error.message)
             })
-       
+
     }
 
     ViewIngredientOrder(e, ingredientOrderId) {
@@ -96,7 +64,7 @@ class IngredientOrderManagement extends Component {
 
     navigateUpdateIngredientOrderPage(e, ingredientOrderId) {      //edit
         localStorage.setItem('ingredientOrderId', ingredientOrderId);
-        
+
         window.location = `/update-IngredientOrder/${ingredientOrderId}`
     }
 
@@ -140,9 +108,9 @@ class IngredientOrderManagement extends Component {
                                     <div className="container" >
                                         <h3 className="h3"><b>Creations</b></h3>
                                         <div className="list-group">
-                                        <a href="/create-foodManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Management</button></a>
-                                        <a href="/kitchenHeadDashboard" className="routeBtn">  <button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true"> Ingredient Order Management</button></a>
-                                        
+                                            <a href="/create-foodManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Management</button></a>
+                                            <a href="/kitchenHeadDashboard" className="routeBtn">  <button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true"> Ingredient Order Management</button></a>
+
 
                                         </div>
                                     </div>
@@ -156,7 +124,7 @@ class IngredientOrderManagement extends Component {
                                     </div>
 
                                     <div className="float-end">
-                                    <form className="d-flex" onSubmit={this.navigateSearchIngredientOrderPage}>
+                                        <form className="d-flex" onSubmit={this.navigateSearchIngredientOrderPage}>
                                             <input
                                                 className="form-control me-2"
                                                 type="search"
@@ -174,7 +142,7 @@ class IngredientOrderManagement extends Component {
                                     </div>
 
                                     <br />
-                                    
+
                                     <div className="table-responsive">
                                         <table className="table">
                                             <thead className="table-dark">
@@ -187,7 +155,7 @@ class IngredientOrderManagement extends Component {
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>
-                                                    {/* <th></th> */}
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -212,7 +180,7 @@ class IngredientOrderManagement extends Component {
                                                             ))}
                                                         </td>
                                                         <td>{item.createdDate}</td>
-                                                        {/* <td></td> */}
+
                                                         <td><button type="button" className="btn btn-primary" onClick={e => this.ViewIngredientOrder(e, item._id)}>View</button></td>
                                                         <td><button type="button" className="btn btn-warning" onClick={e => this.navigateUpdateIngredientOrderPage(e, item._id)}>Update</button></td>
                                                         <td><button type="button" className="btn btn-danger" onClick={e => this.deleteIngredientOrder(e, item._id)}>Delete</button></td>
@@ -221,19 +189,6 @@ class IngredientOrderManagement extends Component {
                                             </tbody>
                                         </table>
                                     </div>
-                                    {/* <ReactPaginate
-                                        previousLabel={'Previous'}
-                                        nextLabel={'Next'}
-                                        breakLabel={'...'}
-                                        breakClassName={'break-me'}
-                                        pageCount={this.state.totalPages}
-                                        marginPagesDisplayed={2}
-                                        pageRangeDisplayed={5}
-                                        onPageChange={this.handlePageChange}
-                                        containerClassName={'pagination'}
-                                        activeClassName={'active'}
-                                    /> */}
-
                                 </div>
                             </div>
                         </div>

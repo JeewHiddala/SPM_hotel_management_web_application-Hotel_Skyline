@@ -23,7 +23,6 @@ class updateIngredient extends Component {
         this.state = initialState;
         this.onChange = this.onChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        //this.onChefNameSelect = this.onChefNameSelect.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.backtoIngredientOrder = this.backtoIngredientOrder.bind(this);
     }
@@ -78,13 +77,6 @@ class updateIngredient extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    // onChefNameSelect(e) {
-    //     this.setState({ selectedChef: e ? e.map(item => item.value) : [] });
-    // }
-
-    // onChangeSelect(e) {
-    //     this.setState({ selectedChef: e.target.value });
-    // }
     handleChange = selectedChef => {
         this.setState({ selectedChef });
         console.log('Option selected:', selectedChef);
@@ -128,7 +120,6 @@ class updateIngredient extends Component {
 
     render() {
         const { data } = this.props.location;
-        //this.setState({ orderNumber: orderNo });
         console.log("orderNo1: " + data);
         const { selectedChef } = this.state.selectedChef;
         console.log("qqqqq " + this.state.selectedChef.label);
@@ -200,8 +191,8 @@ class updateIngredient extends Component {
                                                 onChange={this.onChange}
                                             />
                                         </div>
-                                        </div>
-                                        <div className="row mb-3">
+                                    </div>
+                                    <div className="row mb-3">
                                         <div className="col-6">
                                             <label htmlFor="quantity" className="form-label">Quantity</label>
                                             <input
@@ -232,7 +223,7 @@ class updateIngredient extends Component {
                                                 required
                                             />
                                         </div>
-                                        </div>
+                                    </div>
                                 </div>
                                 <br />
 

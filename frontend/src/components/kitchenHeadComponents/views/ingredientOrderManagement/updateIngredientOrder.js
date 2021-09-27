@@ -28,15 +28,6 @@ class updateIngredientOrder extends Component {
         window.location = `/update-Ingredient/${ingredientId}`
     }
 
-    // updateIngredient(e, id) {
-    //         localStorage.setItem('createdDate', this.state.createdDate);
-    //         this.props.history.push({
-    //             pathname: `/update-Ingredient/${id}`,
-    //             data: `${orderNo}`
-    //         })
-    //     }
-
-
     backtoIngredientOrderManagement(e) {
         window.location = '/kitchenHeadDashboard'
     }
@@ -44,24 +35,6 @@ class updateIngredientOrder extends Component {
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
     }
-
-    // componentDidMount() {
-    //     const ingredientOrder = this.props.match.params.id;
-    //     console.log("pppp" + ingredientOrder);
-
-    //     axios.get(`http://localhost:8100/ingredientOrder/${ingredientOrder}`)
-    //         .then(response => {
-    //             this.setState({ id: response.data.data._id })
-    //             this.setState({ orderNumber: response.data.data.orderNumber })
-    //             this.setState({ createdDate: response.data.data.createdDate })
-    //             this.setState({ ingredients: response.data.data.ingredients })
-
-    //             console.log("mmm" + response.data.data)
-    //         })
-    //         .catch(error => {
-    //             alert(error.message)
-    //         })
-    // }
 
     deleteIngredient(e, ingredientId) {
         console.log("I am on Delete", ingredientId)
@@ -88,8 +61,6 @@ class updateIngredientOrder extends Component {
     }
 
     componentDidMount() {
-        // const data = this.props.match.params.id;
-        // console.log("rrrr" + data);
 
         var data1 = localStorage.getItem('ingredientOrderId') || 1;
 
@@ -135,9 +106,6 @@ class updateIngredientOrder extends Component {
     }
 
     render() {
-        //const { data } = this.props.location;
-
-        //console.log("orderNo1: " + data);
         return (
             <div className="row justify-content-center" id="dash-food">
                 <div className="container-dash">
@@ -161,9 +129,6 @@ class updateIngredientOrder extends Component {
                             <div className="container"></div>
 
                             <h2>Edit Ingredient Order Details</h2>
-                            {/* <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
-
-                            </h5> */}
 
                             <form onSubmit={this.onSubmit} >
 
@@ -198,7 +163,6 @@ class updateIngredientOrder extends Component {
                                     </div>
                                     <br />
 
-                                    {/* <button onClick={e => this.updateIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add new Ingredient</button> */}
 
                                     <br></br>
 
