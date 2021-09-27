@@ -18,7 +18,7 @@ class ViewFood extends Component {
       status: '',
       chefName: '',
     }
-   // this.onChange = this.onChange.bind(this);  //bind onChange function.
+    // this.onChange = this.onChange.bind(this);  //bind onChange function.
     this.backtoFoodManagement = this.backtoFoodManagement.bind(this);
 
   }
@@ -46,7 +46,7 @@ class ViewFood extends Component {
     //   this.setState({ foodNumber: this.state.food.foodNumber });
 
     // });
-   
+
   }
 
   backtoFoodManagement(e) {
@@ -72,112 +72,131 @@ class ViewFood extends Component {
   // }
   render() {
     return (
-      <div className="container-box">
-        <h2>Food Details</h2>
-        <form onSubmit={this.onSubmit} >
+      <div className="row justify-content-center" id="dash-food">
+        <div className="container-dash">
+          <h2><b>Kitchen Head Dashboard</b></h2>
+          <div className="row justify-content-evenly">
+            <div className="col-3 align-self-stretch">
 
-          <div className="row mb-3">
+              <div className="row">
+                <div className="container" >
+                  <h3 className="h3"><b>Creations</b></h3>
+                  <div className="list-group">
+                    <a href="/create-foodManagement" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Food Management</button></a>
+                    <a href="/kitchenHeadDashboard" className="routeBtn">  <button type="button" className="list-group-item list-group-item-action"  > Ingredient Order Management</button></a>
 
-
-            <div className="col-6" style={{ textAlign: "left" }}>
-              <label htmlFor="foodNumber" className="form-label">Food Number</label>
-              <input
-                type="text"
-                className="form-control"
-                id="foodNumber"
-                name="foodNumber"
-                value={this.state.foodNumber}
-                disabled
-                onChange={this.onChange}
-              />
+                  </div>
+                  <br></br>
+                </div>
+              </div>
+              <br /><br /><br /><br />
             </div>
+            <div className="col-8 align-self-stretch">
+              <div className="container"></div>
+              <h2>Food Details</h2>
+              <form onSubmit={this.onSubmit} >
 
-            <div className="col-6" style={{ textAlign: "left" }}>
-              <label htmlFor="foodName" className="form-label">Food Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="foodName"
-                name="foodName"
-                value={this.state.foodName}
-                disabled
-                onChange={this.onChange}
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-6" style={{ textAlign: "left" }}>
-              <label htmlFor="category" className="form-label">Category</label>
-              <input
-                type="text"
-                className="form-control"
-                id="category"
-                name="category"
-                value={this.state.category}
-                disabled
-                onChange={this.onChange}
-              />
-            </div>
+                <div className="container">
+                  <div className="row mb-3">
+                    <div className="col-6">
+                      <label htmlFor="foodNumber" className="form-label">Food Number</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="foodNumber"
+                        name="foodNumber"
+                        value={this.state.foodNumber}
+                        disabled
+                        onChange={this.onChange}
+                      />
+                    </div>
 
-            <div className="col-6" style={{ textAlign: "left" }}>
-              <label htmlFor="price" className="form-label">Price</label>
-              <input
-                type="text"
-                className="form-control"
-                id="price"
-                name="price"
-                value={this.state.price}
-                disabled
-                onChange={this.onChange}
-              />
-            </div>
-          </div>
-          <div className="mb-3" style={{ textAlign: "left" }}>
-            <label htmlFor="description" className="form-label">Description</label>
-            <textarea
-              className="form-control"
-              id="description"
-              name="description"
-              value={this.state.description}
-              disabled
-              onChange={this.onChange}
-            >
-            </textarea>
+                    <div className="col-6" style={{ textAlign: "left" }}>
+                      <label htmlFor="foodName" className="form-label">Food Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="foodName"
+                        name="foodName"
+                        value={this.state.foodName}
+                        disabled
+                        onChange={this.onChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-3">
+                    <div className="col-6" style={{ textAlign: "left" }}>
+                      <label htmlFor="category" className="form-label">Category</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="category"
+                        name="category"
+                        value={this.state.category}
+                        disabled
+                        onChange={this.onChange}
+                      />
+                    </div>
 
-          </div>
+                    <div className="col-6" style={{ textAlign: "left" }}>
+                      <label htmlFor="price" className="form-label">Price</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="price"
+                        name="price"
+                        value={this.state.price}
+                        disabled
+                        onChange={this.onChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-3" style={{ textAlign: "left" }}>
+                    <label htmlFor="description" className="form-label">Description</label>
+                    <textarea
+                      className="form-control"
+                      id="description"
+                      name="description"
+                      value={this.state.description}
+                      disabled
+                      onChange={this.onChange}
+                    >
+                    </textarea>
 
-          <div className="row mb-3">
-            <div className="col-6" style={{ textAlign: "left" }}>
-              <label htmlFor="createDate" className="form-label"> Date</label>
-              <input
-                type="date"
-                className="form-control"
-                id="createDate"
-                name="createDate"
-                value={this.state.createDate}
-                disabled
-                onChange={this.onChange}
+                  </div>
 
-              />
-            </div>
+                  <div className="row mb-3">
+                    <div className="col-6" style={{ textAlign: "left" }}>
+                      <label htmlFor="createDate" className="form-label"> Date</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        id="createDate"
+                        name="createDate"
+                        value={this.state.createDate}
+                        disabled
+                        onChange={this.onChange}
 
-
-            <div className="col-6" style={{ textAlign: "left" }}>
-              <label htmlFor="status" className="form-label">Status</label>
-              <input
-                type="text"
-                className="form-control"
-                id="status"
-                name="status"
-                value={this.state.status}
-                disabled
-                onChange={this.onChange}
-              />
-            </div>
-          </div>
+                      />
+                    </div>
 
 
-          {/* 
+                    <div className="col-6" style={{ textAlign: "left" }}>
+                      <label htmlFor="status" className="form-label">Status</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="status"
+                        name="status"
+                        value={this.state.status}
+                        disabled
+                        onChange={this.onChange}
+                      />
+                    </div>
+                  </div>
+
+
+                  {/* 
           <div className="mb-3" style={{ textAlign: "left" }}>
             <label htmlFor="chefName" className="form-label">Selected Chef</label>
             { <input
@@ -194,11 +213,16 @@ class ViewFood extends Component {
             </p>
           </div> */}
 
-          <br></br>
-          <div className="mb-3">
-            <button type="button" className="btn btn-secondary" onClick={e => this.backtoFoodManagement(e)}>Back</button>
+                  <br></br>
+                  <div className="mb-3">
+                    <button type="button" className="btn btn-secondary" onClick={e => this.backtoFoodManagement(e)}>Back</button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-        </form>
+        </div>
+
       </div>
     )
   }
