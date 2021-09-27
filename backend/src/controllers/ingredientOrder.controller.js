@@ -15,16 +15,6 @@ const createIngredientOrder = async (req, res) => {       //create a IngredientO
 }
 
 const getAllIngredientOrdersDetails = async (req, res) => {   
-    // let page = req.query.page; 
-    // var abc = [{ path: 'ingredients', select: 'ingredientName quantity chefName' },{ path: 'chefName', select: 'name' }];
-   
-    // const options = {
-    //     page: page,
-    //     populate: abc,   
-    //     limit: 5
-    //   }
-      
-    // console.log("Page", req.query.page);      //get all IngredientOrder details.
     await IngredientOrder.find({}).populate('ingredients','ingredientName quantity chefName')
     .populate({
         path: 'ingredients',
