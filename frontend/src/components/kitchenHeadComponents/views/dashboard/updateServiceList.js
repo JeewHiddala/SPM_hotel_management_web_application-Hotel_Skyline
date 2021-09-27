@@ -109,7 +109,7 @@ class updateServiceList extends Component {
         })
     }
 
-    
+
 
     onSubmit(e) {      //submit details
         e.preventDefault();     //avoid browser refresh. 
@@ -143,109 +143,123 @@ class updateServiceList extends Component {
         console.log("aaaaaaqqq" + this.state.customerServices)
         //console.log("orderNo1: " + data);
         return (
-            <div className="container-box"><br />
+            <div className="row justify-content-center" id="dash-food">
+                <div className="container-dash">
+                    <h2><b>Receptionist Dashboard</b></h2>
+                    <div className="row justify-content-evenly">
+                        <div className="col-3 align-self-stretch">
 
-                <h2>Edit Customer Service Details</h2>
-                <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
-
-                </h5>
-
-                <form onSubmit={this.onSubmit} >
-
-                    <div className={"row"}>
-                        <div className={"col-md-6"}>
-
-
-                            {/* <div className="mb-3" style={{ textAlign: "left" }}>
-                                <label htmlFor="orderNumber" className="form-label">Ingredient Order Number</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="orderNumber"
-                                    name="orderNumber"
-                                    value={this.state.orderNumber}
-                                    disabled
-                                    onChange={this.onChange}
-                                />
-                            </div> */}
-
-                            <div className="mb-3">
-                                <label htmlFor="createdDate" className="form-label">Created Date</label>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    id="createdDate"
-                                    name="createdDate"
-                                    value={this.state.createdDate}
-                                    disabled
-                                    onChange={this.onChange}
-
-                                />
+                            <div className="row">
+                                <div className="container" >
+                                    <h3 className="h3"><b>Creations</b></h3>
+                                    <div className="list-group">
+                                        <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Check Available Rooms</button></a>
+                                        <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
+                                            Room Booking Management
+                                        </button></a>
+                                        <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
+                                        <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                                        <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
+                                        <a href="/create-serviceListBill" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Service List Bill</button></a>
+                                        <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
+                                    </div>
+                                    <br></br>
+                                </div>
                             </div>
-                            <br />
+                            <br /><br /><br /><br />
+                        </div>
+                        <div className="col-8 align-self-stretch">
 
-                            {/* <button onClick={e => this.updateIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add new Ingredient</button> */}
+                            <div className="container"></div>
 
-                            <br></br>
+                            <h2>Edit Customer Service Details</h2>
+                            <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
 
-                            <h5><p><b>Customer Service List</b></p></h5>
-                            <div className="table-responsive">
-                                <table className="table">
-                                    <thead className="table-dark">
-                                        <tr>
-                                            <th>Service Name</th>
-                                            <th>Used Date</th>
-                                            <th>No of Hours</th>
-                                            <th>Price/Hours</th>
-                                            <th>Cost</th>
-                                            <th></th>
-                                            <th></th>
+                            </h5>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.state.customerServices.length > 0 && this.state.customerServices.map((item, index) => (
-                                            <tr key={index}>
-                                                <td>{item.serviceName.name}</td>
-                                                <td>{item.date}</td>
-                                                <td>{item.noOfHours}</td>
-                                                <td>{item.price}</td>
-                                                <td>{item.cost}</td>
-                                                
-                                                <td><button type="button" className="btn btn-warning" onClick={e => this.updateServiceList(e, item._id)}>Update</button></td>
-                                                <td><button type="button" className="btn btn-danger" onClick={e => this.deleteServiceList(e, item._id)}>Delete</button></td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <br></br>
-                            <div className="mb-3" style={{ textAlign: "left" }}>
-                                <label htmlFor="total" className="form-label">Service Total</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="total"
-                                    name="total"
-                                    value={this.state.total}
-                                    disabled
-                                    onChange={this.onChange}
-                                />
-                            </div>
+                            <form onSubmit={this.onSubmit} >
 
-                            <br></br>
-                            <br></br>
-                            <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoServiceListBillManagementDash(e)}>Back</button>
-                            <button type="submit" id="form-button" className="btn btn-warning" >Update Customer Service </button>
+                                <div className="container">
+                                    <div className="row mb-3">
+                                        <div className="col-6">
+                                            <label htmlFor="createdDate" className="form-label">Created Date</label>
+                                            <input
+                                                type="date"
+                                                className="form-control"
+                                                id="createdDate"
+                                                name="createdDate"
+                                                value={this.state.createdDate}
+                                                disabled
+                                                onChange={this.onChange}
+
+                                            />
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                    {/* <button onClick={e => this.updateIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add new Ingredient</button> */}
+
+                                    <br></br>
+
+                                    <h5><p><b>Customer Service List</b></p></h5>
+                                    <div className="table-responsive">
+                                        <table className="table">
+                                            <thead className="table-dark">
+                                                <tr>
+                                                    <th>Service Name</th>
+                                                    <th>Used Date</th>
+                                                    <th>No of Hours</th>
+                                                    <th>Price/Hours</th>
+                                                    <th>Cost</th>
+                                                    <th></th>
+                                                    <th></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {this.state.customerServices.length > 0 && this.state.customerServices.map((item, index) => (
+                                                    <tr key={index}>
+                                                        <td>{item.serviceName.name}</td>
+                                                        <td>{item.date}</td>
+                                                        <td>{item.noOfHours}</td>
+                                                        <td>{item.price}</td>
+                                                        <td>{item.cost}</td>
+
+                                                        <td><button type="button" className="btn btn-warning" onClick={e => this.updateServiceList(e, item._id)}>Update</button></td>
+                                                        <td><button type="button" className="btn btn-danger" onClick={e => this.deleteServiceList(e, item._id)}>Delete</button></td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br></br>
+                                    <div className="col-6">
+                                        <label htmlFor="total" className="form-label">Service Total</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="total"
+                                            name="total"
+                                            value={this.state.total}
+                                            disabled
+                                            onChange={this.onChange}
+                                        />
+                                    </div>
+
+                                    <br></br>
+                                    <br></br>
+                                    <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoServiceListBillManagementDash(e)}>Back</button>
+                                    <button type="submit" id="form-button" className="btn btn-warning" >Update Customer Service </button>
+
+                                </div>
+                                <br>
+                                </br>
+                                <br></br>
+                                <br></br>
+                            </form>
                         </div>
                     </div>
-                    <br>
-                    </br>
-                    <br></br>
-                    <br></br>
-                </form>
-
-
+                </div>
             </div>
         )
     }
