@@ -37,7 +37,7 @@ class ViewServiceList extends Component {
     render() {
         return (
 
-            <div className="row justify-content-center">
+            <div className="row justify-content-center" id="dash-food">
                 <div className="container-dash">
                     <h2><b>Receptionist Dashboard</b></h2>
                     <div className="row justify-content-evenly">
@@ -121,7 +121,7 @@ class ViewServiceList extends Component {
                                             </table>
                                         </div>
                                         <br />
-                                        <div className="mb-3" style={{ textAlign: "left" }}>
+                                        <div className="col-6">
                                             <label htmlFor="total" className="form-label">Service Total</label>
                                             <input
                                                 type="text"
