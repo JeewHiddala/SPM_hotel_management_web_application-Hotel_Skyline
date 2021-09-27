@@ -25,17 +25,6 @@ const getAllCustomerServicesDetails = async (req, res) => {       //get all Cust
         });
 }
 
-// const getServicesInList = async (req, res) => {       
-//     var bookingID = req.params.bookingID;
-//     console.log("conn",bookingID);
-//     await CustomerService.find({ bookingID: bookingID }).populate('serviceName','name')
-//         .then(data => {
-//             res.status(200).send({ data: data });
-//         })
-//         .catch(error => {
-//             res.status(500).send({ error: error.message });
-//         });
-// }
 const getCustomerServicessInServiceList = async (req, res) => {       //get all customer service details.
     var bookingNo = req.params.bookingNo;
     console.log(bookingNo);
