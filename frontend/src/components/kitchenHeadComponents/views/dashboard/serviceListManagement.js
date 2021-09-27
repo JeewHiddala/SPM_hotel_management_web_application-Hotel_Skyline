@@ -3,6 +3,9 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 //import ReactPaginate from 'react-paginate';
 import '../../../css/dash.css';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import reportImage from '../../../../images/logo.jpg';
 
 
 class ServiceListManagement extends Component {
@@ -11,12 +14,13 @@ class ServiceListManagement extends Component {
         this.state = {
             // totalPages: 0,
             // page: 0,
-            serviceLists: [],
+            id:'',
+            serviceLists: []
         }
         this.deleteServiceBill = this.deleteServiceBill.bind(this);
         this.navigateCreateServiceBillPage = this.navigateCreateServiceBillPage.bind(this);
         this.navigateUpdateServiceListPage = this.navigateUpdateServiceListPage.bind(this);
-
+        this.exportServiceBillReportPDF = this.exportServiceBillReportPDF.bind(this);
         // this.retrieveServiceList = this.retrieveServiceList.bind(this);
         // this.handlePageChange = this.handlePageChange.bind(this);
     }
@@ -101,6 +105,81 @@ class ServiceListManagement extends Component {
         })
     }
 
+    exportServiceBillReportPDF = () => {
+        const unit = "pt";
+        const size = "A4"; // Use A1, A2, A3 or A4
+        const orientation = "portrait"; // portrait or landscape
+
+        const marginLeft = 40;
+        const doc = new jsPDF(orientation, unit, size);
+
+        doc.setFontSize(13);
+
+        var reportImg = new Image;
+        reportImg.src = reportImage;
+
+        
+        const title = "Service Bill Management Report";
+        const headers = [["Booking Number", "Created Date", "Service Name", "Used Date", "No Of Hours","Price","Total"]];
+
+        const data = [];
+        this.state.serviceLists.map((item, index) => {
+            let serviceName =" ";
+                let noOfHours =" ";
+                let price =" ";
+let date ="";
+            item.customerServices.map((item, index) => {
+                 serviceName =item.serviceName.name;
+                 noOfHours =item.noOfHours;
+                 price =item.price;
+                 date =item.date;
+
+                
+            })
+
+            let serviceLists1 = [
+                item.bookingID.bookingNo,
+                item.createdDate,
+                serviceName,
+              date,
+                noOfHours,
+                price,
+                item.total,
+            ]
+            console.log('eeeee', serviceLists1);
+            data.push(serviceLists1)
+            //return 0;
+        });
+
+        let content = {
+            startY: 122,
+            head: headers,
+            body: data
+        };
+
+        doc.addImage(reportImg, 'JPEG', 40, 13, 70, 70);
+        doc.text("Skylight Hotel", marginLeft+80, 25);
+        doc.text("No.2 Main Street, Colombo", marginLeft+80, 40);
+        doc.text("info@skylight.com", marginLeft+80, 55);
+        doc.text("+94 255 255 111", marginLeft+80, 70);
+
+        doc.line(40, 93, 558, 93);
+
+        doc.text(title, marginLeft, 110);
+        doc.autoTable(content);
+
+        // let finalY = doc.previousAutoTable.finalY;
+
+        // let content1 = {
+        //     startY: finalY+10,
+        //     head: headers1,
+        //     body: data1
+        // };
+        // doc.autoTable(content1);
+        doc.save("Service Management Report - Hotel SkyLight.pdf")
+    }
+
+
     render() {
         return (
             <div>
@@ -131,18 +210,19 @@ class ServiceListManagement extends Component {
                             </div>
                             <div className="col-8 align-self-stretch">
                                 <div className="container" >
+                                    
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateServiceBillPage(e)}>Create Service List Bill</button>
                                     </div>
 
-                                    <div className="float-end">
+                                    {/* <div className="float-end">
                                         <form className="d-flex">
                                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
-                                    </div>
-                                    <div className="col-4">
-                                        <h3 className="h3"><b>Service List Bill Management</b></h3>
+                                    </div> */}
+                                    <div className="col-6">
+                                        <h2 className="h3"><b>Service List Bill Management</b></h2>
                                     </div>
 
                                     <br />
@@ -201,9 +281,11 @@ class ServiceListManagement extends Component {
                                             </tbody>
                                         </table>
                                     </div>
-
-                                    {/* <button type="button" className="btn btn-dark">Generate Report</button> */}
-
+                                    <br />
+                                    <div className="generateReportbtn">
+                                        <button type="button" className="btn btn-dark" onClick={() => this.exportServiceBillReportPDF()}>Generate Report</button>
+                                    </div>
+                                    <br /><br />
                                     {/* <ReactPaginate
                                         previousLabel={'Previous'}
                                         nextLabel={'Next'}
@@ -216,6 +298,7 @@ class ServiceListManagement extends Component {
                                         containerClassName={'pagination'}
                                         activeClassName={'active'}
                                     /> */}
+
                                 </div>
                             </div>
                         </div>
