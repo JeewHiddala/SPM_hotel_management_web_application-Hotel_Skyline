@@ -139,7 +139,7 @@ class updateIngredientOrder extends Component {
 
         //console.log("orderNo1: " + data);
         return (
-            <div className="row justify-content-center">
+            <div className="row justify-content-center" id="dash-food">
                 <div className="container-dash">
                     <h2><b>Kitchen Head Dashboard</b></h2>
                     <div className="row justify-content-evenly">
@@ -161,9 +161,9 @@ class updateIngredientOrder extends Component {
                             <div className="container"></div>
 
                             <h2>Edit Ingredient Order Details</h2>
-                            <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
+                            {/* <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
 
-                            </h5>
+                            </h5> */}
 
                             <form onSubmit={this.onSubmit} >
 
@@ -194,48 +194,48 @@ class updateIngredientOrder extends Component {
                                                 onChange={this.onChange}
 
                                             />
-                                            </div>
                                         </div>
-                                        <br />
-
-                                        {/* <button onClick={e => this.updateIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add new Ingredient</button> */}
-
-                                        <br></br>
-
-                                        <h5><p><b>Ingredient Order List</b></p></h5>
-                                        <div className="table-responsive">
-                                            <table className="table">
-                                                <thead className="table-dark">
-                                                    <tr>
-                                                        <th>Ingredient Name</th>
-                                                        <th>Quantity</th>
-                                                        <th>Chef Name</th>
-                                                        <th></th>
-                                                        <th></th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {this.state.ingredients.length > 0 && this.state.ingredients.map((item, index) => (
-                                                        <tr key={index}>
-                                                            <td>{item.ingredientName}</td>
-                                                            <td>{item.quantity}</td>
-                                                            <td>{item.chefName.name}</td>
-
-                                                            <td><button type="button" className="btn btn-warning" onClick={e => this.updateIngredient(e, item._id)}>Update</button></td>
-                                                            <td><button type="button" className="btn btn-danger" onClick={e => this.deleteIngredient(e, item._id)}>Delete</button></td>
-                                                        </tr>
-                                                    ))}
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <br></br>
-                                        <br></br>
-                                        <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
-                                        <button type="submit" id="form-button" className="btn btn-warning" >Update Ingredient Order </button>
                                     </div>
-                                
+                                    <br />
+
+                                    {/* <button onClick={e => this.updateIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add new Ingredient</button> */}
+
+                                    <br></br>
+
+                                    <h5><p><b>Ingredient Order List</b></p></h5>
+                                    <div className="table-responsive">
+                                        <table className="table">
+                                            <thead className="table-dark">
+                                                <tr>
+                                                    <th>Ingredient Name</th>
+                                                    <th>Quantity</th>
+                                                    <th>Chef Name</th>
+                                                    <th></th>
+                                                    <th></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {this.state.ingredients.length > 0 && this.state.ingredients.map((item, index) => (
+                                                    <tr key={index}>
+                                                        <td>{item.ingredientName}</td>
+                                                        <td>{item.quantity}</td>
+                                                        <td>{item.chefName.name}</td>
+
+                                                        <td><button type="button" className="btn btn-warning" onClick={e => this.updateIngredient(e, item._id)}>Update</button></td>
+                                                        <td><button type="button" className="btn btn-danger" onClick={e => this.deleteIngredient(e, item._id)}>Delete</button></td>
+                                                    </tr>
+                                                ))}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br></br>
+                                    <br></br>
+                                    <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
+                                    <button type="submit" id="form-button" className="btn btn-warning" >Update Ingredient Order </button>
+                                </div>
+
                                 <br>
                                 </br>
                                 <br></br>
