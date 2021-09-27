@@ -63,10 +63,6 @@ class FoodManagement extends Component {
     };
 
     viewFood(e, foodId) {
-        //  this.props.history.push({
-        //     pathname:  `/food-view/`,
-        //      data:`${foodId}`
-        //  });
         window.location = `/food-view/${foodId}`
     }
 
@@ -77,7 +73,7 @@ class FoodManagement extends Component {
 
         axios.get(`http://localhost:8100/food/search/${foodNumber}`)
             .then(response => {
-                
+
                 let id = response.data.data._id
                 console.log("oop" + id)
 
@@ -86,7 +82,7 @@ class FoodManagement extends Component {
             .catch(error => {
                 alert(error.message)
             })
-       
+
     }
 
     navigateCreateFoodPage(e) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 
-const initialState = {
+const initialState = { //initiate states
     selectedChef: [],
     foodNumber: '',
     foodName: '',
@@ -22,9 +22,9 @@ class Food extends Component {
     constructor(props) {
         super(props);
         this.state = initialState;
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChefNameSelect = this.onChefNameSelect.bind(this);
+        this.onChange = this.onChange.bind(this); //bind onChange function.
+        this.onSubmit = this.onSubmit.bind(this);//bind onSubmit function.
+        this.onChefNameSelect = this.onChefNameSelect.bind(this); //bind chefName function.
         this.backtoFoodManagement = this.backtoFoodManagement.bind(this);
 
     }
@@ -62,7 +62,7 @@ class Food extends Component {
     }
 
     onSubmit(e) {
-        e.preventDefault();
+        e.preventDefault(); //avoid browser refresh
 
         let food = {
             foodNumber: this.state.foodNumber,
@@ -116,10 +116,6 @@ class Food extends Component {
                             <div className="container"></div>
 
                             <h2>Add New Food</h2><br></br>
-                            {/* <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
-
-                </h5> */}
-
                             <form onSubmit={this.onSubmit} >
 
                                 <div className="container">

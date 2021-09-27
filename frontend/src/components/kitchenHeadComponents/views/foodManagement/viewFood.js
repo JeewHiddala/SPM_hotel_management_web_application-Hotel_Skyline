@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Select from 'react-select';
-import Swal from "sweetalert2";
-
 
 class ViewFood extends Component {
   constructor(props) {
@@ -18,7 +15,7 @@ class ViewFood extends Component {
       status: '',
       chefName: '',
     }
-    // this.onChange = this.onChange.bind(this);  //bind onChange function.
+
     this.backtoFoodManagement = this.backtoFoodManagement.bind(this);
 
   }
@@ -41,11 +38,6 @@ class ViewFood extends Component {
         this.setState({ status: response.data.data.status });
         this.setState({ chefName: response.data.data.chefName });
       })
-    // .then(() => {
-    //   console.log(this.state.food)
-    //   this.setState({ foodNumber: this.state.food.foodNumber });
-
-    // });
 
   }
 
@@ -53,23 +45,6 @@ class ViewFood extends Component {
     window.location = '/create-foodManagement'
   }
 
-  // onSubmit(e) {
-  //   e.preventDefault();
-
-  //   let food = {
-  //     foodNumber: this.state.foodNumber,
-  //     foodName: this.state.foodName,
-  //     category: this.state.category,
-  //    price: this.state.price,
-  //     description: this.state.description,
-  //     createDate: this.state.createDate,
-  //     status: this.state.status,
-  //     chefName: this.state.chefName,
-
-  //     remarks: this.state.remarks
-  //   };
-
-  // }
   render() {
     return (
       <div className="row justify-content-center" id="dash-food">
@@ -194,24 +169,6 @@ class ViewFood extends Component {
                       />
                     </div>
                   </div>
-
-
-                  {/* 
-          <div className="mb-3" style={{ textAlign: "left" }}>
-            <label htmlFor="chefName" className="form-label">Selected Chef</label>
-            { <input
-              type="text"
-              className="form-control"
-              id="chefName"
-              name="chefName"
-              value={this.state.chefName}
-              disabled
-              onChange={this.onChange}
-            /> }
-            <p className="form-control" id="chefName" name="chefName">
-            {this.state.chefName.name}
-            </p>
-          </div> */}
 
                   <br></br>
                   <div className="mb-3">
