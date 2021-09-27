@@ -142,7 +142,7 @@ class updateIngredient extends Component {
 
         return (
 
-            <div className="row justify-content-center">
+            <div className="row justify-content-center" id="dash-food">
                 <div className="container-dash">
                     <h2><b>Kitchen Head Dashboard</b></h2>
                     <div className="row justify-content-evenly">
