@@ -88,13 +88,7 @@ import kitchentransferredOrderManagement from './components/receptionistDashboar
 import cashPaymentManagement from './components/payment-bill/cashpaymentManagemnt';
 import creditPaymentManagement from './components/payment-bill/creditpaymentManagement';
 import viewCreditPaymentForm from './components/payment-bill/viewcreditpaymentDetails';
-import viewSearchedAvailableRoom from './components/receptionistDashboard/searchViews/viewdsearchedAvailableRoom';
-import viewSearchedUnAvailableRoom from './components/receptionistDashboard/searchViews/viewdsearchedUnAvailableRoom';
-import viewSearchedBookedRoomDetails from './components/receptionistDashboard/searchViews/viewSearchedBookedRoomDetails';
-import viewSearchedCashPayment from './components/receptionistDashboard/searchViews/viewdsearchedCashPayment';
-import viewSearchedCreditPayment from './components/receptionistDashboard/searchViews/viewdsearchedCreditPayment';
 import viewSearchedFoodorder from './components/receptionistDashboard/searchViews/viewSearchedFoodOrder';
-import viewSearchedTransferredFoodorder from './components/receptionistDashboard/searchViews/viewSearchedTransferredFoodOrder';
 
 
 
@@ -153,13 +147,7 @@ function App() {
             <Route path="/checkUnAvailableRooms" component={CheckUnAvailableRooms} />
             <Route path="/cashpaymentManagement" component={cashPaymentManagement} />
             <Route path="/creditpaymentManagement" component={creditPaymentManagement} />
-            <Route path="/searchAvailableRoom/:id" component={viewSearchedAvailableRoom} />
-            <Route path="/searchUnAvailableRoom/:id" component={viewSearchedUnAvailableRoom} />
-            <Route path="/searchbooking/:id" component={viewSearchedBookedRoomDetails} />
-            <Route path="/searchcashpayment/:id" component={viewSearchedCashPayment} />
-            <Route path="/searchcreditpayment/:id" component={viewSearchedCreditPayment} />
             <Route path="/searchfoodorder/:id" component={viewSearchedFoodorder} />
-            <Route path="/searchkitchenorder/:id" component={viewSearchedTransferredFoodorder} />
             <Route path="/create-foodOrder" component={addfoodproduct} />
             <Route path="/create-foodOrder1" component={updateaddedfoodproduct} />
             <Route path="/create-foodOrder-continue" component={createFoodOrders} />
