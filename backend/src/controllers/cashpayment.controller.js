@@ -15,8 +15,16 @@ const createCashPayment = async (req, res) => {
     }
 }
 
+
+
+
 const getAllCashPaymentDetails = async (req, res) => {
-    await CashPayment.find({})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await CashPayment.paginate({},options)
         .then(data => {
             res.status(200).send({ data: data });
         })
