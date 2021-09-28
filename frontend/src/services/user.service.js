@@ -12,6 +12,10 @@ class UserService {
     return axios.get(API_URL + 'role', { headers: authHeader() });
   }
 
+  getProfileImage() {
+    return axios.get(API_URL + 'profilepic', { headers: authHeader() });
+  }
+
 }
 
 export default new UserService();

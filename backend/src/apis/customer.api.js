@@ -7,6 +7,7 @@ module.exports = function () {
     router.get('/', customerController.getAllCustomersDetails);       //get all customers.
     router.get('/get-customer/:userData', customerController.getCustomersDetails);       //get customers.
     router.get('/:id', customerController.getSelectedCustomerDetails);       //get selected customers details.
+    router.patch('/:id', customerController.updateSelectedCustomer); //update customer
     router.delete('/:id', customerController.deleteCustomer);         //delete selected customers details.
 
     return router;

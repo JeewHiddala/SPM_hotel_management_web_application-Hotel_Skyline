@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import reportImage from '../../images/logo.jpg';
 // import '../receptionist-dashboard/receptionist-dashboard.css';
 
 class CheckoutHandling extends Component {
@@ -24,10 +27,10 @@ class CheckoutHandling extends Component {
 
     fetchBillsDetails(){
         axios.get('http://localhost:8100/bill/')
-        .then(response => {
-            this.setState({ bills: response.data.data });
-            console.log("jjj", response.data.data);
-        })
+            .then(response => {
+                this.setState({ bills: response.data.data });
+                console.log("jjj", response.data.data);
+            })
 
     }
 
@@ -43,23 +46,23 @@ class CheckoutHandling extends Component {
         window.location = `/reception/updateCheckoutBill/${billId}`
     }
 
-    searchCheckoutBill(e) { 
+    searchCheckoutBill(e) {
         e.preventDefault();
         axios.get('http://localhost:8100/bill/search/', {
             params: {
                 billNo: this.state.search
             }
         })
-        .then(response => {
-           let billId = response.data.data
-            console.log("jjjbill", response.data.data);
-            window.location = `/reception/viewBill/${billId}`
-        })
-        .catch((error) => {
-            alert('Enter valid Bill number')
-        })
-   
-        
+            .then(response => {
+                let billId = response.data.data
+                console.log("jjjbill", response.data.data);
+                window.location = `/reception/viewBill/${billId}`
+            })
+            .catch((error) => {
+                alert('Enter valid Bill number')
+            })
+
+
     }
 
     viewBillDetails(e, billId) {
@@ -89,6 +92,71 @@ class CheckoutHandling extends Component {
         })
     }
 
+    generateReport = () => {
+        const unit = "pt";
+        const size = "A4"; // Use A1, A2, A3 or A4
+        const orientation = "portrait"; // portrait or landscape
+
+        const marginLeft = 40;
+        const doc = new jsPDF(orientation, unit, size);
+
+        doc.setFontSize(13);
+
+        var reportImg = new Image;
+        reportImg.src = reportImage;
+
+        const title = "Customer Billing Report";
+        const headers = [["Booking Number", "Days of Stay", "Room Booking Cost", "Service Bill Cost", "Damage claims"]];
+
+        doc.addImage(reportImg, 'JPEG', 40, 13, 70, 70);
+        doc.text("Skylight Hotel", marginLeft + 80, 25);
+        doc.setFontSize(11);
+        doc.text("No.2 Main Street, Colombo", marginLeft + 80, 40);
+        doc.text("info@skylight.com", marginLeft + 80, 55);
+        doc.text("+94 255 255 111", marginLeft + 80, 70);
+
+        doc.line(40, 93, 558, 93);
+        doc.setFontSize(13);
+        doc.text(title, marginLeft, 110);
+
+
+        doc.setFontSize(10);
+        let x = marginLeft;
+        let y = 110;
+        this.state.bills.map((item, index) => {
+            const data = [];
+            doc.text("Receptionist Name:", x, y += 22);
+            doc.text(item.receptionistName.name, x + 100, y);
+            doc.text("Bill Number;", x, y += 15);
+            doc.text(item.billNo, x + 100, y);
+            doc.text("Issued Date:", x, y += 15);
+            doc.text(item.issuedDate, x + 100, y);
+            doc.text("Total Bill Value:", x, y += 15);
+            let totalCost = item.totalCost.toString();
+            doc.text(totalCost, x + 100, y);
+            let bill = [
+                item.bookingNo.bookingNo,
+                item.daysOfStay,
+                item.bookingCost,
+                item.serviceCost,
+                item.damageCost
+            ]
+            data.push(bill)
+            let content = {
+                startY: y += 10,
+                head: headers,
+                body: data
+            };
+            doc.autoTable(content);
+            y = doc.previousAutoTable.finalY;
+        });
+        let marginTop = doc.previousAutoTable.finalY + 25;
+        var today = new Date();
+        var newdate = "Date Printed : " + today;
+        doc.text(marginLeft, marginTop, newdate);
+        doc.line(40, 780, 558, 780);          //bottom line
+        doc.save("Customer Billing Report - Hotel SkyLight.pdf")
+    }
 
     render() {
         return (
@@ -102,10 +170,10 @@ class CheckoutHandling extends Component {
                         <div className="row justify-content-evenly">
                             <div className="col-3 align-self-stretch">
 
-                            <div className="row">
-                                        <div className="container" >
-                                            <h3 className="h3"><b>Creations</b></h3>
-                                            <div className="list-group">
+                                <div className="row">
+                                    <div className="container" >
+                                        <h3 className="h3"><b>Creations</b></h3>
+                                        <div className="list-group">
                                             <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Check Available Rooms</button></a>
                                             <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >
                                                 Room Booking Management
@@ -116,8 +184,8 @@ class CheckoutHandling extends Component {
                                             <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service List Bill</button></a>
                                             <a href="/reception/checkout" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Checkout Handling</button></a>
                                         </div>
-                                        </div>
                                     </div>
+                                </div>
                                 <br />
                             </div>
                             <div className="col-8 align-self-stretch">
@@ -125,7 +193,7 @@ class CheckoutHandling extends Component {
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateCheckoutBill(e)}>Create checkout bill</button>
                                     </div>
-                                    
+
                                     <div className="float-end">
                                         <form className="d-flex" onSubmit={this.searchCheckoutBill}>
                                             <input className="form-control me-2" type="search" placeholder="Enter Bill number" name="search" value={this.state.search} onChange={this.onChange} aria-label="Search" autoComplete="off"/>
@@ -143,12 +211,12 @@ class CheckoutHandling extends Component {
                                                 <tr>
                                                     <th scope="col">Bill Number</th>
                                                     <th scope="col">Booking Number</th>
-                                                    <th scope="col">Receptionist Id</th>
+                                                    <th scope="col">Receptionist Name</th>
                                                     <th scope="col">Issued Date</th>
                                                     <th scope="col">Total Bill Value</th>
-                                                    <th scope="col"></th>                                              
-                                                    <th scope="col"></th>                                                    
-                                                    <th scope="col"></th>  
+                                                    <th scope="col"></th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>{this.state.bills.length > 0 && this.state.bills.map((item, index) => (
@@ -162,11 +230,11 @@ class CheckoutHandling extends Component {
                                                     <td><button type="button" className="btn btn-warning" onClick={e => this.navigateUpdateCheckoutBill(e, item._id)}>Update</button></td>
                                                     <td><button type="button" className="btn btn-danger" onClick={e => this.deleteCheckoutBill(e, item._id)}>Delete</button></td>
                                                 </tr>
-                                                ))}
+                                            ))}
                                             </tbody>
                                         </table>
                                     </div>
-                                    
+                                    <button type="button" className="btn btn-dark float-end" onClick={e => this.generateReport(e)}>Generate Report</button>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +248,7 @@ class CheckoutHandling extends Component {
 
 
 
-                
+
             </div>
         )
     }
