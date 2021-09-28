@@ -91,7 +91,7 @@ class SalaryManagement extends Component {
         const marginLeft = 40;
         const doc = new jsPDF(orientation, unit, size);
 
-        doc.setFontSize(13);
+        doc.setFontSize(12);
 
         var reportImg = new Image;
         reportImg.src = reportImage;
@@ -129,20 +129,17 @@ class SalaryManagement extends Component {
             body: data
         };
 
+        doc.setFontSize(13);
         doc.addImage(reportImg, 'JPEG', 40, 13, 70, 70);
         doc.text("Skylight Hotel", marginLeft+80, 25);
+
+        doc.setFontSize(11);
         doc.text("No.2 Main Street, Colombo", marginLeft+80, 40);
         doc.text("info@skylight.com", marginLeft+80, 55);
         doc.text("+94 255 255 111", marginLeft+80, 70);
 
         doc.line(40, 93, 558, 93);          //upper line
         doc.line(40, 780, 558, 780);          //bottom line
-
-
-        // var width =  doc.internal.pageSize.getWidth();
-        // var height =  doc.internal.pageSize.getHeight();
-        // console.log("width",width);
-        // console.log("height",height);
 
         doc.text(title, marginLeft, 110);
         doc.autoTable(content);
@@ -155,7 +152,13 @@ class SalaryManagement extends Component {
             body: data1
         };
         doc.autoTable(content1);
-        doc.save("Salary Management Report - Hotel SkyLight.pdf")
+        doc.setFontSize(10);
+        let marginTop = doc.previousAutoTable.finalY + 25;
+        var today = new Date();
+        var newdate = "Report Issued : " + today;
+        doc.text(marginLeft, marginTop, newdate);
+        doc.text("*** Disclaimer : This is an electronically generated report, hence does not require signature.", marginLeft, marginTop+20);
+        doc.save("Salary Management Report - Hotel SkyLight.pdf");
     }
 
     dropdown(e) {
