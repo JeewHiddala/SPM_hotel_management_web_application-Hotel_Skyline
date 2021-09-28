@@ -19,6 +19,7 @@ module.exports = function() {
         authController.signup
       );
     router.post("/signin", authController.signin);
-
+    router.patch("/:id", authController.updateSelectedUser);
+    router.delete('/:id', authController.deleteCustomerUser);
     return router;
   }
