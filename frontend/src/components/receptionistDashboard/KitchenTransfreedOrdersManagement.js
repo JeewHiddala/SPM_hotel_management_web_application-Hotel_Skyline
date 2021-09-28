@@ -132,6 +132,11 @@ class kitchentransferredOrderManagement extends Component {
 
         doc.text(title, marginLeft, 40);
         doc.autoTable(content);
+        doc.previousAutoTable.finalY + 25;
+        var today = new Date();
+        var newdate = "Date Printed :" + today;
+        doc.text(marginLeft,
+            marginTop, newdate);
         doc.save("report2.pdf")
     }
 
