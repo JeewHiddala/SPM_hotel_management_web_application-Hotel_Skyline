@@ -60,10 +60,10 @@ test('Backend Test Case 24 - Should enter a new attendance - IT19059150  - Ranaw
 })
 
 //test case 2 IT19059150
-// test('Backend Test Case 25 - Should get all employee Leaves details - IT19059150  - Ranaweera I.G.S.V.', async () => {
-//     await request(app).get('/employeeLeaves/').send({  
+test('Backend Test Case 25 - Should get all employee Leaves details - IT19059150  - Ranaweera I.G.S.V.', async () => {
+    await request(app).get('/employeeLeaves/').send({  
 
-//     }).expect(200).then((res) => {
-//         id = res.body._id;
-//     });
-// })
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
