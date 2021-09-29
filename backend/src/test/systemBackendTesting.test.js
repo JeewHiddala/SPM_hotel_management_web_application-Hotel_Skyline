@@ -67,18 +67,18 @@ test('Backend Test Case 01 - Should insert a new room - IT19007502 - Hiddalarach
     });
 })
 
-// //test case 02 - Update room details
-// test('Backend Test Case 02 - Should update existing room details - IT19007502  - Hiddalarachchi J.', async () => {
-//     await request(app).patch('/room/update/61542fffd452935a383b6918').send({
-//         roomNo:"Z055",
-//         category:"Double Room",
-//         airConditioningCategory:"Non A/C",
-//         description: "Budget Room",
-//         price:18070,
-//     }).expect(200).then((res) => {
-//         id = res.body._id;
-//     });
-// })
+//test case 02 - Update room details
+test('Backend Test Case 02 - Should update existing room details - IT19007502  - Hiddalarachchi J.', async () => {
+    await request(app).patch('/room/update/61542fffd452935a383b6918').send({
+        roomNo:"Z055",
+        category:"Double Room",
+        airConditioningCategory:"Non A/C",
+        description: "Budget Room",
+        price:18070,
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 // //test case 03 - delete room details
 // test('Backend Test Case 03 - Should delete existing room details - IT19007502  - Hiddalarachchi J.', async () => {
