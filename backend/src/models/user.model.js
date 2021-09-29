@@ -9,7 +9,11 @@ const User = mongoose.model(
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "roles"
-    }
+    },
+    pic:{
+      type:String,
+      default:"http://res.cloudinary.com/svxzwylz/image/upload/v1632669612/kvmauuzoshkezjnqajvc.png"
+     }
   })
 );
 

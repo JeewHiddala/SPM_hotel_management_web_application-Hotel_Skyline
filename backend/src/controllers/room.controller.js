@@ -84,6 +84,17 @@ const getSelectedRoomDetails = async (req, res) => {          //get selected roo
     }
 }
 
+const getSearchedRoomDetailsByNo = async (req, res) => {          //get selected room details. //search
+        var roomNo = req.params.roomNo;
+        await Room.findOne({roomNo: roomNo})
+            .then(data => {
+                res.status(200).send({ data: data });
+            })
+            .catch(error => {
+                res.status(500).send({ error: error.message });
+            });
+    }
+
 const getSelectedAvailableRoomDetails = async (req, res) => {          //get selected available room details.
     if (req.params && req.params.id) {
         await Room.findById(req.params.id)
@@ -121,7 +132,7 @@ const updateSelectedRoomDetails = async (req, res) => {       //update selected 
         const {id} = req.params;        // fetching the id of the editor.
         const room = req.body;
 
-        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No editor With That id');      // validating the room id
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No room With That id');      // validating the room id
         const updatedRoom = await Room.findByIdAndUpdate(id, room,{new : true});      // find room and room editor
         res.json(updatedRoom);
     }
@@ -136,6 +147,7 @@ module.exports = {
     getSelectedRoomDetails,
     getSelectedAvailableRoomDetails,
     getRoomsDetailsByNo,
+    getSearchedRoomDetailsByNo,
     updateSelectedRoomDetails,
     deleteRoom
 };

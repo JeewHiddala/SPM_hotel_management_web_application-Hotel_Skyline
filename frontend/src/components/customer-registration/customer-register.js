@@ -51,6 +51,17 @@ const vpassword = value => {
     }
 };
 
+// const vcpassword = value => {
+//     if (!value.localeCompare(this.state.password)) {
+
+//         return (
+//             <div className="alert alert-danger" role="alert">
+//                 The confirm password must match given password.
+//             </div>
+//         );
+//     }
+// };
+
 export default class CustomerRegister extends Component {
     constructor(props) {
         super(props);
@@ -84,11 +95,12 @@ export default class CustomerRegister extends Component {
             successful: false
         });
 
-
-        if (this.form.validateAll() && !(this.state.confirmPassword.localeCompare(this.state.password))) {
+        this.form.validateAll();
+        if (this.state.confirmPassword.localeCompare(this.state.password)) {
+            console.log("Mismatch");
             alert("Passwords don't match.");
         }
-        if (this.checkBtn.context._errors.length === 0) {
+        else if (this.checkBtn.context._errors.length === 0) {
             AuthService.register(
                 this.state.userName,
                 this.state.password,
@@ -124,7 +136,7 @@ export default class CustomerRegister extends Component {
                         
                 },
                 error => {
-                    alert('Auth signup failed');
+                    alert('Signup failed. Username already exists');
                 }
             );
 

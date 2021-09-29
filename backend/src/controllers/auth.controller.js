@@ -1,6 +1,7 @@
 const config = require("../config/auth.config");
 const User = require('../models/user.model');       //import user model
 const Role = require('../models/role.model');       //import role model
+const mongoose = require("mongoose");
 
 var jwt = require("jsonwebtoken");
 
@@ -89,7 +90,29 @@ exports.signin = (req, res) => {
         id: user._id,
         userName: user.userName,
         role: user.role,
+        pic: user.pic,
         accessToken: token
       });
     });
 };
+
+exports.deleteCustomerUser = async (req, res) => {              
+  if (req.params && req.params.id) {
+      const {id} = req.params;            
+      if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No User with id: ${id}`);       
+      await User.findByIdAndRemove(id);        
+      res.json({message: "User deleted successfully."});
+  }
+}
+
+exports.updateSelectedUser = async (req, res) => {
+  if (req.params && req.params.id) {
+      const { id } = req.params;
+      const user = req.body;
+      if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No user With that id');
+      const updatedUser = await User.findByIdAndUpdate(id, {$set: {
+          password: user.password,
+      }});
+      res.json(updatedUser);
+  }
+}

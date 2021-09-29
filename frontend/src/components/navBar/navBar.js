@@ -137,7 +137,7 @@ class Navbar extends Component {
                                     <li className="nav-item" >
                                         <a className="nav-link" href="/cart">Cart
                                             {cartItems.length > 0 && (
-                                                <span className="badge">{cartItems.length}</span>
+                                                <span className="badge-cart">{cartItems.length}</span>
                                             )}
                                         </a>
                                     </li>

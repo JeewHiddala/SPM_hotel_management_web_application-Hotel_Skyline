@@ -13,8 +13,8 @@ module.exports = function () {
     });
 
     router.get("/all", userController.allAccess);
-
+    router.get("/profilepic", [authJwt.verifyToken], userController.getProfileImage);
     router.get("/role", [authJwt.verifyToken], userController.userBoard);
-
+    router.patch("/updatepic/:id", userController.updateProfilePic);
     return router;
 }
