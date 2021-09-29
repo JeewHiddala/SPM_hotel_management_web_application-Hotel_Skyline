@@ -163,19 +163,19 @@ test('Backend Test Case 09 - Should get specific employee details - IT19007502  
     });
 })
 
-// //test case 10 - add new service
-// test('Backend Test Case 10 - Should insert a new service - IT19007502  - Hiddalarachchi J.', async () => {
-//     await request(app).post('/service/create').send({
-//         serviceNo:"SN085",
-//         name:"Surfing",
-//         addedDate:"2011-11-11",
-//         pricePerHour: "5500",
-//         description: "We pay attention for build your joy with nature",
-//         employeeCount:15,
-//     }).expect(200).then((res) => {
-//         id = res.body._id;
-//     });
-// })
+//test case 10 - add new service
+test('Backend Test Case 10 - Should insert a new service - IT19007502  - Hiddalarachchi J.', async () => {
+    await request(app).post('/service/create').send({
+        serviceNo:"SN085",
+        name:"Surfing",
+        addedDate:"2011-11-11",
+        pricePerHour: "5500",
+        description: "We pay attention for build your joy with nature",
+        employeeCount:15,
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 // //test case 11 - Update service details
 // test('Backend Test Case 11 - Should update existing service details - IT19007502  - Hiddalarachchi J.', async () => {
