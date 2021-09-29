@@ -8,9 +8,9 @@ const request = require('supertest');
 //import APIs
 
 //const foodApi = require('../apis/food.api');// IT19021058 -De Seram E.M.A.P.
- const ingredientApi = require('../apis/ingredient.api'); // IT19021058 -De Seram E.M.A.P.
-// const serviceListApi = require('../apis/serviceList.api'); // IT19021058 -De Seram E.M.A.P.
-// const customerServiceApi = require('../apis/customerService.api'); // IT19021058 -De Seram E.M.A.P.
+// const ingredientApi = require('../apis/ingredient.api'); // IT19021058 -De Seram E.M.A.P.
+ const serviceListApi = require('../apis/serviceList.api'); // IT19021058 -De Seram E.M.A.P.
+const customerServiceApi = require('../apis/customerService.api'); // IT19021058 -De Seram E.M.A.P.
 
 
 
@@ -55,8 +55,8 @@ app.listen(PORT, () => {
 
 //app.use('/food', foodApi());// IT19021058 -De Seram E.M.A.P.
  app.use('/serviceList', serviceListApi());  // IT19021058 -De Seram E.M.A.P.
-// app.use('/ingredient', ingredientApi()); // IT19021058 -De Seram E.M.A.P.
-// app.use('/customerService', customerServiceApi());  // IT19021058 -De Seram E.M.A.P.
+app.use('/ingredient', ingredientApi()); // IT19021058 -De Seram E.M.A.P.
+ app.use('/customerService', customerServiceApi());  // IT19021058 -De Seram E.M.A.P.
 
 
 //test case 18 - add new food
@@ -101,25 +101,25 @@ app.listen(PORT, () => {
 // })
 
 //test case 21 - create new ingredient
-test('should insert a new Ingredient', async () => {
-    await request(app).post('/ingredient/create').send({
-        orderNumber: "IO00082",
-        ingredientName: "Carrot",
-        quantity: "15kg",
-        chefName: "611a0f6ca28bea02808efe8a",
-    }).expect(200).then((res) => {
-        id = res.body._id;
-    });
-})
-
-//test case 22 - get all service list details
-// test('should get service list details', async () => {
-//     await request(app).get('/serviceList').send({
-
+// test('should insert a new Ingredient', async () => {
+//     await request(app).post('/ingredient/create').send({
+//         orderNumber: "IO00082",
+//         ingredientName: "Carrot",
+//         quantity: "15kg",
+//         chefName: "611a0f6ca28bea02808efe8a",
 //     }).expect(200).then((res) => {
 //         id = res.body._id;
 //     });
 // })
+
+//test case 22 - get all service list details
+test('should get service list details', async () => {
+    await request(app).get('/serviceList').send({
+
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 //test case 23 - add new customer service
 // test('should insert a new Customer service', async () => {
