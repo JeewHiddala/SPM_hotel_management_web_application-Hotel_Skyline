@@ -87,7 +87,12 @@ class CheckoutHandling extends Component {
                     'Checkout Bill has been deleted.',
                     'success'
                 )
-                window.location.reload(false);
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload(false);
+                        }
+                    })
+
             }
         })
     }

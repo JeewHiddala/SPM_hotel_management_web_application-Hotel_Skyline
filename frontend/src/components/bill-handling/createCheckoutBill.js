@@ -116,8 +116,9 @@ class CreateCheckoutBill extends Component {
                 })
                     .then(response => {
                         this.setState({ rooms: response.data.data }, () => {
-                            console.log('Room selected:', response.data.data);
+                            console.log('Room selected:', response.data.data.price);
                             let roomCost = response.data.data.price;
+                            let serviceCost = 0;
                             axios.get('http://localhost:8100/serviceList/checkoutServiceList/', {
                                 params: {
                                     bookingID: item._id
@@ -126,19 +127,16 @@ class CreateCheckoutBill extends Component {
                                 .then(response => {
                                     this.setState({ serviceLists: response.data.data }, () => {
                                         console.log('serviceLists selected:', response.data.data);
-                                        let serviceCost = response.data.data.total;
-
-
-                                        this.setState({
-                                            bookingCost: roomCost * item.days,
-                                            serviceCost: serviceCost,
-                                            totalCost: roomCost * item.days + serviceCost + this.state.damageCost
-                                        });
+                                        serviceCost = response.data.data.total;
 
                                     })
 
                                 })
-
+                                this.setState({
+                                    bookingCost: roomCost * item.days,
+                                    serviceCost: serviceCost,
+                                    totalCost: roomCost * item.days + serviceCost + this.state.damageCost
+                                });
 
                         })
 
