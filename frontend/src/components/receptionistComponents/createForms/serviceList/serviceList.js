@@ -5,8 +5,8 @@ import Select from 'react-select';
 const initialState = {
     selectedBookingID: '',
     id: '',
-    createdDate:'',
-    total:'',
+    createdDate: '',
+    total: '',
     options1: [],
     bookings: []
 }
@@ -42,134 +42,121 @@ class ServiceList extends Component {
                 })
             })
 
-        }
+    }
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-//  onBookingIDSelect(e) {
-//         this.setState({ selectedBookingID: e ? e.map(item => item.value) : [] });
-        
-//     }
+
     onBookingIDSelect = selectedBookingID => {
         this.setState({ selectedBookingID });
         console.log('Option selected:', selectedBookingID);
     }
 
-    addService(e, bookingNo,id) {
-        if((bookingNo === '')){
+    addService(e, bookingNo, id) {
+        if ((bookingNo === '')) {
             alert('Please enter booking ID!');
-            
-        }else{
 
-        this.props.history.push({
-            pathname: `/create-customerService/${id}`,
-            data: `${bookingNo}`
-        })
-    }
-    
-      
-}
-      
-      
+        } else {
 
-/*onSubmit(e) {
-    e.preventDefault();
-
-    let serviceList = {
-        bookings: this.state.selectedBookingID,
-        createdDate: this.state.createdDate,
-        total: this.state.total,
+            this.props.history.push({
+                pathname: `/create-customerService/${id}`,
+                data: `${bookingNo}`
+            })
+        }
 
     }
-    console.log('DATA TO SEND', serviceList);
-    axios.post('http://localhost:8100/serviceList/create', serviceList)
-        .then(response => {
-            alert('Data successfully inserted')
-            console.log("a");
-        })
-
-        .catch(error => {
-            console.log(error.message);
-            alert(error.message)
-        })
 
 
-}
-componentDidMount() {
+    render() {
+        const { selectedBookingID } = this.state.selectedBookingID;
+        console.log("bid: " + selectedBookingID);
+        return (
+            <div className="row justify-content-center" id="dash-food">
+                <div className="container-dash">
+                    <h2><b>Receptionist Dashboard</b></h2>
+                    <div className="row justify-content-evenly">
+                        <div className="col-3 align-self-stretch">
 
-    this.setState(state => {
-        const { data } = this.props.location;
-        state.ingredients.push(this.props.location);
-
-    });
-}
-*/
-
-render() {
-    /*const { data } = this.props.location
-    console.log("ingredient: " + data); */
-    const { selectedBookingID } = this.state.selectedBookingID;
-    console.log("bid: " + selectedBookingID); 
-    return (
-        <div className="container-box"><br />
-
-            <h2>Create Customer Service List</h2>
-            <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
-
-            </h5>
-
-            <form onSubmit={this.onSubmit} >
-
-                <div className={"row"}>
-                    <div className={"col-md-6"}>
-
-
-                        
-                    <label htmlFor="bookingID" className="form-label">Booking Number</label>
-                            <Select
-                                placeholder="Select Booking ID"
-                                name="selectedBookingID"
-                                value ={selectedBookingID}
-                                options={this.state.options1}        
-                                onChange={this.onBookingIDSelect}
-                                className="basic-single"
-                               
-                            />
-                            <br />
-
-                        <div className="mb-3">
-                            <label htmlFor="createdDate" className="form-label">Created Date</label>
-                            <input
-                                type="date"
-                                className="form-control"
-                                id="createdDate"
-                                name="createdDate"
-                                value={this.state.createdDate}
-                                onChange={this.onChange}
-                                
-
-                            />
+                            <div className="row">
+                                <div className="container" >
+                                    <h3 className="h3"><b>Creations</b></h3>
+                                    <div className="list-group">
+                                        <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Check Available Rooms</button></a>
+                                        <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
+                                            Room Booking Management
+                                        </button></a>
+                                        <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
+                                        <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                                        <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
+                                        <a href="/create-serviceListBill" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Service List Bill</button></a>
+                                        <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
+                                    </div>
+                                    <br></br>
+                                </div>
+                            </div>
+                            <br /><br /><br /><br />
                         </div>
-                        <br></br>
-                        <br></br>
-                        <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoServiceListBillManagementDash(e)}>Back</button>
-                        <button id="form-button" onClick={e => this.addService(e, this.state.selectedBookingID.label,this.state.selectedBookingID.value)} className="btn btn-primary">Add Service</button>
-                        
+                        <div className="col-8 align-self-stretch">
+
+                            <div className="container"></div>
+
+                            <h2>Create Customer Service List</h2>
+                            <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
+
+                            </h5>
+
+                            <form onSubmit={this.onSubmit} >
+
+                                <div className="container">
+                                    <div className="row mb-3">
+                                        <div className="col-6">
 
 
-                        
+                                            <label htmlFor="bookingID" className="form-label">Booking Number</label>
+                                            <Select
+                                                placeholder="Select Booking ID"
+                                                name="selectedBookingID"
+                                                value={selectedBookingID}
+                                                options={this.state.options1}
+                                                onChange={this.onBookingIDSelect}
+                                                className="basic-single"
+
+                                            />
+
+                                        </div>
+                                        <div className="col-6">
+
+                                            <label htmlFor="createdDate" className="form-label">Created Date</label>
+                                            <input
+                                                type="date"
+                                                className="form-control"
+                                                id="createdDate"
+                                                name="createdDate"
+                                                value={this.state.createdDate}
+                                                onChange={this.onChange}
+
+
+                                            />
+                                        </div>
+                                    </div>
+                                    <br></br>
+                                    <br></br>
+                                    <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoServiceListBillManagementDash(e)}>Back</button>
+                                    <button id="form-button" onClick={e => this.addService(e, this.state.selectedBookingID.label, this.state.selectedBookingID.value)} className="btn btn-primary">Add Service</button>
+
+
+                                </div>
+                                <br></br>
+
+                                <br></br>
+                                <br></br>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <br>
-                </br>
-                <br></br>
-                <br></br>
-            </form>
-
-
-        </div>
-    )
-}
+            </div>
+        )
+    }
 }
 
 export default ServiceList;

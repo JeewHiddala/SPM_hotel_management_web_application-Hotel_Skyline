@@ -34,6 +34,7 @@
 
 .generateReportbtn{
     float: right;
+    padding: 15px;
 }
 /* 
 .row justify-content-evenly{
@@ -121,8 +122,35 @@
   #servicelist-tbl{
     font-size: 15px;
   }
+
+
+  #dash-food{
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
   #attendance-tbl{
     font-size: 16px;
   }
 
-  
+  #description{
+    margin-bottom: 10px;
+  }
+
+  #workemprep{
+    width:auto;
+    border: 2px solid black;
+    padding: 15px;
+    margin:2px;
+    background-color: #d4d4d4;
+    border-radius: 20px;
+  }
+
+  #red{
+    color: red;
+  }
+
+
+

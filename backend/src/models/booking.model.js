@@ -6,13 +6,14 @@ const BookingSchema = new mongoose.Schema({
     customerId: { type: String, required: true, trim: true },
     roomNo: { type: String, trim: true },
     boardingType: { type: String, required: true, trim: true },
-    bookingDate: { type: Date },
+    bookingDate: { type: Date},
     noOfGuests: { type: Number, required: true },
     days: { type: Number, required: true },
-    arrivalDate: { type: Date },
+    arrivalDate: { type: Date ,  required: true},
     remarks: { type: String, required: true, trim: true },
     room: [{ type: mongoose.Schema.Types.ObjectId, required: false, ref: 'rooms' }],
 });
+
 
 BookingSchema.plugin(mongoosePaginate);
 const Booking = mongoose.model('bookings', BookingSchema);

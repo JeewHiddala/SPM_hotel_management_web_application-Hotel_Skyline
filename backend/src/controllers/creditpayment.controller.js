@@ -15,8 +15,15 @@ const createCreditPayment = async (req, res) => {
     }
 }
 
+
+
 const getAllCreditPaymentDetails = async (req, res) => {
-    await CreditPayment.find({})
+    let page = req.query.page; 
+    const options = {
+        page: page,
+        limit: 5
+      }
+    await CreditPayment.paginate({},options)
         .then(data => {
             res.status(200).send({ data: data });
         })

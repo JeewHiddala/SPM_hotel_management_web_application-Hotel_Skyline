@@ -38,7 +38,7 @@ const getIngredientsInOrder = async (req, res) => {       //get all Ingredient d
 
 const getSelectedIngredientDetails = async (req, res) => {          //get selected Ingredient details.
     if (req.params && req.params.id) {
-        await Ingredient.findById(req.params.id)
+        await Ingredient.findById(req.params.id).populate('chefName','name')
             .then(data => {
                 res.status(200).send({ data: data });
             })
@@ -47,6 +47,7 @@ const getSelectedIngredientDetails = async (req, res) => {          //get select
             });
     }
 }
+
 
 const deleteIngredient = async (req, res) => {               // delete selected Ingredient.
     if (req.params && req.params.id) {
@@ -57,10 +58,22 @@ const deleteIngredient = async (req, res) => {               // delete selected 
     }
 }
 
+const updateSelectedIngredientDetails = async (req, res) => {       //update selected Ingredient
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the Ingredient.
+        const ingredient = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No Ingredient With That id');      // validating the Ingredient id
+        const updatedIngredient = await Ingredient.findByIdAndUpdate(id, ingredient,{new : true}).populate('chefName','name');      // find Ingredient
+        res.json(updatedIngredient);
+    }
+}
+
 module.exports = {
     createIngredient,
     getAllIngredientsDetails,
     getIngredientsInOrder,
     getSelectedIngredientDetails,
+    updateSelectedIngredientDetails,
     deleteIngredient
 };

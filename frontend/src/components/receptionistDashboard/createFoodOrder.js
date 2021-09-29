@@ -1,20 +1,12 @@
-// import './createBooking.css';
-// import Swal from "sweetalert2";
-import React, { Component } from 'react';
-import axios from 'axios';
-// import image from '../images/w1.jpg';
-// import CheckoutSteps from '../checkoutSteps/checkoutSteps';
 
+import React, { Component } from 'react';
+import './dash.css';
 
 
 const initialState = {
 
     orderId: '',
-    foodName: '',
-    quantity: 0,
-    price: 0,
-    pricenquantity: 0,
-    totalPrice: 0
+
 }
 
 class createFoodOrder extends Component {
@@ -22,84 +14,33 @@ class createFoodOrder extends Component {
         super(props);
 
         this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        // this.onEditorSelect = this.onEditorSelect.bind(this);
-        //  this.onAdminSelect = this.onAdminSelect.bind(this);
+        this.addFood = this.addFood.bind(this);
         this.state = initialState;
     }
 
-    // componentDidMount() {
-    //     axios.get('http://localhost:7000/editor/')
-    //         .then(response => {
-    //             this.setState({ editors: response.data.data }, () => {
-    //                 let data = [];
-    //                 this.state.editors.map((item, index) => {
-    //                     let editors = {
-    //                         value: item._id,
-    //                         label: item.name
-    //                     }
-    //                     data.push(editors)
-    //                     console.log("a" + editors);
-    //                 });
-    //                 this.setState({ options1: data });
-    //             })
-    //         })
-
-    // }
-
-    // componentDidMount(){
-    //     axios.get(`http://localhost:8100/foodorder/cal/${this.props.match.params.id}`)
-    //     .then(response => {
-    //       this.setState({totalPrice: totalPrice})
-    //     })
-    //     .catch(error => {
-    //       alert(error.message)
-    //     })
-    // }
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    // onEditorSelect(e) {
-    //     this.setState({ selectedEditors: e ? e.map(item => item.value) : [] });
-    // }
 
-    calculate() {
-        return (
-            this.totalPrice = this.price * this.quantity);
-    }
 
     backtofoodorder(e) {
         window.location = '/foodorder'
     }
 
 
-    onSubmit(e) {
-        e.preventDefault();
+    addFood(e, orderNo, id) {
+        if ((orderNo === '')) {
+            alert('Please enter food order id!');
 
-        let foodorder = {
-            orderId: this.state.orderId,
-            foodName: this.state.foodName,
-            price: this.state.price,
-            quantity: this.state.quantity,
-            pricenquantity: this.state.pricenquantity,
-            totalPrice: this.state.price * this.state.quantity,
-
-
-
-        };
-
-        console.log('DATA TO SEND', foodorder);
-        axios.post('http://localhost:8100/foodorder/create', foodorder)
-            .then(response => {
-                alert('Food Ordering Success')
+        } else {
+           
+            this.props.history.push({
+                pathname: '/create-foodOrder/${id}',
+                data: `${orderNo}`
             })
-            .catch(error => {
-                console.log(error.message);
-                alert(error.message)
-            })
-
+        }
     }
 
 
@@ -107,101 +48,83 @@ class createFoodOrder extends Component {
 
     render() {
         return (
-            <div className="container-box"><br />
 
-                <h2>Create Food Order</h2>
+            <div>
+               <br/><br/>
+                <div className="row justify-content-center" id="dash-box">
+                    <div className="container-dash">
+                        <h2><b>Receptionist Dashboard</b></h2>
+                        <div className="row justify-content-evenly">
+                            <div className="col-3 align-self-stretch">
 
+                                <div className="row">
+                                    <div className="container" >
+                                        <h3 className="h3"><b>Creations</b></h3>
+                                        <div className="list-group">
+                                            <a href="/checkAvailableRooms"  className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Check Available Rooms</button></a>
+                                            <a href="/checkUnAvailableRooms" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" aria-current="true">Check UnAvailable Rooms</button></a>
+                                            <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >
+                                                Room Booking Management
+                                            </button></a>
+                                            <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
+                                            <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                                            <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Food Ordering</button></a>
+                                            <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Service List Bill</button></a>
+                                            <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Checkout Handling</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                            <div className="col-8 align-self-stretch">
+                                <div className="container" >
+                               
+                             
+                             <h2>Add New Food Order</h2>
                 <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
 
                 </h5>
 
-                <form onSubmit={this.onSubmit} >
+                <form >
 
                     <div className={"row"}>
                         <div className={"col-md-6"}>
 
 
                             <div className="mb-3" style={{ textAlign: "left" }}>
-                                <label htmlFor="orderId" className="form-label">Order Id</label>
+                                <label htmlFor="orderId" className="form-label">Food Order Id</label><br>
+                                </br>
                                 <input
                                     type="text"
                                     className="form-control"
+                                    placeholder="Enter Food Order Id"
                                     id="orderId"
-                                    name="orderId"
+                                    name="orderId"                                   
+                                    maxLength="7"
                                     value={this.state.orderId}
                                     onChange={this.onChange}
+                                    required
                                 />
                             </div>
 
-
-
-                            <div className="mb-3">
-                                <label htmlFor="foodName" className="form-label">Food Name</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="foodName"
-                                    name="foodName"
-                                    value={this.state.foodName}
-                                    onChange={this.onChange}
-
-                                />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="price" className="form-label">Price</label>
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    id="price"
-                                    name="price"
-                                    value={this.state.price}
-                                    onChange={this.onChange}
-
-                                />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="quantity" className="form-label">Quantity</label>
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    id="quantity"
-                                    name="quantity"
-                                    value={this.state.quantity}
-                                    onChange={this.onChange}
-
-                                />
-                            </div>
-
-
-
-                            <div className="mb-3">
-                                <label htmlFor="totalPrice" className="form-label">TotalPrice</label>
-                                <input
-                                    className="form-control"
-                                    id="totalPrice"
-                                    name="totalPrice"
-                                    value={this.state.price * this.state.quantity}
-
-                                    onChange={this.onChange}
-                                >
-                                </input>
-                            </div>
-                            <br></br>
-                            <h2>Total price for the order {this.state.orderId} : Rs.{this.state.price * this.state.quantity}</h2>
+                          
                             <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtofoodorder(e)}> Back</button>
-                            <button type="submit" id="form-button" className="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                    <br>
-                    </br>
-                    <br></br>
-                    <br></br>
-                </form>
+                      
+                            <button type="submit" id="form-button" onClick={e => this.addFood(e, this.state.orderId)} className="btn btn-success">Add Food Products</button>
+  
+    </div>
+    </div>
+        </form>
+      </div>
+</div>
+</div>
+</div>
+</div>
+<br/><br/>
+</div>
 
 
-            </div>
         )
     }
 }

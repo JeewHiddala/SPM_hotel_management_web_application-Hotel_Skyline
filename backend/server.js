@@ -7,6 +7,11 @@ const path = require('path');
 const fileRoutes = require('./src/routes/file-upload-routes');
 const productRouter = require('./src/routers/productRouter');
 
+
+
+
+
+
 const userRouter = require('./src/routers/userRouter');
 const orderRouter = require('./src/routers/orderRouter.js');
 const { data } = require('./data.js');
@@ -29,6 +34,7 @@ const employeeLeaveAPI = require('./src/apis/employeeLeaves.api');   //IT1905915
 // const customerServiceApi = require('./src/apis/customerService.api');// IT19021058 -De Seram E.M.A.P.
 // const serviceListApi = require('./src/apis/serviceList.api');// IT19021058 -De Seram E.M.A.P.
 const foodorderAPI = require('./src/apis/foodorder.api'); //IT19051826
+const foodorderingAPI = require('./src/apis/foodordering.api'); //IT19051826
 const bookingAPI = require('./src/apis/booking.api'); //IT19051826
 const kitchenorderAPI = require('./src/apis/kitchen.api');
 const cashpaymentAPI = require('./src/apis/cashpayment.api');
@@ -95,6 +101,7 @@ app.use('/customer', customerAPI());    //IT19059150 - Ranaweera I.G.S.V.
 // app.use('/serviceList',serviceListApi());// IT19021058 -De Seram E.M.A.P.
 
 app.use('/foodorder', foodorderAPI()); //IT19051826
+app.use('/foodordering', foodorderingAPI());
 app.use('/booking', bookingAPI()); //IT19051826
 //app.use('/product', productApI()); //IT19051826
 // app.use('/api/products', productAPI());
@@ -134,6 +141,8 @@ app.use('/customerService',customerServiceApi());// IT19021058 -De Seram E.M.A.P
 app.use('/serviceList',serviceListApi());// IT19021058 -De Seram E.M.A.P.
 
 app.use('/booking', bookingAPI());
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on PORT ${PORT}`);

@@ -30,6 +30,8 @@ const getAllBookings = async (req, res) => {
         });
 }
 
+
+
 const getAllBookingDetails = async (req, res) => {       
     await Booking.find({})
         .then(data => {
@@ -87,6 +89,19 @@ const getSelectedBookingDetails = async (req, res) => {
     }
 }
 
+
+
+const updateSelectedRoomBookingDetails = async (req, res) => {       //update selected editor
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the editor.
+        const booking = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No booking With That id');      // validating the room id
+        const updatedBooking = await Booking.findByIdAndUpdate(id, booking,{new : true});      // find room and room editor
+        res.json(updatedBooking);
+    }
+}
+
 const deleteBooking = async (req, res) => {
     if (req.params && req.params.id) {
         const { id } = req.params;
@@ -104,5 +119,6 @@ module.exports = {
     getAllBookings,
     getAllUnavailableBookingDetails,
     getSelectedBookingDetails,
+    updateSelectedRoomBookingDetails,
     deleteBooking
 };

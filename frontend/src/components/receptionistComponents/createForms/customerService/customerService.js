@@ -27,7 +27,6 @@ class CustomerService extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onHoursChange = this.onHoursChange.bind(this);
         this.handleServiceChange = this.handleServiceChange.bind(this);
-        //this.onBookingIDSelect = this.onBookingIDSelect.bind(this);
     }
 
     componentDidMount() {
@@ -36,7 +35,7 @@ class CustomerService extends Component {
 
         const id = this.props.match.params.id;
         console.log("booking ID: " + id);
-        this.setState({ bookingID:id });
+        this.setState({ bookingID: id });
 
         axios.get('http://localhost:8100/service/get/')
             .then(response => {
@@ -54,65 +53,11 @@ class CustomerService extends Component {
                 })
             })
 
-        // axios.get('http://localhost:8100/booking')
-        // .then(response => {
-        //     this.setState({ bookings: response.data.data }, () => {
-        //         let data = [];
-        //         this.setState({ bookingOptions: data });
-        //         this.state.bookings.map((item, index) => {
-        //             if (!item.bookingNo.localeCompare(data)) {
-        //                 this.setState({ bookingID: item._id });  
-        //             }
-        //             return 0;
-        //         });
-        //         this.setState({ bookingOptions: data });
-
-        //     })
-
-
-        // })
-
-        // console.log("aaaaaaaaaaa",this.state.bookings)
-        // this.state.bookings.map((item, index) => {
-
-        //     if (!item.bookingNo.localeCompare(data)) {
-        //         this.setState({ bookingID: item._id });
-        //     }
-        //     return 0;
-        // });
-
-        //const orderNo = this.props.match.params.id;
-        //  this.setState({ [e.target.name]: e.target.value });
-        // axios.get('http://localhost:8100/booking/')
-        //     .then(response => {
-        //         this.setState({ bookings: response.data.data }, () => {
-        //             let data = [];
-        //             this.setState({ options2: data });
-        //             this.state.bookings.map((item, index) => {
-        //                 let bookings = {
-        //                     value: item._id,
-        //                     label: item.bookingNo
-        //                 }
-        //                 data.push(bookings)
-        //                 console.log("b" + bookings);
-        //             });
-        //             this.setState({ options2: data });
-        //         })
-        //     })
-
     }
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-
-    // onServiceNameSelect(e) {
-    //     this.setState({ selectedService: e ? e.map(item => item.value) : [] });
-    // }
-
-    // onBookingIDSelect(e) {
-    //     this.setState({ selectedBookingID: e ? e.map(item => item.value) : [] });
-    // }
 
     handleServiceChange = selectedService => {
         this.setState({ selectedService });
@@ -153,7 +98,7 @@ class CustomerService extends Component {
             noOfHours: this.state.noOfHours,
             price: this.state.price,
             cost: this.state.cost,
-            
+
         }
         console.log('DATA TO SEND', customerService);
         axios.post('http://localhost:8100/customerService/create', customerService)
@@ -185,111 +130,140 @@ class CustomerService extends Component {
         // const { selectedBookingID } = selectedBookingID;
 
         return (
-            <div className="container-box">
+            <div className="row justify-content-center" id="dash-food">
+                <div className="container-dash">
+                    <h2><b>Receptionist Dashboard</b></h2>
+                    <div className="row justify-content-evenly">
+                        <div className="col-3 align-self-stretch">
 
-                <h2>Add Service to Service List</h2>
-                <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
-
-                </h5>
-
-                <form onSubmit={this.onSubmit} >
-
-                    <div className="row mb-3">
-
-                        <div className="col-6" style={{ textAlign: "left" }}>
-
-                            <label htmlFor="bookingID" className="form-label">Booking Number</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="bookingID"
-                                name="bookingID"
-                                value={this.state.selectedBookingID}
-                                disabled
-                            />
-                            <br />
+                            <div className="row">
+                                <div className="container" >
+                                    <h3 className="h3"><b>Creations</b></h3>
+                                    <div className="list-group">
+                                        <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Check Available Rooms</button></a>
+                                        <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >
+                                            Room Booking Management
+                                        </button></a>
+                                        <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
+                                        <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                                        <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
+                                        <a href="/create-serviceListBill" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Service List Bill</button></a>
+                                        <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
+                                    </div>
+                                    <br></br>
+                                </div>
+                            </div>
+                            <br /><br /><br /><br />
                         </div>
-                        <div className="col-6" style={{ textAlign: "left" }}>
-                            <label htmlFor="serviceName" className="form-label">Service Name</label>
-                            <Select
-                                placeholder="Select Service Name"
-                                name={this.state.serviceName}
-                                value={selectedService}
-                                options={this.state.options1}
-                                onChange={this.handleServiceChange}
-                                className="basic-single"
+                        <div className="col-8 align-self-stretch">
 
-                            />
-                            <br />
-                            <div className="row mb-3">
-                                <div className="col-6" style={{ textAlign: "left" }}>
-                                    <label htmlFor="date" className="form-label">Added Date</label>
-                                    <input
-                                        type="date"
-                                        className="form-control"
-                                        id="date"
-                                        name="date"
-                                        value={this.state.date}
-                                        onChange={this.onChange}
+                            <div className="container"></div>
 
-                                    />
+                            <h2>Add Service to Service List</h2>
+                            <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
+
+                            </h5>
+
+                            <form onSubmit={this.onSubmit} >
+
+                                <div className="container">
+                                    <div className="row mb-3">
+                                        <div className="col-6">
+
+                                            <label htmlFor="bookingID" className="form-label">Booking Number</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="bookingID"
+                                                name="bookingID"
+                                                value={this.state.selectedBookingID}
+                                                disabled
+                                            />
+                                            <br />
+                                        </div>
+                                        <div className="col-6" style={{ textAlign: "left" }}>
+                                            <label htmlFor="serviceName" className="form-label">Service Name</label>
+                                            <Select
+                                                placeholder="Select Service Name"
+                                                name={this.state.serviceName}
+                                                value={selectedService}
+                                                options={this.state.options1}
+                                                onChange={this.handleServiceChange}
+                                                className="basic-single"
+
+                                            />
+                                            <br />
+                                            <div className="row mb-3">
+                                                <div className="col-6" style={{ textAlign: "left" }}>
+                                                    <label htmlFor="date" className="form-label">Added Date</label>
+                                                    <input
+                                                        type="date"
+                                                        className="form-control"
+                                                        id="date"
+                                                        name="date"
+                                                        value={this.state.date}
+                                                        onChange={this.onChange}
+
+                                                    />
+                                                </div>
+
+                                                <div className="col-6" style={{ textAlign: "left" }}>
+                                                    <label htmlFor="noOfHours" className="form-label">No of Hours Used</label>
+                                                    <input
+                                                        type="number"
+                                                        className="form-control"
+                                                        id="noOfHours"
+                                                        name="noOfHours"
+                                                        value={this.state.noOfHours}
+                                                        onChange={this.onHoursChange}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="row mb-3">
+                                                <div className="col-6" style={{ textAlign: "left" }}>
+                                                    <label htmlFor="price" className="form-label">Price per Hour</label>
+                                                    <input
+                                                        type="number"
+                                                        className="form-control"
+                                                        id="price"
+                                                        name="price"
+                                                        value={this.state.price}
+                                                        disabled />
+                                                </div>
+
+
+
+                                                <div className="col-6" style={{ textAlign: "left" }}>
+                                                    <label htmlFor="cost" className="form-label">Total Cost</label>
+                                                    <input
+                                                        type="number"
+                                                        className="form-control"
+                                                        id="cost"
+                                                        name="cost"
+                                                        value={this.state.cost}
+                                                        disabled
+                                                    />
+                                                </div>
+
+                                            </div>
+
+                                            <br></br>
+                                            <br></br>
+
+                                            <button type="submit" className="btn btn-primary">Add Service</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    </br>
+                                    <br></br>
+                                    <br></br>
                                 </div>
+                            </form>
 
-                                <div className="col-6" style={{ textAlign: "left" }}>
-                                    <label htmlFor="noOfHours" className="form-label">No of Hours Used</label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        id="noOfHours"
-                                        name="noOfHours"
-                                        value={this.state.noOfHours}
-                                        onChange={this.onHoursChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row mb-3">
-                                <div className="col-6" style={{ textAlign: "left" }}>
-                                    <label htmlFor="price" className="form-label">Price per Hour</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="price"
-                                        name="price"
-                                        value={this.state.price}
-                                        disabled />
-                                </div>
-
-
-
-                                <div className="col-6" style={{ textAlign: "left" }}>
-                                    <label htmlFor="cost" className="form-label">Total Cost</label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        id="cost"
-                                        name="cost"
-                                        value={this.state.cost}
-                                        disabled
-                                    />
-                                </div>
-
-                            </div>
-
-                            <br></br>
-                            <br></br>
-
-                            {/* <button type="submit" className="btn btn-secondary">Back</button> */}
-                            <button type="submit" className="btn btn-primary">Add Service</button>
                         </div>
                     </div>
-                    <br>
-                    </br>
-                    <br></br>
-                    <br></br>
-                </form>
-
-
-            </div>
+                </div>
+            </div >
         )
     }
 }
