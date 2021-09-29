@@ -10,19 +10,27 @@ class RoomManagement extends Component {
         this.state = {
             totalPages: 0,
             page: 0,
+            roomNumber : "",
             rooms: [],
             isDropdownClicked: false
+            
         }
         this.deleteRoom = this.deleteRoom.bind(this);
         this.navigateCreateRoomPage = this.navigateCreateRoomPage.bind(this);
+        this.navigateEditRoomPage = this.navigateEditRoomPage.bind(this);
+        this.navigateSearchRoomPage = this.navigateSearchRoomPage.bind(this);
         this.dropdown = this.dropdown.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.retrieveRooms = this.retrieveRooms.bind(this);     //pagination
-        // this.back = this.back.bind(this);
     }
 
     componentDidMount() {   //inbuild function
         this.fetchRoomDetails_Manager();
+    }
+
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     fetchRoomDetails_Manager() {
@@ -34,17 +42,20 @@ class RoomManagement extends Component {
 
     }
 
-    // navigateEditAdminPage(e, adminId) {
-    //     window.location = `/updateAdmin/${adminId}`
-    // }
+    navigateEditRoomPage(e, roomId) {                 //edit
+        window.location = `/updateRoom/${roomId}`
+    }
+
+    navigateSearchRoomPage(e) {      //search
+        e.preventDefault();   
+        console.log("abcd", this.state.roomNumber);
+        let roomNo = this.state.roomNumber;        
+        window.location = `/searchRoom/${roomNo}`
+    }
 
     navigateCreateRoomPage(e) {
         window.location = '/createRoom'
     }
-
-    // back(e) {
-    //     window.location = '/adminSubcategories'
-    // }
 
     retrieveRooms(page) {               //pagination
         console.log("Pagef", page);
@@ -84,7 +95,11 @@ class RoomManagement extends Component {
                     'Room has been deleted.',
                     'success'
                 )
-                window.location.reload(false);
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/roomManagement'
+                    }
+                })
             }
         })
     }
@@ -100,32 +115,18 @@ class RoomManagement extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch">
 
                                 <div className="row">
                                     <div className="container" >
                                         <h5><b className="sub-topic">Creations</b></h5>
                                         <div className="list-group">
                                             <a href="/roomManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" id="active-button" aria-current="true">Room Management</button></a>
-                                            {/* <button type="button" className="list-group-item list-group-item-action " >
-                                                Employee Management
-                                            </button> */}
-
                                             <button type="button" className="list-group-item list-group-item-action" data-bs-toggle="dropdown" aria-expanded="false" onClick={e => this.dropdown(e)}>
                                                 Employee Management
                                             </button>
@@ -147,23 +148,31 @@ class RoomManagement extends Component {
                                             </button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Ingredient Ordering</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Employee Attendence</button></a>
-                                            <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Monthly Salary Management</button></a>
+                                            <a href="/salaryManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Salary Management</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Price Lists</button></a>
                                         </div>
                                     </div>
                                 </div>
-                                <br /><br /><br /><br />
+                                <br/>
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateRoomPage(e)}>Create New Room</button>
                                     </div>
 
                                     <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                            <button className="btn btn-primary" type="submit">Search</button>
+                                        <form className="d-flex" onSubmit={this.navigateSearchRoomPage}>
+                                            <input 
+                                                className="form-control me-2" 
+                                                type="text" 
+                                                placeholder="Enter room number" 
+                                                aria-label="Search"
+                                                name="roomNumber"
+                                                value={this.state.roomNumber}      //bind state value
+                                                onChange={this.onChange}    //don't call function. only give a reference.
+                                             />
+                                            <button className="btn btn-primary" type="submit" >Search</button>
                                         </form>
                                     </div>
                                     <div className="col-4">
@@ -192,11 +201,11 @@ class RoomManagement extends Component {
                                                     <td>{item.airConditioningCategory}</td>
                                                     <td>{item.description}</td>
                                                     <td>{item.isAvailable.toString() === 'true'
-                                                        ? <div> Available </div>
-                                                        : <div> Unavailable </div>}
+                                                        ? <div><span className="badge bg-success"> Available </span></div>
+                                                        : <div><span className="badge bg-danger"> Unavailable </span></div>}
                                                     </td>
                                                     <td>{item.price}</td>
-                                                    <td><button type="button" className="btn btn-warning" >Update</button></td>
+                                                    <td><button type="button" className="btn btn-warning" onClick={e => this.navigateEditRoomPage(e, item._id)}>Edit</button></td>
                                                     <td><button type="button" className="btn btn-danger" onClick={e => this.deleteRoom(e, item._id)}>Delete</button></td>
                                                 </tr>
                                             ))}
@@ -220,14 +229,6 @@ class RoomManagement extends Component {
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>

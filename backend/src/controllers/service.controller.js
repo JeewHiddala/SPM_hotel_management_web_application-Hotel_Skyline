@@ -51,6 +51,17 @@ const getSelectedServiceDetails = async (req, res) => {          //get selected 
     }
 }
 
+const getSearchedServiceDetailsByNo = async (req, res) => {          //get selected search details. //search
+    var serviceNo = req.params.serviceNo;
+    await Service.findOne({serviceNo: serviceNo})
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 const deleteService = async (req, res) => {               // delete selected service.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the service
@@ -60,10 +71,23 @@ const deleteService = async (req, res) => {               // delete selected ser
     }
 }
 
+const updateSelectedServiceDetails = async (req, res) => {       //update selected service
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the service.
+        const service = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No service With That id');      // validating the service id
+        const updatedService = await Service.findByIdAndUpdate(id, service,{new : true});      // find service and service editor
+        res.json(updatedService);
+    }
+}
+
 module.exports = {
     createService,
     getAllServicesDetails,
     getSelectedServiceDetails,
     getAllServicesDetailsForReceptionist,
+    getSearchedServiceDetailsByNo,
+    updateSelectedServiceDetails,
     deleteService
 };

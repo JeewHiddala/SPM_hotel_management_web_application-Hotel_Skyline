@@ -9,6 +9,14 @@ import RoomManagement from './components/managerComponents/views/roomManagement/
 import CreateRoom from './components/managerComponents/createForms/roomManagement/createRoom';    //IT19007502 - Hiddalarachchi J.
 import ServiceManagement from './components/managerComponents/views/serviceManagement/serviceManagement';    //IT19007502 - Hiddalarachchi J.
 import CreateService from './components/managerComponents/createForms/serviceManagement/createService';    //IT19007502 - Hiddalarachchi J.
+import UpdateRoom from './components/managerComponents/updateForms/roomManagement/editRoom';  //IT19007502 - Hiddalarachchi J.
+import UpdateWorkingEmployee from './components/managerComponents/updateForms/employeeManagement/editWorkingEmployee';  //IT19007502 - Hiddalarachchi J.
+import UpdateService from './components/managerComponents/updateForms/serviceManagement/editService';  //IT19007502 - Hiddalarachchi J.
+import SearchRoom from './components/managerComponents/searchViews/roomManagement/searchRoom';  //IT19007502 - Hiddalarachchi J.
+import SearchService from './components/managerComponents/searchViews/serviceManagement/searchService';  //IT19007502 - Hiddalarachchi J.
+import SearchEmployee from './components/managerComponents/searchViews/employeeManagement/searchEmployee';  //IT19007502 - Hiddalarachchi J.
+import SearchEmployeeInRetiredEmployeeSection from './components/managerComponents/searchViews/employeeManagement/searchEmployeeInRetiredSection';  //IT19007502 - Hiddalarachchi J.
+import SalaryManagement from './components/managerComponents/views/salaryManagement/salaryManagement';  //IT19007502 - Hiddalarachchi J.
 // import ManagerDashboard from './components/managerComponents/views/dashboard/managerDashboard';
 import Login from "./components/login/login.component";
 import Home from "./components/home/home.component";
@@ -110,6 +118,14 @@ function App() {
             <Route path="/createRoom" component={CreateRoom} />
             <Route path="/serviceManagement" component={ServiceManagement} />
             <Route path="/createService" component={CreateService} />
+            <Route path="/updateRoom/:id" component={UpdateRoom} />
+            <Route path="/updateWorkingEmployee/:id" component={UpdateWorkingEmployee} />
+            <Route path="/updateService/:id" component={UpdateService} />
+            <Route path="/searchRoom/:id" component={SearchRoom} />
+            <Route path="/searchService/:id" component={SearchService} />
+            <Route path="/searchEmployee/:id" component={SearchEmployee} />
+            <Route path="/searchEmployeeInRetiredEmployeeSection/:id" component={SearchEmployeeInRetiredEmployeeSection} />
+            <Route path="/salaryManagement" component={SalaryManagement} />
             {/* </ManagerDashboard>  */}
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />

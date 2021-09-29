@@ -173,12 +173,11 @@ class CreateCheckoutBill extends Component {
         console.log('DATA TO SEND', bill);
         axios.post('http://localhost:8100/bill/create', bill)
             .then(response => {
-                alert('Bill created successfully! ')
 
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'New Employee details has been saved',
+                    title: 'New Bill details has been saved',
                     showConfirmButton: false,
                     timer: 1500
                   })

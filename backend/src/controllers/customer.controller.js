@@ -47,6 +47,24 @@ const getSelectedCustomerDetails = async (req, res) => {          //get selected
     }
 }
 
+const updateSelectedCustomer = async (req, res) => {       //update selected customer
+    if (req.params && req.params.id) {
+        const { id } = req.params;        // fetching the customer id 
+        const customer = req.body;
+        // const damageCost = req.body.damageCost;
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No customer With that id');      // validating the customer id
+        const updatedCustomer = await Customer.findByIdAndUpdate(id, {$set: {
+            fullname: customer.fullname,
+            address: customer.address,
+            nicNo: customer.nicNo,
+            mobileNumber: customer.mobileNumber,
+            email: customer.email,
+            password: customer.password
+        }});      // find and update customer
+        res.json(updatedCustomer);
+    }
+}
+
 const deleteCustomer = async (req, res) => {               // delete selected Customer.
     if (req.params && req.params.id) {
         const {id} = req.params;            // fetching the id of the Customer
@@ -61,5 +79,6 @@ module.exports = {
     getAllCustomersDetails,
     getCustomersDetails,
     getSelectedCustomerDetails,
+    updateSelectedCustomer,
     deleteCustomer
 };

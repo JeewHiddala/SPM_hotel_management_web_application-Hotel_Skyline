@@ -3,6 +3,7 @@ import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 import axios from 'axios';
 import Swal from "sweetalert2";
+import profile from '../../images/profile-avatar.png';
 
 import './profile-styles.css';
 
@@ -23,15 +24,28 @@ export default class Profile extends Component {
       nicNo: '',
       salary: '',
       role: "",
+      image: "",
       currentUser: AuthService.getCurrentUser()
     };
     this.deleteAccount = this.deleteAccount.bind(this);
     this.back = this.back.bind(this);
-
+    this.navigateUpdateProfile = this.navigateUpdateProfile.bind(this);
   }
 
   componentDidMount() {
     console.log("aaa", this.state.currentUser);
+    UserService.getProfileImage()
+      .then(
+        response => {
+          console.log("pic", response.data.pic);
+          if (response.data.pic) {
+            this.setState({ image: response.data.pic })
+          } else {
+            this.setState({ image: profile })
+          }
+        });
+
+    
 
     UserService.getUserBoard()
       .then(
@@ -84,7 +98,7 @@ export default class Profile extends Component {
   }
 
   deleteAccount(e) {
-    console.log("I am on Delete", this.state.id)
+    console.log("I am on Delete", this.state.currentUser.id)
     Swal.fire({
       title: 'Are you sure you want to delete your account?',
       text: "You won't be able to revert this!",
@@ -95,16 +109,25 @@ export default class Profile extends Component {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:7000/customer/${this.state.id}`)//check and delete user from user table ---to be done
+        axios.delete(`http://localhost:8100/customer/${this.state.id}`)
+
+        axios.delete(`http://localhost:8100/auth/${this.state.currentUser.id}`)
         Swal.fire(
           'Deleted!',
           'Account has been deleted.',
           'success'
-        )
-        AuthService.logout();
-        window.location = '/login'
+        ).then((result) => {
+          if (result.isConfirmed) {
+            AuthService.logout();
+            window.location = '/login'
+          }
+        })
       }
     })
+  }
+
+  navigateUpdateProfile(e) {
+    window.location = '/update-profile/'
   }
 
   back(e) {
@@ -119,71 +142,80 @@ export default class Profile extends Component {
         {currentUser ? (
           <div>
             <h2>My Profile</h2><br />
-            <form onSubmit={this.onSubmit}>
-              <div className="mb-3">
-                <label className="form-label">Full Name</label>
-                <input type="text" className="form-control" name="name" value={this.state.name} disabled />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Username</label>
-                <input type="text" className="form-control" name="username" value={this.state.userName} disabled />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">NIC Number</label>
-                <input type="text" className="form-control" name="workplace" value={this.state.nicNo} disabled />
-              </div>
-
-
-
-              <div className="row mb-3">
-                <div className="col">
-                  <div className="mb-3">
-                    <label className="form-label">Email address</label>
-                    <input type="text" className="form-control" name="email" value={this.state.email} disabled />
-                  </div>
+            <div className="container">
+              <div className="row">
+                <div className="col-3" id="profile-box">
+                  <img src={this.state.image} className="card-img" alt="profile" /><br /><br />
                 </div>
-                <div className="col">
-                  <div className="mb-3">
-                    <label className="form-label">Mobile number</label>
-                    <input type="text" className="form-control" name="mobileNo" value={this.state.mobileNumber} disabled />
-                  </div>
-                </div>
-              </div>
-              {this.state.customer && (
-                <div className="mb-3">
-                  <label className="form-label">Address</label>
-                  <input type="text" className="form-control" name="address" value={this.state.address} disabled />
-                </div>
-              )}
-              {this.state.employee && (
-                <div className="row mb-3">
-                  <div className="col">
+                <div className="col-8" id="profile-box">
+                  <form onSubmit={this.onSubmit}>
                     <div className="mb-3">
-                      <label className="form-label">Position</label>
-                      <input type="text" className="form-control" name="position" value={this.state.position} disabled />
+                      <label className="form-label">Full Name</label>
+                      <input type="text" className="form-control" name="name" value={this.state.name} disabled />
                     </div>
-                  </div>
-                  <div className="col">
                     <div className="mb-3">
-                      <label className="form-label">Salary</label>
-                      <input type="text" className="form-control" name="salary" value={this.state.salary} disabled />
+                      <label className="form-label">Username</label>
+                      <input type="text" className="form-control" name="username" value={this.state.userName} disabled />
                     </div>
-                  </div>
+                    <div className="mb-3">
+                      <label className="form-label">NIC Number</label>
+                      <input type="text" className="form-control" name="nicNo" value={this.state.nicNo} disabled />
+                    </div>
+
+
+
+                    <div className="row mb-3">
+                      <div className="col">
+                        <div className="mb-3">
+                          <label className="form-label">Email address</label>
+                          <input type="text" className="form-control" name="email" value={this.state.email} disabled />
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="mb-3">
+                          <label className="form-label">Mobile number</label>
+                          <input type="text" className="form-control" name="mobileNo" value={this.state.mobileNumber} disabled />
+                        </div>
+                      </div>
+                    </div>
+                    {this.state.customer && (
+                      <div className="mb-3">
+                        <label className="form-label">Address</label>
+                        <input type="text" className="form-control" name="address" value={this.state.address} disabled />
+                      </div>
+                    )}
+                    {this.state.employee && (
+                      <div className="row mb-3">
+                        <div className="col">
+                          <div className="mb-3">
+                            <label className="form-label">Position</label>
+                            <input type="text" className="form-control" name="position" value={this.state.position} disabled />
+                          </div>
+                        </div>
+                        <div className="col">
+                          <div className="mb-3">
+                            <label className="form-label">Salary</label>
+                            <input type="text" className="form-control" name="salary" value={this.state.salary} disabled />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="d-grid gap-4 d-md-block">
+                      <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}>Back</button>
+                      {this.state.customer && (
+                        <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteAccount(e)}>Delete</button>
+                      )}
+
+                      <button type="button" id="button" className="btn btn-warning" onClick={e => this.navigateUpdateProfile(e)}>Update</button>
+
+                    </div>
+
+
+                  </form>
                 </div>
-              )}
-
-              <div className="d-grid gap-4 d-md-block">
-                <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}>Back</button>
-                {this.state.customer && (
-                  <button type="button" id="button" className="btn btn-danger" onClick={e => this.deleteAccount(e)}>Delete</button>
-                )}
-                {this.state.customer && (
-                  <button type="button" id="button" className="btn btn-warning">Update</button>
-                )}
               </div>
-
-
-            </form>
+            </div>
           </div>
         ) : (
           <div className="container">

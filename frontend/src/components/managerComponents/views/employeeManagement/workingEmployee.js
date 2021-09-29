@@ -11,17 +11,20 @@ class WorkingEmployee extends Component {
         this.state = {
             totalPages: 0,
             page: 0,
+            nicNumber:'',
             employees: [],
             isDropdownClicked: false,
             loading: true
         }
         this.navigateCreateEmployeePage = this.navigateCreateEmployeePage.bind(this);
         this.dropdown = this.dropdown.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.navigateEditWorkingEmployeePage = this.navigateEditWorkingEmployeePage.bind(this);
+        this.navigateSearchEmployeePage = this.navigateSearchEmployeePage.bind(this);
+        this.navigateHRSalaryReportPage = this.navigateHRSalaryReportPage.bind(this);
         this.resignEmployee = this.resignEmployee.bind(this);           //change working state of employee
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.workingEmployee = this.workingEmployee.bind(this);     //pagination
-        // this.deleteAdmin = this.deleteAdmin.bind(this);
-        // this.back = this.back.bind(this);
     }
 
     componentDidMount() {   //inbuild function
@@ -39,17 +42,29 @@ class WorkingEmployee extends Component {
         })
     }
 
-    // navigateEditAdminPage(e, adminId) {
-    //     window.location = `/updateAdmin/${adminId}`
-    // }
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+
+    navigateSearchEmployeePage(e) {      //search
+        e.preventDefault();   
+        console.log("abcd", this.state.nicNumber);
+        let nicNo = this.state.nicNumber;        
+        window.location = `/SearchEmployee/${nicNo}`
+    }
+
+    navigateEditWorkingEmployeePage(e, employeeId) {
+        window.location = `/updateWorkingEmployee/${employeeId}`
+    }
 
     navigateCreateEmployeePage(e) {
         window.location = '/createEmployee'
     }
 
-    // back(e) {
-    //     window.location = '/adminSubcategories'
-    // }
+    navigateHRSalaryReportPage(e) {
+        window.location = '/salaryManagement'
+    }
 
     workingEmployee(page) {               //pagination
         console.log("Pagef", page);
@@ -95,7 +110,11 @@ class WorkingEmployee extends Component {
                     'Employee has been resigned.',
                     'success'
                 )
-                window.location.reload(false);
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = '/workingEmployee'
+                    }
+                })
             }
         })
     }
@@ -108,23 +127,12 @@ class WorkingEmployee extends Component {
         return (
             <div>
                 <br /><br />
-
-                {/* <h1 class="hotel-name"> Hotel Skylight</h1>
-                <br />
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-1">
-                            Username
-                        </div>
-                    </div>
-                </div> */}
                 <br />
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h3><b className ="super-topic">Manager Dashboard</b></h3>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
-
+                            <div className="col-3 align-self-stretch">
                                 <div className="row">
                                     <div className="container" >
                                     <h5><b className="sub-topic">Creations</b></h5>
@@ -150,22 +158,30 @@ class WorkingEmployee extends Component {
                                             </button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">View Ingredient Ordering</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Employee Attendence</button></a>
-                                            <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Monthly Salary Management</button></a>
+                                            <a href="/salaryManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Salary Management</button></a>
                                             <a href="/" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Price Lists</button></a>
                                         </div>
                                     </div>
                                 </div>
                                 <br /><br /><br /><br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateEmployeePage(e)}>Create Employee</button>
                                     </div>
                                     
                                     <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                                        <form className="d-flex" onSubmit={this.navigateSearchEmployeePage}>
+                                            <input
+                                             className="form-control me-2" 
+                                             type="search" 
+                                             placeholder="Enter NIC no" 
+                                             aria-label="Search" 
+                                             name="nicNumber"
+                                             value={this.state.nicNumber}      //bind state value
+                                             onChange={this.onChange}    //don't call function. only give a reference.
+                                             />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -201,7 +217,7 @@ class WorkingEmployee extends Component {
                                                     <td>{item.salary}</td>
                                                     <td>{item.userName}</td>
                                                     <td>{item.password}</td>
-                                                    <td><button type="button" className="btn btn-warning">Update</button></td>
+                                                    <td><button type="button" className="btn btn-warning" onClick={e => this.navigateEditWorkingEmployeePage(e, item._id)}>Edit</button></td>
                                                     <td><button type="button" className="btn btn-danger" onClick={e => this.resignEmployee(e, item._id)}>Retire</button></td>
                                                 </tr>
                                             ))}
@@ -221,21 +237,13 @@ class WorkingEmployee extends Component {
                                         activeClassName={'active'}
                                     />
                                     <div className= "generateReportbtn">
-                                    <button type="button" className="btn btn-dark">Generate Report</button>
+                                    <button type="button" className="btn btn-dark" onClick={e => this.navigateHRSalaryReportPage(e)}>Generate Human Resourse Report</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
             </div>

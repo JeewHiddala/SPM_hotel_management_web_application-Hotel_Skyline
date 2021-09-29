@@ -10,3 +10,18 @@
 #button{
     margin: 10px;
 }
+#profile-box{
+    border-style: none;
+}
+#profile-image{
+    height: 200px;
+    width: 200px;
+}
+#inputGroupFile03{
+    position: relative;
+}
+#inputGroupFile03::file-selector-button{ 
+    background-color: green;
+    color: white;
+    
+}
