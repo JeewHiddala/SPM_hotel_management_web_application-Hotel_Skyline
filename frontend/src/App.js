@@ -21,6 +21,8 @@ import SalaryManagement from './components/managerComponents/views/salaryManagem
 import Login from "./components/login/login.component";
 import Home from "./components/home/home.component";
 import Profile from "./components/profile/profile.component";
+import UpdateProfile from "./components/profile/profile-update";
+import UpdateProfileImage from "./components/profile/image-update";
 import NavBar from './components/navBar/navBar';//Sahanya
 import CustomerRegister from './components/customer-registration/customer-register';
 import CheckoutHandling from './components/bill-handling/checkoutHandling';
@@ -29,12 +31,16 @@ import ViewCheckoutBill from './components/bill-handling/viewBill';
 import Paymentm from './components/payment-bill/paymentm';
 import PaymentForm from './components/payment-bill/cashpaymentForm';
 import CreditPaymentForm from './components/payment-bill/creditpaymentForm';
-
-
+import UpdateCheckoutBill from './components/bill-handling/updateCheckoutBill';
+import EmployeeAttendance from './components/attendance-handling/employeeAttendance';
+import CreateAttendance from './components/attendance-handling/createAttendance';
+import ViewAttendance from './components/attendance-handling/viewSearchedAttendance';
+import EmployeeLeaves from './components/attendance-handling/employeeLeaves';
+import CreateLeave from './components/attendance-handling/createLeave';
+import ViewSearchedLeaves from './components/attendance-handling/viewSearchedLeaves';
 
 // import React from 'react';
 // import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';    //make routes
-
 // import Footer from './footer/footer';
 // import Home from './components/Home';
 // import NavBar from './mainNav/Navbar';//Deshani
@@ -108,6 +114,7 @@ import viewSearchedFoodorder from './components/receptionistDashboard/searchView
 
 
 
+
 function App() {
 
 
@@ -139,7 +146,8 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register-customer" component={CustomerRegister} />
             <Route exact path="/profile" component={Profile} />
-
+            <Route exact path="/update-profile" component={UpdateProfile} />
+            <Route exact path="/update-image/:id" component={UpdateProfileImage} />
             <Route path="/customerhome" component={CustomerHome} ></Route>
             {/* <Route path="/register" component={RegisterScreen}></Route> */}
             <Route path="/checkAvailableRooms" component={CheckAvailableRooms} />
@@ -166,6 +174,15 @@ function App() {
             <Route exact path="/reception/checkout" component={CheckoutHandling} />
             <Route exact path="/reception/createCheckoutBill" component={CreateCheckoutBill} />
             <Route exact path="/reception/viewBill/:id" component={ViewCheckoutBill} />
+
+            <Route exact path="/reception/updateCheckoutBill/:id" component={UpdateCheckoutBill} />
+            <Route exact path="/attendance/employeeAttendance" component={EmployeeAttendance} />
+            <Route path="/attendance/createAttendance" component={CreateAttendance} />
+            <Route exact path="/attendance/employeeLeaves" component={EmployeeLeaves} />
+            <Route path="/leaves/createLeave" component={CreateLeave} />
+            <Route path="/attendance/:empId" component={ViewAttendance} />
+            <Route path="/leaves/:empId" component={ViewSearchedLeaves} />
+
             <Route path="/updateBooking/:id" component={updateRoomBooking} />
             <Route path="/updateFoodorder/:id" component={updateFoodOrder1} />
             <Route path="/checkUnAvailableRooms" component={CheckUnAvailableRooms} />

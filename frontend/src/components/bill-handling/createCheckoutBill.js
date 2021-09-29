@@ -116,30 +116,32 @@ class CreateCheckoutBill extends Component {
                 })
                     .then(response => {
                         this.setState({ rooms: response.data.data }, () => {
-                            console.log('Room selected:', response.data.data);
+                            console.log('Room selected:', response.data.data.price);
                             let roomCost = response.data.data.price;
-                            axios.get('http://localhost:8100/serviceList/checkoutServiceList/', {
-                                params: {
-                                    bookingID: item._id
-                                }
-                            })
+                            let serviceCost = 0;
+                            axios.get('http://localhost:8100/serviceList/')
                                 .then(response => {
                                     this.setState({ serviceLists: response.data.data }, () => {
                                         console.log('serviceLists selected:', response.data.data);
-                                        let serviceCost = response.data.data.total;
-
-
+                                        this.state.serviceLists.map((item) => {
+                                            if (!item.bookingID.bookingNo.localeCompare(bookingNo.label)){
+                                                serviceCost += item.total;
+                                                console.log('cost:', serviceCost);
+                                            }
+                                            // return 0;
+                                        });
                                         this.setState({
                                             bookingCost: roomCost * item.days,
                                             serviceCost: serviceCost,
                                             totalCost: roomCost * item.days + serviceCost + this.state.damageCost
                                         });
+                                        
 
                                     })
 
                                 })
-
-
+                                console.log('cos444t:', serviceCost);
+                                console.log('123:', this.state.serviceCost);
                         })
 
                     })

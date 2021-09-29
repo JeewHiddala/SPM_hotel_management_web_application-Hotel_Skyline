@@ -87,7 +87,12 @@ class CheckoutHandling extends Component {
                     'Checkout Bill has been deleted.',
                     'success'
                 )
-                window.location.reload(false);
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload(false);
+                        }
+                    })
+
             }
         })
     }
@@ -152,8 +157,9 @@ class CheckoutHandling extends Component {
         });
         let marginTop = doc.previousAutoTable.finalY + 25;
         var today = new Date();
-        var newdate = "Date Printed : " + today;
+        var newdate = "Report Issued: " + today;
         doc.text(marginLeft, marginTop, newdate);
+        doc.text("*** Disclaimer : This is an electronically generated report, hence does not require signature.", marginLeft, marginTop+20);
         doc.line(40, 780, 558, 780);          //bottom line
         doc.save("Customer Billing Report - Hotel SkyLight.pdf")
     }
