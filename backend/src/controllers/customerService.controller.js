@@ -25,17 +25,6 @@ const getAllCustomerServicesDetails = async (req, res) => {       //get all Cust
         });
 }
 
-// const getServicesInList = async (req, res) => {       
-//     var bookingID = req.params.bookingID;
-//     console.log("conn",bookingID);
-//     await CustomerService.find({ bookingID: bookingID }).populate('serviceName','name')
-//         .then(data => {
-//             res.status(200).send({ data: data });
-//         })
-//         .catch(error => {
-//             res.status(500).send({ error: error.message });
-//         });
-// }
 const getCustomerServicessInServiceList = async (req, res) => {       //get all customer service details.
     var bookingNo = req.params.bookingNo;
     console.log(bookingNo);
@@ -70,10 +59,22 @@ const deleteCustomerService = async (req, res) => {               // delete sele
     }
 }
 
+const updateSelectedCustomerServiceDetails = async (req, res) => {       //update selected CustomerService
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the CustomerService.
+        const customerService = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No CustomerService With That id');      // validating the CustomerService id
+        const updatedCustomerService = await CustomerService.findByIdAndUpdate(id, customerService,{new : true});      // find CustomerService
+        res.json(updatedCustomerService);
+    }
+}
+
 module.exports = {
     createCustomerService,
     getAllCustomerServicesDetails,
     getSelectedCustomerServiceDetails,
     getCustomerServicessInServiceList,
+    updateSelectedCustomerServiceDetails,
     deleteCustomerService
 };

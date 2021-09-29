@@ -2,89 +2,45 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
 
+
 const initialState = {
     orderNumber: '',
     createdDate: '',
-    ingredients: [],
-    chef: []
+    id: '',
+    ingredients: []
+
 }
 
-
-class IngredientOrder1 extends Component {
+class updateIngredientOrder extends Component {
     constructor(props) {
         super(props);
         this.state = initialState;
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.addIngredient = this.addIngredient.bind(this);
+        this.onChange = this.onChange.bind(this);  //bind onChange function.
+        this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
         this.deleteIngredient = this.deleteIngredient.bind(this);
+        this.updateIngredient = this.updateIngredient.bind(this);
+
+
         this.backtoIngredientOrderManagement = this.backtoIngredientOrderManagement.bind(this);
-        this.backtoIngredientOrderManagementDash = this.backtoIngredientOrderManagementDash.bind(this);
     }
 
+    updateIngredient(e, ingredientId) {
+        window.location = `/update-Ingredient/${ingredientId}`
+    }
 
     backtoIngredientOrderManagement(e) {
-        window.location = '/create-ingredient'
-    }
-
-    backtoIngredientOrderManagementDash(e) {
         window.location = '/kitchenHeadDashboard'
     }
 
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
-    addIngredient(e, orderNo) {
-        console.log("orderNo: " + orderNo);
-        this.props.history.push({
-            pathname: '/create-ingredient',
-            data: `${orderNo}`
-        })
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        let ingredientOrder = {
-            orderNumber: this.state.orderNumber,
-            createdDate: this.state.createdDate,
-            ingredients: this.state.ingredients,
-
-        }
-        console.log('DATA TO SEND', ingredientOrder);
-        axios.post('http://localhost:8100/ingredientOrder/create', ingredientOrder)
-            .then(response => {
-                alert('Data successfully inserted')
-                console.log("a");
-            })
-
-            .catch(error => {
-                console.log(error.message);
-                alert(error.message)
-            })
-
-
-    }
-    componentDidMount() {
-        var data = localStorage.getItem('orderNumber') || 1;
-        var data1 = localStorage.getItem('createdDate') || 1;
-        this.setState({ createdDate: data1 });
-
-
-        console.log("ing ord no" + data);
-        axios.get(`http://localhost:8100/ingredient/get-ingredients-in-order/${data}`)
-            .then(response => {
-                this.setState({ ingredients: response.data.data })
-            })
-        this.setState({ orderNumber: data });
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     deleteIngredient(e, ingredientId) {
         console.log("I am on Delete", ingredientId)
         Swal.fire({
-            title: 'Are you sure you want to delete this Ingredient?',
-            text: "This item will be deleted immediently. You can't undo this action!",
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -96,17 +52,61 @@ class IngredientOrder1 extends Component {
 
                 Swal.fire(
                     'Deleted!',
-                    'Ingredient is successfully deleted.',
+                    'Ingredient has been deleted.',
                     'success'
                 )
                 window.location.reload(false);
             }
         })
     }
-    render() {
-        const { data } = this.props.location;
-        return (
 
+    componentDidMount() {
+
+        var data1 = localStorage.getItem('ingredientOrderId') || 1;
+
+        axios.get(`http://localhost:8100/ingredientOrder/${data1}`)
+            .then(response => {
+                this.setState({ id: response.data.data._id })
+                this.setState({ orderNumber: response.data.data.orderNumber });
+                this.setState({ createdDate: response.data.data.createdDate });
+                this.setState({ ingredients: response.data.data.ingredients });
+
+                console.log("mmm" + response.data.data)
+            })
+            .catch(error => {
+                alert(error.message)
+            })
+    }
+
+    onSubmit(e) {      //submit details
+        e.preventDefault();     //avoid browser refresh. 
+        let ingredientOrder = {
+            orderNumber: this.state.orderNumber,
+            createdDate: this.state.createdDate,
+            ingredients: this.state.ingredients,
+        }
+        console.log('DATA TO SEND', ingredientOrder);
+
+        axios.patch(`http://localhost:8100/ingredientOrder/update/${this.state.id}`, ingredientOrder)
+            .then(response => {
+                // alert('Food Data successfully updated')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Updated ingredientOrder details has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(error => {
+                console.log(error.message);
+                alert(error.message)
+            })
+
+    }
+
+    render() {
+        return (
             <div className="row justify-content-center" id="dash-food">
                 <div className="container-dash">
                     <h2><b>Kitchen Head Dashboard</b></h2>
@@ -128,10 +128,7 @@ class IngredientOrder1 extends Component {
                         <div className="col-8 align-self-stretch">
                             <div className="container"></div>
 
-                            <h2>Create New Ingredient Order</h2>
-                            <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
-
-                            </h5>
+                            <h2>Edit Ingredient Order Details</h2>
 
                             <form onSubmit={this.onSubmit} >
 
@@ -158,6 +155,7 @@ class IngredientOrder1 extends Component {
                                                 id="createdDate"
                                                 name="createdDate"
                                                 value={this.state.createdDate}
+                                                disabled
                                                 onChange={this.onChange}
 
                                             />
@@ -165,9 +163,8 @@ class IngredientOrder1 extends Component {
                                     </div>
                                     <br />
 
-                                    <button onClick={e => this.addIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add new Ingredient</button>
+
                                     <br></br>
-                                    <br></br><br></br>
 
                                     <h5><p><b>Ingredient Order List</b></p></h5>
                                     <div className="table-responsive">
@@ -178,6 +175,8 @@ class IngredientOrder1 extends Component {
                                                     <th>Quantity</th>
                                                     <th>Chef Name</th>
                                                     <th></th>
+                                                    <th></th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -186,6 +185,8 @@ class IngredientOrder1 extends Component {
                                                         <td>{item.ingredientName}</td>
                                                         <td>{item.quantity}</td>
                                                         <td>{item.chefName.name}</td>
+
+                                                        <td><button type="button" className="btn btn-warning" onClick={e => this.updateIngredient(e, item._id)}>Update</button></td>
                                                         <td><button type="button" className="btn btn-danger" onClick={e => this.deleteIngredient(e, item._id)}>Delete</button></td>
                                                     </tr>
                                                 ))}
@@ -194,16 +195,16 @@ class IngredientOrder1 extends Component {
                                         </table>
                                     </div>
                                     <br></br>
+                                    <br></br>
                                     <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
-                                    <button type="submit" id="form-button" className="btn btn-primary" onClick={e => this.backtoIngredientOrderManagementDash(e)}>Create New Ingredient Order</button>
-
+                                    <button type="submit" id="form-button" className="btn btn-warning" >Update Ingredient Order </button>
                                 </div>
+
                                 <br>
                                 </br>
                                 <br></br>
                                 <br></br>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -211,5 +212,4 @@ class IngredientOrder1 extends Component {
         )
     }
 }
-
-export default IngredientOrder1;
+export default updateIngredientOrder;

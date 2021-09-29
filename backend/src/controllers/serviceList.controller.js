@@ -15,16 +15,6 @@ const createServiceList = async (req, res) => {       //create a ServiceList to 
 }
 
 const getAllServiceListsDetails = async (req, res) => {       //get all ServiceList details.
-    // let page = req.query.page; 
-    // var abc = ({ path: 'customerServices', select: 'date noOfHours price cost' });
-    // var abcde = ({ path: 'serviceName', select: 'name' });
-    // const options = {
-    //     page: page,
-    //     populate: abc,
-    //     populate: abcde,
-    //     limit: 5
-    //   }
-    //   console.log("Page", req.query.page);  
     await ServiceList.find({}).populate('customerServices','serviceName date noOfHours price cost')
     .populate('bookingID','bookingNo')
     .populate({
@@ -44,6 +34,12 @@ const getAllServiceListsDetails = async (req, res) => {       //get all ServiceL
 const getSelectedServiceListDetails = async (req, res) => {  //get selected ServiceList details.
     if (req.params && req.params.id) {
         await ServiceList.findById(req.params.id).populate('customerServices','serviceName date noOfHours price cost')
+        .populate({
+            path: 'customerServices',
+            populate: {
+                path: 'serviceName'
+            }
+        })
             .then(data => {
                 res.status(200).send({ data : data });
             })
@@ -62,9 +58,21 @@ const deleteServiceList = async (req, res) => {               // delete selected
     }
 }
 
+const updateSelectedServiceListDetails = async (req, res) => {       //update selected ServiceListDetails
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the ServiceListDetails.
+        const serviceList = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No ServiceList With That id');      // validating the ServiceListDetails id
+        const updatedServiceList = await ServiceList.findByIdAndUpdate(id, serviceList,{new : true});      // find ServiceListDetails
+        res.json(updatedServiceList);
+    }
+}
+
 module.exports = {
     createServiceList,
     getAllServiceListsDetails,
     getSelectedServiceListDetails,
+    updateSelectedServiceListDetails,
     deleteServiceList
 };

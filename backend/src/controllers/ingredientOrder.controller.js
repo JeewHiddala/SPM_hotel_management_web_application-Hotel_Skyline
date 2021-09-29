@@ -15,16 +15,6 @@ const createIngredientOrder = async (req, res) => {       //create a IngredientO
 }
 
 const getAllIngredientOrdersDetails = async (req, res) => {   
-    // let page = req.query.page; 
-    // var abc = [{ path: 'ingredients', select: 'ingredientName quantity chefName' },{ path: 'chefName', select: 'name' }];
-   
-    // const options = {
-    //     page: page,
-    //     populate: abc,   
-    //     limit: 5
-    //   }
-      
-    // console.log("Page", req.query.page);      //get all IngredientOrder details.
     await IngredientOrder.find({}).populate('ingredients','ingredientName quantity chefName')
     .populate({
         path: 'ingredients',
@@ -39,6 +29,7 @@ const getAllIngredientOrdersDetails = async (req, res) => {
             res.status(500).send({ error: error.message });
         });
 }
+
 
 
 const getSelectedIngredientOrderDetails = async (req, res) => {          //get selected IngredientOrder details.
@@ -68,9 +59,46 @@ const deleteIngredientOrder = async (req, res) => {               // delete sele
     }
 }
 
+const updateSelectedIngredientOrderDetails = async (req, res) => {       //update selected Ingredient,Order
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the Ingredient.
+        const ingredientOrder = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No IngredientOrder With That id');      // validating the Ingredient id
+        const updatedIngredientOrder = await IngredientOrder.findByIdAndUpdate(id, ingredientOrder,{new : true})
+        .populate('ingredients','ingredientName quantity chefName')
+        .populate({
+            path: 'ingredients',
+            populate: {
+                path: 'chefName'
+        }});    
+          // find Ingredient
+        res.json(updatedIngredientOrder);
+    }
+}
+
+const getSearchedIngredientOrderDetailsByNo = async (req, res) => {          //get selected IngredientOrder details. //search
+    var orderNumber = req.params.orderNumber;
+    await IngredientOrder.findOne({orderNumber: orderNumber}).populate('ingredients','ingredientName quantity chefName')
+    .populate({
+        path: 'ingredients',
+        populate: {
+            path: 'chefName'
+        }
+    })
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
 module.exports = {
     createIngredientOrder,
     getAllIngredientOrdersDetails,
     getSelectedIngredientOrderDetails,
-    deleteIngredientOrder
+    updateSelectedIngredientOrderDetails,
+    deleteIngredientOrder,
+    getSearchedIngredientOrderDetailsByNo
 };

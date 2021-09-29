@@ -10,14 +10,19 @@ class FoodManagement extends Component {
         this.state = {
             totalPages: 0,
             page: 0,
+            foodNumber: '',
+            id: '',
             foods: []
         }
         this.deleteFood = this.deleteFood.bind(this);
         this.viewFood = this.viewFood.bind(this);
         this.navigateCreateFoodPage = this.navigateCreateFoodPage.bind(this);
+        this.navigateUpdateFoodPage = this.navigateUpdateFoodPage.bind(this);
+        this.navigateSearchFoodPage = this.navigateSearchFoodPage.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.retrieveFood = this.retrieveFood.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
-        
+
     }
 
     componentDidMount() {
@@ -30,7 +35,9 @@ class FoodManagement extends Component {
                 console.log("TP", this.state.totalPages);
             })
     }
-
+    onChange(e) {     //update states
+        this.setState({ [e.target.name]: e.target.value })
+    }
     retrieveFood(page) {
         console.log("Pagef", page);
         axios.get('http://localhost:8100/food/', {
@@ -56,22 +63,41 @@ class FoodManagement extends Component {
     };
 
     viewFood(e, foodId) {
-        //  this.props.history.push({
-        //     pathname:  `/food-view/`,
-        //      data:`${foodId}`
-        //  });
         window.location = `/food-view/${foodId}`
+    }
+
+    navigateSearchFoodPage(e) {      //search
+        e.preventDefault();
+        console.log("ddddd", this.state.foodNumber);
+        let foodNumber = this.state.foodNumber;
+
+        axios.get(`http://localhost:8100/food/search/${foodNumber}`)
+            .then(response => {
+
+                let id = response.data.data._id
+                console.log("oop" + id)
+
+                window.location = `/food-view/${id}`
+            })
+            .catch(error => {
+                alert(error.message)
+            })
+
     }
 
     navigateCreateFoodPage(e) {
         window.location = '/create-food'
     }
 
+    navigateUpdateFoodPage(e, foodId) {                 //edit
+        window.location = `/updateFood/${foodId}`
+    }
+
     deleteFood(e, foodId) {
         console.log("I am on Delete", foodId)
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Are you sure you want to delete this food?',
+            text: "This item will be deleted immediently. You can't undo this action!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -82,7 +108,7 @@ class FoodManagement extends Component {
                 axios.delete(`http://localhost:8100/food/${foodId}`)
                 Swal.fire(
                     'Deleted!',
-                    'Food has been deleted.',
+                    'Food is successfully deleted.',
                     'success'
                 )
             }
@@ -92,11 +118,11 @@ class FoodManagement extends Component {
         return (
             <div>
                 <br></br>
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" id="dash-food">
                     <div className="container-dash">
                         <h2><b>Kitchen Head Dashboard</b></h2>
                         <div className="row justify-content-evenly">
-                            <div className="col-3">
+                            <div className="col-3 align-self-stretch" >
 
                                 <div className="row">
                                     <div className="container" >
@@ -108,17 +134,25 @@ class FoodManagement extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <br /><br /><br /><br />
+                                <br />
                             </div>
-                            <div className="col-8">
+                            <div className="col-8 align-self-stretch">
                                 <div className="container" >
                                     <div className="float-end">
                                         <button type="button" className="btn btn-success" onClick={e => this.navigateCreateFoodPage(e)}>Add New Food</button>
                                     </div>
 
                                     <div className="float-end">
-                                        <form className="d-flex">
-                                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                                        <form className="d-flex" onSubmit={this.navigateSearchFoodPage}>
+                                            <input
+                                                className="form-control me-2"
+                                                type="search"
+                                                placeholder="Enter Food number"
+                                                aria-label="Search"
+                                                name="foodNumber"
+                                                value={this.state.foodNumber}      //bind state value
+                                                onChange={this.onChange}    //don't call function. only give a reference.
+                                            />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
                                     </div>
@@ -161,7 +195,7 @@ class FoodManagement extends Component {
                                                             ))}
                                                         </td>
                                                         <td><button type="button" className="btn btn-primary" onClick={e => this.viewFood(e, item._id)}>View</button></td>
-                                                        <td><button type="button" className="btn btn-warning">Update</button></td>
+                                                        <td><button type="button" className="btn btn-warning" onClick={e => this.navigateUpdateFoodPage(e, item._id)}>Update</button></td>
                                                         <td><button type="button" className="btn btn-danger" onClick={e => this.deleteFood(e, item._id)}>Delete</button></td>
                                                     </tr>
                                                 ))}
@@ -170,7 +204,7 @@ class FoodManagement extends Component {
                                         </table>
 
                                     </div>
-                                   <br></br>
+                                    <br></br>
                                     <ReactPaginate
                                         previousLabel={'Previous'}
                                         nextLabel={'Next'}

@@ -1,76 +1,41 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Select from 'react-select';
 
-const initialState = {
-    selectedBookingID: '',
-    id: '',
-    createdDate: '',
-    total: '',
-    options1: [],
-    bookings: []
-}
-
-
-class ServiceList extends Component {
+class ViewServiceList extends Component {
     constructor(props) {
         super(props);
-        this.state = initialState;
-        this.onChange = this.onChange.bind(this);
-        this.onBookingIDSelect = this.onBookingIDSelect.bind(this);
-        this.addService = this.addService.bind(this);
-        this.backtoServiceListBillManagementDash = this.backtoServiceListBillManagementDash.bind(this);
+        this.state = {
+            customerServices: [],
+            createdDate: '',
+            total: ''
+        }
+        this.backtoServiceListManagement = this.backtoServiceListManagement.bind(this);
+
     }
 
-    backtoServiceListBillManagementDash(e) {
+
+    backtoServiceListManagement(e) {
         window.location = '/create-serviceListBill'
     }
+
     componentDidMount() {
-        axios.get('http://localhost:8100/booking/')
+        const data = this.props.match.params.id;
+        console.log("qwwwww" + data);
+
+        axios.get(`http://localhost:8100/serviceList/${this.props.match.params.id}`)
             .then(response => {
-                this.setState({ bookings: response.data.data }, () => {
-                    let data = [];
-                    this.state.bookings.map((item, index) => {
-                        let bookings = {
-                            value: item._id,
-                            label: item.bookingNo
-                        }
-                        data.push(bookings)
-                        console.log("a" + bookings);
-                    });
-                    this.setState({ options1: data });
-                })
+                this.setState({ createdDate: response.data.data.createdDate });
+                this.setState({ customerServices: response.data.data.customerServices });
+                this.setState({ total: response.data.data.total });
+
+                console.log("data" + response.data.data);
             })
 
     }
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
-    onBookingIDSelect = selectedBookingID => {
-        this.setState({ selectedBookingID });
-        console.log('Option selected:', selectedBookingID);
-    }
-
-    addService(e, bookingNo, id) {
-        if ((bookingNo === '')) {
-            alert('Please enter booking ID!');
-
-        } else {
-
-            this.props.history.push({
-                pathname: `/create-customerService/${id}`,
-                data: `${bookingNo}`
-            })
-        }
-
-    }
-
 
     render() {
-        const { selectedBookingID } = this.state.selectedBookingID;
-        console.log("bid: " + selectedBookingID);
         return (
+
             <div className="row justify-content-center" id="dash-food">
                 <div className="container-dash">
                     <h2><b>Receptionist Dashboard</b></h2>
@@ -99,8 +64,7 @@ class ServiceList extends Component {
                         <div className="col-8 align-self-stretch">
 
                             <div className="container"></div>
-
-                            <h2>Create Customer Service List</h2>
+                            <h2> Service List Details</h2>
                             <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
 
                             </h5>
@@ -110,22 +74,6 @@ class ServiceList extends Component {
                                 <div className="container">
                                     <div className="row mb-3">
                                         <div className="col-6">
-
-
-                                            <label htmlFor="bookingID" className="form-label">Booking Number</label>
-                                            <Select
-                                                placeholder="Select Booking ID"
-                                                name="selectedBookingID"
-                                                value={selectedBookingID}
-                                                options={this.state.options1}
-                                                onChange={this.onBookingIDSelect}
-                                                className="basic-single"
-
-                                            />
-
-                                        </div>
-                                        <div className="col-6">
-
                                             <label htmlFor="createdDate" className="form-label">Created Date</label>
                                             <input
                                                 type="date"
@@ -133,25 +81,70 @@ class ServiceList extends Component {
                                                 id="createdDate"
                                                 name="createdDate"
                                                 value={this.state.createdDate}
+                                                disabled
                                                 onChange={this.onChange}
-
 
                                             />
                                         </div>
                                     </div>
+                                    <br />
+
+                                    <h5><p><b>Customer Service List</b></p></h5>
+
+
+                                    <div className="table-responsive">
+                                        <table className="table">
+                                            <thead className="table-dark">
+                                                <tr>
+                                                    <th>Service Name</th>
+                                                    <th>Used Date</th>
+                                                    <th>No of Hours</th>
+                                                    <th>Price/Hours</th>
+                                                    <th>Cost</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {this.state.customerServices.length > 0 && this.state.customerServices.map((item, index) => (
+                                                    <tr key={index}>
+
+                                                        <td>{item.serviceName.name}</td>
+                                                        <th>{item.date}</th>
+                                                        <td>{item.noOfHours}</td>
+                                                        <td>{item.price}</td>
+                                                        <td>{item.cost}</td>
+
+                                                    </tr>
+                                                ))}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br />
+                                    <div className="col-6">
+                                        <label htmlFor="total" className="form-label">Service Total</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="total"
+                                            name="total"
+                                            value={this.state.total}
+                                            disabled
+                                            onChange={this.onChange}
+                                        />
+                                    </div>
+
                                     <br></br>
-                                    <br></br>
-                                    <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoServiceListBillManagementDash(e)}>Back</button>
-                                    <button id="form-button" onClick={e => this.addService(e, this.state.selectedBookingID.label, this.state.selectedBookingID.value)} className="btn btn-primary">Add Service</button>
+                                    <button type="button" className="btn btn-secondary" onClick={e => this.backtoServiceListManagement(e)}>Back</button>
 
 
                                 </div>
+                                <br>
+                                </br>
                                 <br></br>
 
-                                <br></br>
-                                <br></br>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -159,4 +152,4 @@ class ServiceList extends Component {
     }
 }
 
-export default ServiceList;
+export default ViewServiceList;
