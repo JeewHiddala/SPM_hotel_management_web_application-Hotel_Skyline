@@ -2,89 +2,48 @@ import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
 import './roomBookingManagement.css';
-import ReactPaginate from 'react-paginate';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-
-class foodOrderManagement extends Component {
+class kitchentransferredOrderManagement extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            totalPages: 0,
-            page: 0,
             orderId: '',
             id: '',
-            foodorderings: []
+            kitchenorders: [],
+            foodorders: [],
+            searchValue: '',
         }
-        this.transfertokitchen = this.transfertokitchen.bind(this);
+
+        this.deleteKitchenOrder = this.deleteKitchenOrder.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.navigateFoodOrderingSearchPage = this.navigateFoodOrderingSearchPage.bind(this); 
+
 
 
     }
 
     componentDidMount() {
 
-       
-        axios.get('http://localhost:8100/foodordering/')
+
+        axios.get('http://localhost:8100/kitchenorder/')
             .then(response => {
-                this.setState({ foodorderings: response.data.data });
-               
+                this.setState({ kitchenorders: response.data.data });
+
             })
-   
+
     }
- 
 
-
-    navigateFoodOrderingSearchPage(e) {      //search
-        e.preventDefault();   
-        console.log("abcd", this.state.orderId);
-        let orderId = this.state.orderId;  
-        
-        axios.get(`http://localhost:8100/foodordering/search/${orderId}`)
-        .then(response =>{
-            let id = response.data.data._id
-            console.log("oop" + id)
-            window.location = `/searchfoodorder/${id}`
-            
-        })
-        .catch(error =>{
-            alert(error.message)
-        })
-
-       
-    }
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
-       
+
     }
 
 
-    createfoodorder() {
-        window.location = `/createfoodorder`
-    }
-
-
-    transfertokitchen(e, foodorderId) {
-        this.props.history.push({
-            pathname: `/transferKitchen/${foodorderId}`,
-            data: `${foodorderId}`
-        });
-    }
-    updateOrder(e, foodorderId) {
-        this.props.history.push({
-            pathname: `/updateFoodorder/${foodorderId}`,
-            data: `${foodorderId}`
-        });
-    }
-
-
-
-    deleteFoodOrder(e, foodorderId) {
-        console.log("Delete", foodorderId)
+    deleteKitchenOrder(e, kitchenorderId) {
+        console.log("Delete", kitchenorderId)
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -95,10 +54,10 @@ class foodOrderManagement extends Component {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:8100/foodordering/${foodorderId}`)
+                axios.delete(`http://localhost:8100/kitchenorder/${kitchenorderId}`)
                 Swal.fire(
                     'Deleted!',
-                    'Food Order Removed.',
+                    'Kitchen Transferred Order Removed.',
                     'success'
                 )
             }
@@ -107,68 +66,85 @@ class foodOrderManagement extends Component {
     }
 
 
-        
-    exportFoodOrderPDF = () => {
+    searchHandler = (event) => {
+
+
+
+        let searchResults = this.state.kitchenorders;
+        searchResults = searchResults.filter(result => {
+            return result.orderId.toLowerCase().search(
+                event.target.value.toLowerCase()) !== -1;
+
+        });
+
+        this.setState({
+            kitchenorders: searchResults,
+            //room: searchResults,
+            searchValue: event.target.value.toLowerCase()
+
+        }, () => console.log('state', this.state))
+
+
+    };
+
+
+    exportFoodOrderingPDF = () => {
         const unit = "pt";
         const size = "A4"; // Use A1, A2, A3 or A4
         const orientation = "portrait"; // portrait or landscape
-    
+
         const marginLeft = 40;
         const doc = new jsPDF(orientation, unit, size);
-    
+
         doc.setFontSize(15);
-    
-        const title = "Food Orders Report";
-        const headers = [["OrderId", "foodName", "price", "quantity", "price*Qty"]];
-    
-     
-    const data =this.state.foodorderings.map(item =>
-       
-     [
-            item.orderId,
-          
-                       item.foodorders.map(item =>[
-                        item.foodName,
-                    ] ),item.foodorders.map(item =>[
-                        item.price,
-                    ]), item.foodorders.map(item =>[
-                       item.quantity,
-                    ]), item.foodorders.map(item =>[
-                       item.pricenquantity,
-                    ]),
-                   
-                   
-                  
-     ] );
+
+        const title = "Food Orderings";
+        const headers = [["OrderId", "foodName", "price", "quantity", "price*Qty", "Total"]];
+
+
+        const data = this.state.kitchenorders.map(item =>
+
+            [
+                item.orderId,
+
+                item.foodorders.map(item => [
+                    item.foodName,
+                ]), item.foodorders.map(item => [
+                    item.price,
+                ]), item.foodorders.map(item => [
+                    item.quantity,
+                ]), item.foodorders.map(item => [
+                    item.pricenquantity,
+                ]),
+                item.totalPrice,
+
+
+            ]);
 
 
 
         let content = {
-          startY: 50,
-          head: headers,
-          body: data
+            startY: 50,
+            head: headers,
+            body: data
         };
-    
-    
+
 
         doc.text(title, marginLeft, 40);
         doc.autoTable(content);
-        let marginTop = 
         doc.previousAutoTable.finalY + 25;
         var today = new Date();
         var newdate = "Date Printed :" + today;
         doc.text(marginLeft,
             marginTop, newdate);
-        doc.save("foodorder.pdf")
-      }
+        doc.save("report2.pdf")
+    }
 
-  
-    
 
     render() {
         return (
             <div>
-                <br/><br/>
+                <br /><br />
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h2><b>Receptionist Dashboard</b></h2>
@@ -185,43 +161,37 @@ class foodOrderManagement extends Component {
                                             </button></a>
                                             <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
                                             <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
-                                            <a href="/foodorder" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Food Ordering</button></a>
-                                            <a href="/kitchentransferredOrderManagement" className="routeBtn"><button type="button"  className="list-group-item list-group-item-action">Kitchen Transferred Orders</button></a>
-                                            
+                                            <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >Food Ordering</button></a>
+                                            <a href="/kitchentransferredOrderManagement" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Kitchen Transferred Orders</button></a>
                                             <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service List Bill</button></a>
                                             <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Checkout Handling</button></a>
-                                            <a href="cashpaymentManagement"  id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Bill Cash Payment Handling</button></a>
-                                            <a href="/creditpaymentManagement"  id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Bill Credit Payment Handling</button></a>
                                         </div>
                                     </div>
                                 </div>
-                               
+                                <br /><br /><br /><br />
                             </div>
                             <div className="col-8 align-self-stretch">
                                 <div className="container" >
-                                    <div className="float-end">
-                                        <button type="button" className="btn btn-success" onClick={() => this.createfoodorder()}>Create Food Order</button>
-                                    </div>
+
 
                                     <div className="float-end">
-                                        <form className="d-flex" onSubmit={this.navigateFoodOrderingSearchPage}>
+                                        <form className="d-flex">
                                             <input
-                                             className="form-control me-2" 
-                                             type="search" 
-                                             placeholder="Enter orderId" 
-                                             aria-label="Search"
-                                             name="orderId"
-                                             value={this.state.orderId}      //bind state value
-                                             onChange={this.onChange}    //don't call function. only give a reference.
-                                             />
+                                                className="form-control me-2"
+                                                type="search"
+                                                placeholder="Enter orderId"
+                                                aria-label="Search"
+                                                name="orderId"
+                                                value={this.state.searchValue}
+                                                onChange={this.searchHandler}
+                                            />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
                                     </div>
                                     <div className="col-4">
-                                        <h3 className="h3"><b>Food Ordering</b></h3>
+                                        <h3 className="h3"><b>Kitchen Transferred Orders</b></h3>
                                     </div>
 
-                                    <br />
                                     <div className="table-responsive">
                                         <table className="table">
                                             <thead className="table-dark">
@@ -230,30 +200,27 @@ class foodOrderManagement extends Component {
                                                     <th>FoodName</th>
                                                     <th>Price (Rs.)</th>
                                                     <th>Quantity</th>
-
                                                     <th>Price*Qty</th>
-                                                    <th></th>
+                                                    <th>Order Total</th>
                                                     <th></th>
                                                     <th></th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {this.state.foodorderings.length > 0 && this.state.foodorderings.map((item, index) => (
+                                                {this.state.kitchenorders.length > 0 && this.state.kitchenorders.map((item, index) => (
                                                     <tr key={index}>
-                                                        <td>{item.orderId}</td>
+                                                        <td><h5>{item.orderId}</h5></td>
                                                         <td>
                                                             {item.foodorders.map((item, index) => (
                                                                 <h5> {item.foodName}</h5>
 
                                                             ))}
 
-
-
                                                         </td>
                                                         <td>
 
-                                                        {item.foodorders.map((item, index) => (
+                                                            {item.foodorders.map((item, index) => (
                                                                 <h5> {item.price}</h5>
 
                                                             ))}
@@ -267,15 +234,14 @@ class foodOrderManagement extends Component {
                                                         </td>
 
                                                         <td>
-                                                        {item.foodorders.map((item, index) => (
+                                                            {item.foodorders.map((item, index) => (
                                                                 <h5> {item.pricenquantity}</h5>
 
                                                             ))}
                                                         </td>
-                                                        
-                                                        <td><button type="button" className="btn btn-warning" onClick={e => this.updateOrder(e, item._id)} >Update</button></td>
-                                                        <td><button type="button" className="btn btn-danger" onClick={e => this.deleteFoodOrder(e, item._id)}>Delete</button></td>
-                                                        <td><button type="button" className="btn btn-primary" onClick={e => this.transfertokitchen(e, item._id)}>View TotalPrice TransferToKitchen</button></td>
+                                                        <td><h5>{item.totalPrice}</h5></td>
+                                                        <td><button type="button" className="btn btn-danger" onClick={e => this.deleteKitchenOrder(e, item._id)}>Delete</button></td>
+
 
                                                     </tr>
                                                 ))}
@@ -286,23 +252,12 @@ class foodOrderManagement extends Component {
 
                                         <br></br>
                                         <div className="generateReportbtn">
-                                            <button type="button" className="btn btn-dark" onClick={() => this.exportFoodOrderPDF()}>Generate Report</button>
+                                            <button type="button" className="btn btn-dark" onClick={() => this.exportFoodOrderingPDF()}>Generate Report</button>
                                         </div>
 
-                                        
+
+
                                     </div>
-                                    {/* <ReactPaginate
-                                        previousLabel={'Previous'}
-                                        nextLabel={'Next'}
-                                        breakLabel={'...'}
-                                        breakClassName={'break-me'}
-                                        pageCount={this.state.totalPages}
-                                        marginPagesDisplayed={2}
-                                        pageRangeDisplayed={5}
-                                        onPageChange={this.handlePageChange}
-                                        containerClassName={'pagination'}
-                                        activeClassName={'active'}
-                                    /> */}
 
 
                                 </div>
@@ -311,17 +266,10 @@ class foodOrderManagement extends Component {
                     </div>
                 </div>
 
-
-
-
-
-
-
-
-                <br/><br/>
+                <br /><br />
             </div>
         )
     }
 }
 
-export default foodOrderManagement;
+export default kitchentransferredOrderManagement;

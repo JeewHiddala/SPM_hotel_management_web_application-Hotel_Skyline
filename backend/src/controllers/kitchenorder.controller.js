@@ -15,7 +15,8 @@ const createKitchenOrder = async (req, res) => {
 }
 
 const getAllKitchenOrderDetails = async (req, res) => {
-    await Kitchenorder.find({})
+
+    await Kitchenorder.find({}).populate('foodorders','foodName quantity price pricenquantity')
         .then(data => {
             res.status(200).send({ data: data });
         })
@@ -26,7 +27,7 @@ const getAllKitchenOrderDetails = async (req, res) => {
 
 const getSelectedKitchenOrderDetails = async (req, res) => {
     if (req.params && req.params.id) {
-        await Kitchenorder.findById(req.params.id)
+        await Kitchenorder.findById(req.params.id).populate('foodorders','foodName quantity price pricenquantity')
             .then(data => {
                 res.status(200).send({ data: data });
             })
@@ -35,6 +36,7 @@ const getSelectedKitchenOrderDetails = async (req, res) => {
             });
     }
 }
+
 
 
 
@@ -48,6 +50,9 @@ const getSelectedKitchenOrderDetails = async (req, res) => {
 //         res.json(updatedReviewer);
 //     }
 // }
+
+
+
 
 const deleteKitchenOrder = async (req, res) => {
     if (req.params && req.params.id) {
