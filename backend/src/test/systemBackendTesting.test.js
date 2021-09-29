@@ -81,12 +81,31 @@ test('Backend Test Case 15 - Should create booking - IT19051826  - Herath D.D.M.
 //IT19051826 Test Case 16
 //test case 16 - delete selected booking details 
 
-app.use('/booking', bookingAPI());
 
 test('Backend Test Case 16 - delete booking details - IT19051826  - Herath D.D.M.', async () => {
     await request(app).delete('/booking/61471b41e8f6c32080be4e78').send({  
    
     }).expect(200).then((res) => {
         id = res.body._id;
+    });
+})
+
+
+//IT19051826 Test Case 17
+//test case 17 - Update selected booking details 
+
+test('Backend Test Case 17 - should update selected booking details - IT19051826  - Herath D.D.M.', async () => {
+    await request(app).patch('/booking/update/6123ec1ca2b1e110bc563b67').send({  
+        bookingNo:"B009",
+        customerId:"22224475V",
+        roomNo:"D001",
+        boardingType:"fullboard",
+        bookingDate:"2021-08-24T18:30:00.000+00:00",
+        noOfGuests:4,
+        days:2,
+        arrivalDate:"2021-08-26T18:30:00.000+00:00",
+        remarks:"Play area",
+    }).expect(200).then((res) => {
+      
     });
 })
