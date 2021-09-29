@@ -77,6 +77,13 @@ import ServiceList from './components/receptionistComponents/createForms/service
 import ViewFood from './components/kitchenHeadComponents/views/foodManagement/viewFood';
 import ServiceList1 from './components/receptionistComponents/createForms/serviceList/serviceList1';
 import ViewIngredientOrder from './components/kitchenHeadComponents/views/ingredientOrderManagement/viewIngredientOrder';
+import ViewServiceList from './components/kitchenHeadComponents/views/dashboard/viewServiceList';
+import updateFood from './components/kitchenHeadComponents/views/foodManagement/updateFood';
+import updateIngredientOrder from './components/kitchenHeadComponents/views/ingredientOrderManagement/updateIngredientOrder';
+import updateIngredient from './components/kitchenHeadComponents/views/ingredientOrderManagement/updateIngredient';
+import updateCustomerService from './components/kitchenHeadComponents/views/dashboard/updateCustomerService';
+import updateServiceList from './components/kitchenHeadComponents/views/dashboard/updateServiceList';
+
 
 
 function App() {
@@ -141,6 +148,14 @@ function App() {
                         <Route path="/food-view/:id" component={ViewFood} /> 
                         <Route path="/create-serviceList-continue" component={ServiceList1} /> 
                         <Route path="/ingredientOrder-View/:id" component={ViewIngredientOrder} /> 
+                        <Route path="/serviceList-View/:id" component={ViewServiceList} /> 
+                        <Route path="/updateFood/:id" component={updateFood} /> 
+                        <Route path="/update-IngredientOrder/:id" component={updateIngredientOrder} /> 
+                        <Route path="/update-Ingredient/:id" component={updateIngredient} /> 
+                        <Route path="/update-CustomerService/:id" component={updateCustomerService} /> 
+                        <Route path="/update-ServiceList/:id" component={updateServiceList} /> 
+
+
 
           </Switch>
         </section>
