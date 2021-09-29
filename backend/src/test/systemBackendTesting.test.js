@@ -199,11 +199,11 @@ test('Backend Test Case 12 - Should delete existing service details - IT19007502
     });
 })
 
-// //test case 13 - get specific service details
-// test('Backend Test Case 13 - Should get specific service details - IT19007502  - Hiddalarachchi J.', async () => {
-//     await request(app).get('/service/6154a7b00afbc94b78ac4e14').send({
-//     }).expect(200).then((res) => {
-//         id = res.body._id;
-//     });
-// })
+//test case 13 - get specific service details
+test('Backend Test Case 13 - Should get specific service details - IT19007502  - Hiddalarachchi J.', async () => {
+    await request(app).get('/service/6154a7b00afbc94b78ac4e14').send({
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
