@@ -113,24 +113,24 @@ app.use('/ingredient', ingredientApi()); // IT19021058 -De Seram E.M.A.P.
 // })
 
 //test case 22 - get all service list details
-test('should get service list details', async () => {
-    await request(app).get('/serviceList').send({
+// test('should get service list details', async () => {
+//     await request(app).get('/serviceList').send({
 
-    }).expect(200).then((res) => {
-        id = res.body._id;
-    });
-})
-
-//test case 23 - add new customer service
-// test('should insert a new Customer service', async () => {
-//     await request(app).post('/customerService/create').send({
-//         bookingID: "61267e14d326d6217cc60b11",
-//         serviceName: "6124244653d5e665c865323e",
-//         date: "2021-09-28",
-//         noOfHours: 2,
-//         price: 750,
-//         cost: 1500,
 //     }).expect(200).then((res) => {
 //         id = res.body._id;
 //     });
 // })
+
+//test case 23 - add new customer service
+test('should insert a new Customer service', async () => {
+    await request(app).post('/customerService/create').send({
+        bookingID: "61267e14d326d6217cc60b11",
+        serviceName: "6124244653d5e665c865323e",
+        date: "2021-09-28",
+        noOfHours: 2,
+        price: 750,
+        cost: 1500,
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
