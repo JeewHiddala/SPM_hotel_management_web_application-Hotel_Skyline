@@ -7,9 +7,10 @@ const request = require('supertest');
 
 //import APIs
 //IT19007502 - Hiddalarachchi J.
-const roomAPI = require('../apis/room.api');
-const serviceAPI = require('../apis/service.api');
-const employeeAPI = require('../apis/employee.api');
+const roomAPI = require('../apis/room.api'); //IT19007502 - Hiddalarachchi J.
+const serviceAPI = require('../apis/service.api');  //IT19007502 - Hiddalarachchi J.
+const employeeAPI = require('../apis/employee.api');    //IT19007502 - Hiddalarachchi J.
+const bookingAPI = require('../apis/booking.api'); //IT19051826
 
 dotenv.config();
 const app = express();
@@ -49,9 +50,10 @@ app.listen(PORT, () => {
 
 //register router - CHANGEABLE.
 //IT19007502 - Hiddalarachchi J.
-app.use('/room', roomAPI());
-app.use('/employee', employeeAPI());
-app.use('/service', serviceAPI());
+app.use('/room', roomAPI());    //IT19007502 - Hiddalarachchi J.
+app.use('/employee', employeeAPI());    //IT19007502 - Hiddalarachchi J.
+app.use('/service', serviceAPI());  //IT19007502 - Hiddalarachchi J.
+app.use('/booking', bookingAPI()); //IT19051826
 
 //TestCases
 //test case 01 - add new room
@@ -207,3 +209,59 @@ test('Backend Test Case 13 - Should get specific service details - IT19007502  -
     });
 })
 
+//IT19051826 Test Case 14
+//test case 14 - get all booking details
+test('Backend Test Case 14 - Should get all booking details - IT19051826  - Herath D.D.M.', async () => {
+    await request(app).get('/booking/').send({  
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
+
+//IT19051826 Test Case 15
+//test case 15 - create booking 
+
+test('Backend Test Case 15 - Should create booking - IT19051826  - Herath D.D.M.', async () => {
+    await request(app).post('/booking/create').send({  
+        bookingNo:"B009",
+        customerId:"222244V",
+        roomNo:"D001",
+        boardingType:"fullboard",
+        bookingDate:"2021-08-24T18:30:00.000+00:00",
+        noOfGuests:4,
+        days:2,
+        arrivalDate:"2021-08-26T18:30:00.000+00:00",
+        remarks:"Play area",
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
+
+//IT19051826 Test Case 16
+//test case 16 - delete selected booking details 
+test('Backend Test Case 16 - delete booking details - IT19051826  - Herath D.D.M.', async () => {
+    await request(app).delete('/booking/61471b41e8f6c32080be4e78').send({  
+   
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
+
+//IT19051826 Test Case 17
+//test case 17 - Update selected booking details 
+
+test('Backend Test Case 17 - should update selected booking details - IT19051826  - Herath D.D.M.', async () => {
+    await request(app).patch('/booking/update/6123ec1ca2b1e110bc563b67').send({  
+        bookingNo:"B009",
+        customerId:"22224475V",
+        roomNo:"D001",
+        boardingType:"fullboard",
+        bookingDate:"2021-08-24T18:30:00.000+00:00",
+        noOfGuests:4,
+        days:2,
+        arrivalDate:"2021-08-26T18:30:00.000+00:00",
+        remarks:"Play area",
+    }).expect(200).then((res) => {
+      
+    });
+})
