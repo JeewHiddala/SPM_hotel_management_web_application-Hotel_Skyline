@@ -76,3 +76,17 @@ test('Backend Test Case 15 - Should create booking - IT19051826  - Herath D.D.M.
         id = res.body._id;
     });
 })
+
+
+//IT19051826 Test Case 16
+//test case 16 - delete selected booking details 
+
+app.use('/booking', bookingAPI());
+
+test('Backend Test Case 16 - delete booking details - IT19051826  - Herath D.D.M.', async () => {
+    await request(app).delete('/booking/61471b41e8f6c32080be4e78').send({  
+   
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
