@@ -10,7 +10,7 @@ class ViewSearchedLeaves extends Component {
             leaves: [],
         }
         this.deleteLeave = this.deleteLeave.bind(this);
-        
+        this.back = this.back.bind(this);
     }
 
     componentDidMount() {   //inbuild function
@@ -26,6 +26,10 @@ class ViewSearchedLeaves extends Component {
                 console.log("WPF", this.state.leaves);
             })
 
+    }
+
+    back(e) {
+        window.location = '/attendance/employeeLeaves'
     }
 
     deleteLeave(e, leaveId) {
@@ -114,7 +118,7 @@ class ViewSearchedLeaves extends Component {
                                             </tbody>
                                         </table>
                                     </div>
-                                    
+                                    <button type="button" id="button" className="btn btn-secondary" onClick={e => this.back(e)}> Back</button>
                                 </div>
                             </div>
                         </div>
