@@ -177,19 +177,19 @@ test('Backend Test Case 10 - Should insert a new service - IT19007502  - Hiddala
     });
 })
 
-// //test case 11 - Update service details
-// test('Backend Test Case 11 - Should update existing service details - IT19007502  - Hiddalarachchi J.', async () => {
-//     await request(app).patch('/service/update/61543506c6bf3a0a948f2dc4').send({
-//         serviceNo:"SN885",
-//         name:"Sea Surfing",
-//         addedDate:"2022-12-10",
-//         pricePerHour: "5500",
-//         description: "We pay attention for build your joy with sea creations",
-//         employeeCount:25,
-//     }).expect(200).then((res) => {
-//         id = res.body._id;
-//     });
-// })
+//test case 11 - Update service details
+test('Backend Test Case 11 - Should update existing service details - IT19007502  - Hiddalarachchi J.', async () => {
+    await request(app).patch('/service/update/61543506c6bf3a0a948f2dc4').send({
+        serviceNo:"SN885",
+        name:"Sea Surfing",
+        addedDate:"2022-12-10",
+        pricePerHour: "5500",
+        description: "We pay attention for build your joy with sea creations",
+        employeeCount:25,
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 // //test case 12 - delete service details
 // test('Backend Test Case 12 - Should delete existing service details - IT19007502  - Hiddalarachchi J.', async () => {
