@@ -155,13 +155,13 @@ test('Backend Test Case 08 - Should delete retired employee details - IT19007502
     });
 })
 
-// //test case 09 - get specific employee details
-// test('Backend Test Case 09 - Should get specific employee details - IT19007502  - Hiddalarachchi J.', async () => {
-//     await request(app).get('/employee/6154a886f7a94763d446f408').send({
-//     }).expect(200).then((res) => {
-//         id = res.body._id;
-//     });
-// })
+//test case 09 - get specific employee details
+test('Backend Test Case 09 - Should get specific employee details - IT19007502  - Hiddalarachchi J.', async () => {
+    await request(app).get('/employee/6154a886f7a94763d446f408').send({
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 // //test case 10 - add new service
 // test('Backend Test Case 10 - Should insert a new service - IT19007502  - Hiddalarachchi J.', async () => {
