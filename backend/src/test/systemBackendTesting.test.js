@@ -130,22 +130,22 @@ test('Backend Test Case 06 - Should insert retired employee - IT19007502  - Hidd
     });
 })
 
-// //test case 07 - Update working employee details
-// test('Backend Test Case 07 - Should update existing working employee details - IT19007502  - Hiddalarachchi J.', async () => {
-//     await request(app).patch('/employee/update/615434cf0214155e44096f9b').send({
-//         name:"Saman1 Hettiwaththa",
-//         position:"Manager",
-//         email:"saman1@skylight.com",
-//         mobileNumber: "0787555511",
-//         nicNo:"544481177V",
-//         salary:75007,
-//         isWorking: true,
-//         userName:"samanH1",
-//         password:"saman123777",
-//     }).expect(200).then((res) => {
-//         id = res.body._id;
-//     });
-// })
+//test case 07 - Update working employee details
+test('Backend Test Case 07 - Should update existing working employee details - IT19007502  - Hiddalarachchi J.', async () => {
+    await request(app).patch('/employee/update/615434cf0214155e44096f9b').send({
+        name:"Saman1 Hettiwaththa",
+        position:"Manager",
+        email:"saman1@skylight.com",
+        mobileNumber: "0787555511",
+        nicNo:"544481177V",
+        salary:75007,
+        isWorking: true,
+        userName:"samanH1",
+        password:"saman123777",
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 // //test case 08 - delete retired employee details
 // test('Backend Test Case 08 - Should delete retired employee details - IT19007502  - Hiddalarachchi J.', async () => {
