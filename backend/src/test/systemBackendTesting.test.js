@@ -51,10 +51,28 @@ app.use('/booking', bookingAPI()); //IT19051826
 //test case 14 - get all booking details
 
 
-test('Backend Test Case 14 - Shoulld get all booking details - IT19051826  - Herath D.D.M.', async () => {
+test('Backend Test Case 14 - Should get all booking details - IT19051826  - Herath D.D.M.', async () => {
     await request(app).get('/booking/').send({  
     }).expect(200).then((res) => {
         id = res.body._id;
     });
 })
 
+//IT19051826 Test Case 15
+//test case 15 - create booking 
+
+test('Backend Test Case 15 - Should create booking - IT19051826  - Herath D.D.M.', async () => {
+    await request(app).post('/booking/create').send({  
+        bookingNo:"B009",
+        customerId:"222244V",
+        roomNo:"D001",
+        boardingType:"fullboard",
+        bookingDate:"2021-08-24T18:30:00.000+00:00",
+        noOfGuests:4,
+        days:2,
+        arrivalDate:"2021-08-26T18:30:00.000+00:00",
+        remarks:"Play area",
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
