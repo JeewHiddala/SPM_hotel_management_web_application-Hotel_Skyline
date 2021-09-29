@@ -92,25 +92,25 @@ app.listen(PORT, () => {
 // })
 
 //test case 20 - delete selected ingredient
-test('should delete ingredient', async () => {
-    await request(app).delete('/ingredient/61249bda7512594d4c3c5c4a').send({
+// test('should delete ingredient', async () => {
+//     await request(app).delete('/ingredient/61249bda7512594d4c3c5c4a').send({
 
-    }).expect(200).then((res) => {
-        id = res.body._id;
-    });
-})
-
-//test case 21 - create new ingredient
-// test('should insert a new Ingredient', async () => {
-//     await request(app).post('/ingredient/create').send({
-//         orderNumber: "IO00082",
-//         ingredientName: "Carrot",
-//         quantity: "15kg",
-//         chefName: "611a0f6ca28bea02808efe8a",
 //     }).expect(200).then((res) => {
 //         id = res.body._id;
 //     });
 // })
+
+//test case 21 - create new ingredient
+test('should insert a new Ingredient', async () => {
+    await request(app).post('/ingredient/create').send({
+        orderNumber: "IO00082",
+        ingredientName: "Carrot",
+        quantity: "15kg",
+        chefName: "611a0f6ca28bea02808efe8a",
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 //test case 22 - get all service list details
 // test('should get service list details', async () => {
