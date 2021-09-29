@@ -60,36 +60,36 @@ app.use('/food', foodApi());// IT19021058 -De Seram E.M.A.P.
 
 
 //test case 18 - add new food
-test('should insert a new Food', async () => {
-    await request(app).post('/food/create').send({
-        foodNumber: "N00648",
-        foodName: "Rice",
-        category: "Dinner",
-        price: 500,
-        description: "Fried Rice",
-        createDate: "2021-08-10",
-        status: "True",
-        chefName: "416d616c6920706572657261",
-    }).expect(200).then((res) => {
-        id = res.body._id;
-    });
-})
-
-//test case 19 - update food details
-// test('should update Food', async () => {
-//     await request(app).patch('/food/update/6154b935a96a0b141c85bf68').send({
+// test('should insert a new Food', async () => {
+//     await request(app).post('/food/create').send({
 //         foodNumber: "N00648",
 //         foodName: "Rice",
 //         category: "Dinner",
-//         price: 800,
+//         price: 500,
 //         description: "Fried Rice",
 //         createDate: "2021-08-10",
 //         status: "True",
 //         chefName: "416d616c6920706572657261",
 //     }).expect(200).then((res) => {
-
+//         id = res.body._id;
 //     });
 // })
+
+//test case 19 - update food details
+test('should update Food', async () => {
+    await request(app).patch('/food/update/6154b935a96a0b141c85bf68').send({
+        foodNumber: "N00648",
+        foodName: "Rice",
+        category: "Dinner",
+        price: 800,
+        description: "Fried Rice",
+        createDate: "2021-08-10",
+        status: "True",
+        chefName: "416d616c6920706572657261",
+    }).expect(200).then((res) => {
+
+    });
+})
 
 //test case 20 - delete selected ingredient
 // test('should delete ingredient', async () => {
