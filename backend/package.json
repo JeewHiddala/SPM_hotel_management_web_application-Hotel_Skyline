@@ -4,7 +4,8 @@
   "description": "Hotel Skyline Application",
   "main": "index.js",
   "scripts": {
-    "start": "env-cmd ./db/dev.env nodemon server.js"
+    "start": "env-cmd ./db/dev.env nodemon server.js",
+    "test": "jest --watchAll"
   },
   "author": "TeamChaos",
   "license": "ISC",
@@ -28,6 +29,8 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-latest": "^6.24.1",
-    "env-cmd": "^8.0.2"
+    "env-cmd": "^8.0.2",
+    "jest": "^27.2.3",
+    "supertest": "^6.1.6"
   }
 }
