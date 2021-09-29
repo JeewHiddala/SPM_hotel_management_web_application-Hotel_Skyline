@@ -80,13 +80,13 @@ test('Backend Test Case 02 - Should update existing room details - IT19007502  -
     });
 })
 
-// //test case 03 - delete room details
-// test('Backend Test Case 03 - Should delete existing room details - IT19007502  - Hiddalarachchi J.', async () => {
-//     await request(app).delete('/room/6154a770877e0b25dcbe7983').send({
-//     }).expect(200).then((res) => {
-//         id = res.body._id;
-//     });
-// })
+//test case 03 - delete room details
+test('Backend Test Case 03 - Should delete existing room details - IT19007502  - Hiddalarachchi J.', async () => {
+    await request(app).delete('/room/6154a770877e0b25dcbe7983').send({
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 // //test case 04 - get specific room details
 // test('Backend Test Case 04 - Should get specific room details - IT19007502  - Hiddalarachchi J.', async () => {
