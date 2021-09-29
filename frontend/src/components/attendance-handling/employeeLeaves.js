@@ -77,7 +77,7 @@ class EmployeeLeaves extends Component {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete this bill permanently!'
+            confirmButtonText: 'Yes, delete this record permanently!'
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`http://localhost:8100/employeeLeaves/${leaveId}`)
@@ -86,7 +86,11 @@ class EmployeeLeaves extends Component {
                     'Leave details have been deleted.',
                     'success'
                 )
-                window.location.reload(false);
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload(false);
+                    }
+                })
             }
         })
 

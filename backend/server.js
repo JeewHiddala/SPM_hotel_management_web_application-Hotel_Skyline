@@ -23,7 +23,8 @@ const userAPI = require('./src/apis/user.api');   //IT19059150 - Ranaweera I.G.S
 const customerAPI = require('./src/apis/customer.api');   //IT19059150 - Ranaweera I.G.S.V.
 
 const billAPI = require('./src/apis/bill.api');   //IT19059150 - Ranaweera I.G.S.V.
-
+const attendanceAPI = require('./src/apis/attendance.api');   //IT19059150 - Ranaweera I.G.S.V.
+const employeeLeaveAPI = require('./src/apis/employeeLeaves.api');   //IT19059150 - Ranaweera I.G.S.V.
 
 // const customerServiceApi = require('./src/apis/customerService.api');// IT19021058 -De Seram E.M.A.P.
 // const serviceListApi = require('./src/apis/serviceList.api');// IT19021058 -De Seram E.M.A.P.
@@ -103,7 +104,8 @@ app.use('/creditpayment', creditpaymentAPI());
 
 //
 app.use('/bill', billAPI());
-
+app.use('/attendance', attendanceAPI());
+app.use('/employeeLeaves', employeeLeaveAPI());
 
 
 app.use('/api/users', userRouter);
