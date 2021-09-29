@@ -1,4 +1,5 @@
 import './checkAvailableRooms.css';
+import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
 import './dash.css';
@@ -6,52 +7,81 @@ import ReactPaginate from 'react-paginate';
 
 
 
-class CheckAvailableRooms extends Component {
+class CheckUnAvailableRooms extends Component {
     constructor(props) {
         super(props);
         this.state = {
             totalPages: 0,
             page: 0,
+            isAvailable: true,
             id: '',
             roomNo: '',
             room: [],
             searchValue: '',
 
-            
-
-
         }
 
-        this.navigateBookingPage = this.navigateBookingPage.bind(this);
+
         this.handlePageChange = this.handlePageChange.bind(this);  //pagination
         this.onChange = this.onChange.bind(this);
+        this.retriveUnAvailableRoomsPages = this.retriveUnAvailableRoomsPages.bind(this);     //pagination
 
-        this.retriveAvailableRoomsPages = this.retriveAvailableRoomsPages.bind(this); //pagination
 
     }
     componentDidMount() {
-        axios.get('http://localhost:8100/room/availableRooms')
+        axios.get('http://localhost:8100/room/unavailableRooms/')
             .then(response => {
                 this.setState({ room: response.data.data });
-                this.setState({ room: response.data.data.docs });     //pagination
-                this.setState({ totalPages: response.data.data.totalPages });   //pagination
+                this.setState({ room: response.data.data.docs });          //pagination
+                this.setState({ totalPages: response.data.data.totalPages });          //pagination
+
+
+
             })
+    }
 
+
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+        this.setState({ isAvailable: true });
+    }
+
+
+    makeRoomAvailable(e, roomId) {
+
+        console.log("Update", roomId)
+
+        let room = {
+
+            isAvailable: this.state.isAvailable
+        }
+        console.log('DATA TO SEND', room);
+
+        Swal.fire({
+            title: "Make Available the Room!",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Make Available!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axios.patch(`http://localhost:8100/room/update/${roomId}`, room)
+                Swal.fire(
+                    'Updated!',
+                    'Room Now Available.',
+                    'success'
+                )
+            }
+            window.location.reload(false);
+        })
     }
 
 
 
-    navigateBookingPage(e, roomId) {
-        this.props.history.push({
-            pathname: `/createBooking/${roomId}`,
-            data: `${roomId}`
-        });
-    }
-
-
-    retriveAvailableRoomsPages(page) {  //pagination
+    retriveUnAvailableRoomsPages(page) {               //pagination
         console.log("Pagef", page);
-        axios.get('http://localhost:8100/room/availableRooms', {
+        axios.get('http://localhost:8100/room/unavailableRooms', {
             params: {
                 page: page
             }
@@ -62,17 +92,19 @@ class CheckAvailableRooms extends Component {
             })
     };
 
-    handlePageChange = (data) => {    //pagination
+    handlePageChange = (data) => {          //pagination
         let selected = data.selected + 1;
         console.log("val", selected);
         this.setState({ page: selected });
-        this.retriveAvailableRoomsPages(selected);
+        this.retriveUnAvailableRoomsPages(selected);
     };
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
-        this.setState({ isAvailable: false });
+
     }
+
+
 
     searchHandler = (event) => {
 
@@ -96,14 +128,14 @@ class CheckAvailableRooms extends Component {
 
 
 
+
     render() {
+
+
         return (
 
             <div>
                 <br /><br />
-
-
-
                 <div className="row justify-content-center" id="dash-box">
                     <div className="container-dash">
                         <h2><b>Receptionist Dashboard</b></h2>
@@ -114,8 +146,8 @@ class CheckAvailableRooms extends Component {
                                     <div className="container" >
                                         <h3 className="h3"><b>Creations</b></h3>
                                         <div className="list-group">
-                                            <a href="/checkAvailableRooms" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Check Available Rooms</button></a>
-                                            <a href="/checkUnAvailableRooms" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Check UnAvailable Rooms</button></a>
+                                            <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Check Available Rooms</button></a>
+                                            <a href="/checkUnAvailableRooms" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Check UnAvailable Rooms</button></a>
                                             <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >
                                                 Room Booking Management
                                             </button></a>
@@ -134,11 +166,9 @@ class CheckAvailableRooms extends Component {
                                 <div className="container" >
 
 
-
-
                                     <div className="float-end">
                                         <form className="d-flex" >
-                                        <input
+                                            <input
                                                 className="form-control me-2"
                                                 type="search"
                                                 placeholder="Enter room number"
@@ -149,13 +179,9 @@ class CheckAvailableRooms extends Component {
                                             />
                                             <button className="btn btn-primary" type="submit">Search</button>
                                         </form>
-
                                     </div>
-
-
-
                                     <div className="col-4">
-                                        <h3 className="h3"><b>Check Available Rooms</b></h3>
+                                        <h3 className="h3"><b>Check UnAvailable Rooms</b></h3>
                                     </div>
 
                                     <br />
@@ -169,11 +195,10 @@ class CheckAvailableRooms extends Component {
                                                     <th scope="col">Category</th>
                                                     <th scope="col">A/C Category</th>
                                                     <th scope="col">Description</th>
+
                                                     <th scope="col">Price(Rs.)</th>
                                                     <th>Status (isAvailable)</th>
                                                     <th></th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -186,12 +211,10 @@ class CheckAvailableRooms extends Component {
                                                         <td>{item.airConditioningCategory}</td>
                                                         <td>{item.description}</td>
                                                         <td>{item.price}</td>
-                                                        <td> Available ({String(item.isAvailable)})
-
-                                                        </td>
-                                                        <td><button type="button" className="btn btn-success" onClick={e => this.navigateBookingPage(e, item._id)}  >Book</button>
+                                                        <td> UnAvailable ({String(item.isAvailable)})
                                                         </td>
 
+                                                        <td><button type="button" className="btn btn-success" onClick={e => this.makeRoomAvailable(e, item._id)}>Make Available</button></td>
 
                                                     </tr>
                                                 ))}
@@ -216,7 +239,6 @@ class CheckAvailableRooms extends Component {
                     </div>
                 </div>
                 <br /><br />
-
             </div>
 
         )
@@ -224,4 +246,4 @@ class CheckAvailableRooms extends Component {
 }
 
 
-export default CheckAvailableRooms;
+export default CheckUnAvailableRooms;

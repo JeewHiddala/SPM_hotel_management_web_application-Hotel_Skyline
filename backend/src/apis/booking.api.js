@@ -11,6 +11,7 @@ module.exports = function () {
     router.get('/:id', bookingController.getSelectedBookingDetails);
     router.delete('/:id', bookingController.deleteBooking);
     router.get('./room/:id', bookingController.getRoomsInBooking);
-
+    router.patch('/update/:id', bookingController.updateSelectedRoomBookingDetails);
+   
     return router;
 }

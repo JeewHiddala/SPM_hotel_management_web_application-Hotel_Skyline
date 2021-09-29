@@ -93,7 +93,7 @@ class PaymentForm extends Component {
               'Cash Payment!',
               'success'
             )
-            window.location = '/reception/checkout'
+            window.location = '/cashpaymentManagement'
           })
           .catch(error => {
             console.log(error.message);
@@ -117,101 +117,131 @@ class PaymentForm extends Component {
     const { data } = this.props.location
     return (
 
-      <div className="row">
-        <div className="container1">
-          <br></br>
-          <br></br>
-          <br></br>
 
-          <h2>Cash Payment</h2>
-          <h2>Rs.{this.state.totalCost}</h2>
-          <form onSubmit={this.onSubmit} onChange={this.onChange}>
+      <div>
+<br/><br/>
+        <div className="row justify-content-center" id="dash-box">
+          <div className="container-dash">
+            <h2><b>Receptionist Dashboard</b></h2>
+            <div className="row justify-content-evenly">
+              <div className="col-3 align-self-stretch">
 
-            <div className={"row"}>
-              <div className={"col-md-6"}>
-
-
-                <div className="mb-3" >
-                  <label className="form-label">Bill No</label>
-                  <input type="text"
-                    className="form-control"
-                    id="billNo"
-                    name="billNo"
-                    placeholder="Bill No"
-                    value={this.state.billNo}
-                  />
+                <div className="row">
+                  <div className="container" >
+                    <h3 className="h3"><b>Creations</b></h3>
+                    <div className="list-group">
+                      <a href="/checkAvailableRooms" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Check Available Rooms</button></a>
+                      <a href="/checkUnAvailableRooms" id="active-button" className="routeBtn"><button type="button" className="list-group-item list-group-item-action" >Check UnAvailable Rooms</button></a>
+                      <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >
+                        Room Booking Management
+                      </button></a>
+                      <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
+                      <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                      <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Food Ordering</button></a>
+                      <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action ">Service List Bill</button></a>
+                      <a href="/reception/checkout" className="routeBtn"><button type="button" className="list-group-item list-group-item-action active" aria-current="true">Checkout Handling</button></a>
+                    </div>
+                  </div>
                 </div>
+            
+
+              </div>
+              <div className="col-8 align-self-stretch">
+                <div className="container" ></div>
+
+               
+              
+                    <h2>Cash Payment Form</h2>
+                    <h2>Rs.{this.state.totalCost}</h2>
+                    <form onSubmit={this.onSubmit} onChange={this.onChange}>
+
+                      <div className="row mb-3">
+                        <div className="col-6">
+                            <label className="form-label">Bill No</label>
+                            <input type="text"
+                              className="form-control"
+                              id="billNo"
+                              name="billNo"
+                              placeholder="Bill No"
+                              value={this.state.billNo}
+                            />
+                          </div>
 
 
 
 
-                <div className=" mb-3">
-                  <label className="form-label">Total Payment Amount (Rs.)</label>
+                          <div className=" col-6">
+                            <label className="form-label">Total Payment Amount (Rs.)</label>
 
-                  <input type="totalCost"
-                    className="form-control"
-                    id="totalCost"
-                    name="totalCost"
-                    value={this.state.totalCost}
+                            <input type="totalCost"
+                              className="form-control"
+                              id="totalCost"
+                              name="totalCost"
+                              value={this.state.totalCost}
 
-                  />
-                </div>
+                            />
+                          </div>
+                          </div>
 
+                          <div className="row mb-3">
+                        <div className="col-6">
+                          
+                            <label className="form-label">Receptionist Name</label>
+                            <input type="text"
+                              className="form-control"
+                              id="receptionistName"
+                              name="receptionistName"
+                              placeholder="Select receptionistName"
+                              value={this.state.receptionistName.name}
 
-                <div className="mb-3">
-                  <label className="form-label">Receptionist Name</label>
-                  <input type="text"
-                    className="form-control"
-                    id="receptionistName"
-                    name="receptionistName"
-                    placeholder="Select receptionistName"
-                    value={this.state.receptionistName.name}
-
-                  />
-                </div>
-
-
-                <div className="mb-3">
-                  <label className="form-label">Payment Date/Time</label>
-
-                  <input type="date"
-                    className="form-control"
-                    id="paymentDate"
-                    name="paymentDate"
-                    placeholder="Select Payment Date"
-                    value={this.state.paymentDate}
-                    onChange={this.onChange}
-                  />
-                </div>
+                            />
+                          </div>
 
 
+                          <div className="col-6">
+                            <label className="form-label">Payment Date/Time</label>
+
+                            <input type="date"
+                              className="form-control"
+                              id="paymentDate"
+                              name="paymentDate"
+                              placeholder="Select Payment Date"
+                              value={this.state.paymentDate}
+                              onChange={this.onChange}
+                            />
+                          </div>
+</div>
 
 
-                <div className="mb-3">
-                  <label className="form-label">Remarks</label>
-
-                  <input type="text"
-                    className="form-control"
-                    id="remarks"
-                    name="remarks"
-                    placeholder="Enter remarks"
-                    value={this.state.remarks}
-                    onChange={this.onChange}
-                  />
-                </div>
 
 
-                <button type="button" className="btn btn-secondary" onClick={e => this.backtobillingPage(e, data)}> Back</button>
-                <button type="submit" className="btn btn-success" > Pay </button>
+                        <div className="mb-3">
+                            <label className="form-label">Remarks</label>
+
+                            <input type="text"
+                              className="form-control"
+                              id="remarks"
+                              name="remarks"
+                              placeholder="Enter remarks"
+                              value={this.state.remarks}
+                              onChange={this.onChange}
+                            />
+                          
+</div>
+
+
+
+                          <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtobillingPage(e, data)}> Back</button>
+                          <button type="submit" id="form-button" className="btn btn-success" > Pay </button>
+                        
+                    
+                    </form>
+               </div>
               </div>
             </div>
-            <br>
-            </br>
 
-          </form>
-
-
-        </div>
+          </div>
+          <br/><br/>
       </div>
     )
   }

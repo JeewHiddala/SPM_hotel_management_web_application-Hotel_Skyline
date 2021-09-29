@@ -1,7 +1,9 @@
 import './createBooking.css';
+import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+
 
 const initialState = {
 
@@ -16,11 +18,18 @@ const initialState = {
   remarks: ''
 }
 
-class viewBookedRoom extends Component {
+class updateRoomBooking extends Component {
   constructor(props) {
     super(props);
-
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.state = initialState;
+  }
+
+
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
 
@@ -51,6 +60,54 @@ class viewBookedRoom extends Component {
     window.location = '/roomBookingManagement'
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    const { data } = this.props.location
+
+    console.log("userid: " + data);
+    let booking = {
+      roomId: data,
+      bookingNo: this.state.bookingNo,
+      customerId: this.state.customerId,
+      roomNo: this.state.roomNo,
+      boardingType: this.state.boardingType,
+      bookingDate: this.state.bookingDate,
+      noOfGuests: this.state.noOfGuests,
+      days: this.state.days,
+      arrivalDate: this.state.arrivalDate,
+
+      remarks: this.state.remarks
+    };
+
+    console.log('DATA TO SEND', booking);
+
+    console.log('hrll' + data);
+    Swal.fire({
+      title: "Update the booking details!",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Update!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        axios.patch(`http://localhost:8100/booking/update/${data}`, booking)
+          .then(response => {
+            Swal.fire(
+              ' Update!',
+              'success'
+            )
+
+            window.location = '/roomBookingManagement'
+          })
+          .catch(error => {
+            console.log(error.message);
+            alert(error.message)
+          })
+      }
+    })
+
+  }
 
   render() {
     return (
@@ -86,11 +143,11 @@ class viewBookedRoom extends Component {
                 <div className="container" >
 
                   <div className="col-4">
-                    <h4 className="topic"><h2>View Booking Details</h2></h4>
+                    <h4 className="topic"><h2>Edit Room Booking Details</h2></h4>
                   </div>
 
                   <div className="container">
-                    <form onSubmit={this.onSubmit} onChange={this.onHandle}>
+                    <form onSubmit={this.onSubmit} onChange={this.onChange}>
                       <div className="row mb-3">
                         <div className="col-6">
                           <label htmlFor="bookingNo" className="form-label">Booking No</label>
@@ -100,7 +157,8 @@ class viewBookedRoom extends Component {
                             name="bookingNo"
                             placeholder="Booking Number"
                             value={this.state.bookingNo}
-                            disabled
+                            onChange={this.onChange}
+                            required
 
                           />
                         </div>
@@ -115,7 +173,8 @@ class viewBookedRoom extends Component {
                             name="customerId"
                             placeholder="Enter customer ID"
                             value={this.state.customerId}
-                            disabled
+                            onChange={this.onChange}
+                            required
 
                           />
                         </div>
@@ -132,7 +191,7 @@ class viewBookedRoom extends Component {
                             placeholder="Enter room number"
                             value={this.state.roomNo}
                             onChange={this.onChange}
-                            disabled
+                            required
                           />
                         </div>
 
@@ -146,7 +205,7 @@ class viewBookedRoom extends Component {
                             placeholder="Select Boarding type"
                             value={this.state.boardingType}
                             onChange={this.onChange}
-                            disabled
+                            required
                           />
                         </div>
                       </div>
@@ -160,10 +219,11 @@ class viewBookedRoom extends Component {
                             className="form-control"
                             id="bookingDate"
                             name="bookingDate"
-                            disabled
                             placeholder="Select Booking Date"
                             value={moment(this.state.bookingDate).locale('en').format('YYYY-MM-DD')}
 
+                            onChange={this.onChange}
+                            required
 
                           />
                         </div>
@@ -177,7 +237,8 @@ class viewBookedRoom extends Component {
                             name="noOfGuests"
                             placeholder="Enter number of guests"
                             value={this.state.noOfGuests}
-                            disabled
+                            onChange={this.onChange}
+                            required
 
                           />
                         </div>
@@ -193,9 +254,13 @@ class viewBookedRoom extends Component {
                             name="days"
                             placeholder="Enter no of days"
                             value={this.state.days}
-                            disabled
+                            onChange={this.onChange}
+                            required
+
                           />
                         </div>
+
+
                         <div className="col-6">
                           <label htmlFor="arrivalDate" className="form-label">Arrival Date</label>
 
@@ -205,26 +270,37 @@ class viewBookedRoom extends Component {
                             name="arrivalDate"
                             placeholder="Select arrival date"
                             value={moment(this.state.arrivalDate).locale('en').format('YYYY-MM-DD')}
-                            disabled
+                            onChange={this.onChange}
+                            required
+
                           />
                         </div>
                       </div>
+
                       <div className="row mb-3">
                         <div className="col-6">
                           <label htmlFor="remarks" className="form-label">Remarks</label>
+
                           <input type="text"
                             className="form-control"
                             id="remarks"
                             name="remarks"
                             placeholder="Enter remarks"
                             value={this.state.remarks}
-                            disabled
+                            onChange={this.onChange}
+                            required
 
                           />
                         </div>
+
+
                         <div>
+
                           <br></br>
-                          <button type="button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
+                          <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoroombooking(e)}> Back</button>
+                          <button type="submit" id="form-button" className="btn btn-warning">Update</button>
+
+
                         </div>
                       </div>
                     </form>
@@ -235,8 +311,6 @@ class viewBookedRoom extends Component {
           </div>
         </div >
 
-
-
         <br /><br />
       </div >
     )
@@ -244,4 +318,4 @@ class viewBookedRoom extends Component {
 }
 
 
-export default viewBookedRoom;
+export default updateRoomBooking;

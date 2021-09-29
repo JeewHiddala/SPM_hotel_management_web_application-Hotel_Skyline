@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
 import './Home.css';
-import { BrowserRouter as Router } from 'react-router-dom';
-// import Footer from '../footer/footer';
-// import Navbar from '../navbar/navbar';
+
 
 class CustomerHome extends Component {
   constructor(props) {
@@ -37,7 +34,6 @@ class CustomerHome extends Component {
         </section>
 
       </div>
-
 
     )
   }

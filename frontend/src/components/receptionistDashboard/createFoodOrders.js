@@ -1,98 +1,135 @@
-import './createBooking.css';
-import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
+import Swal from "sweetalert2";
 
+const initialState = {
+    orderId: '',
+    foodorders: [],
+   
+  
+}
 
-
-class transferToKitchen extends Component {
+class createFoodOrders extends Component {
     constructor(props) {
-        super(props);  
-        this.state = {
-            foodorders: [],
-            orderId:'',
-            totalPrice:''
-           }   
-         
-    
+        super(props);
+        this.state = initialState;
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.addFood = this.addFood.bind(this);
+        this.deleteFood = this.deleteFood.bind(this);
+        this.onCharge = this.onCharge.bind(this);
+        this.backtoFoodOrderManagement = this.backtoFoodOrderManagement.bind(this);
+        this.backtoFoodOrderManagementDash = this.backtoFoodOrderManagementDash.bind(this);
     }
 
 
-    componentDidMount() {
-        const { data } = this.props.location
-
-        console.log("kitchenorderid: " + data);
-        axios.get(`http://localhost:8100/foodordering/${data}`)
-            .then(response => {
-                this.setState({ foodordering: response.data.data });
-                this.setState({ orderId: response.data.data.orderId });
-                this.setState({ totalPrice: response.data.data.totalPrice });
-                this.setState({ foodorders: response.data.data.foodorders});
-                console.log("abc" + response.data.data.orderId);
-            })
-
-
-                 axios.get(`http://localhost:8100/foodordering/charge/${data}`)
-        .then(response => {
-          this.setState({totalPrice: response.data.totalPrice})
-          console.log("orderid: " + data);
-        })
-        .catch(error => {
-          alert(error.message)
-        })
+    backtoFoodOrderManagement(e) {
+        window.location = '/create-foodOrder'
     }
 
-
-
-
-
-    backtofoodorder(e) {
+    backtoFoodOrderManagementDash(e) {
         window.location = '/foodorder'
     }
 
-
-    transfer() {
-
-        const { data } = this.props.location
-
-        console.log("userid: " + data);
-        let foodorder = {
-            orderId: this.state.orderId,
-            totalPrice: this.state.totalPrice,
-            foodorders: this.state.foodorders
-
-        };
-        console.log('DATA TO SEND', foodorder);
-        Swal.fire({
-            title: "Transfer to Kitchen!",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Transfer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.post('http://localhost:8100/kitchenorder/create', foodorder)
-                    .then(response => {
-                        Swal.fire(
-                            'Transfer!',
-                            'success'
-                        )
-                    })
-                    .catch(error => {
-                        console.log(error.message);
-                        alert(error.message)
-                    })
-            }
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+    addFood(e, orderNo) {
+        console.log("orderNo: " + orderNo);
+        this.props.history.push({
+            pathname: '/create-foodOrder',
+            data: `${orderNo}`
         })
-
     }
 
 
+
+    onCharge(e) {
+
+            this.setState({
+
+                totalPrice: totalPrice + pricenquantity
+            });
+        
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+
+        let foodOrdering = {
+
+            orderId: this.state.orderId,
+            
+            foodorders: this.state.foodorders,
+            
+           
+
+        };
+        console.log('DATA TO SEND', foodOrdering);
+        axios.post('http://localhost:8100/foodordering/create', foodOrdering)
+            .then(response => {
+                Swal.fire(
+                    ' Booking!',
+                    'success'
+                  )
+                  window.location = '/foodorder'
+            })
+           
+
+            .catch(error => {
+                console.log(error.message);
+                alert(error.message)
+            })
+
+            
+
+    }
+    componentDidMount() {
+        var data = localStorage.getItem('orderId') || 1;
+       
+    
+
+        console.log("userid: " + data);
+        axios.get(`http://localhost:8100/foodorder/get-foods-in-order/${data}`)
+            .then(response => {
+                this.setState({ foodorders: response.data.data })
+               
+            })
+        this.setState({ orderId: data });
+
+        }
+
+    deleteFood(e, foodorderId) {
+        console.log("I am on Delete", foodorderId)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8100/foodorder/${foodorderId}`)
+
+                Swal.fire(
+                    'Deleted!',
+                    'Ingredient has been deleted.',
+                    'success'
+                )
+                window.location.reload(false);
+            }
+        })
+    }
     render() {
+        const { data } = this.props.location;
+
         return (
 
+            
             <div>
-           <br/><br/>
+         <br/><br/>
             <div className="row justify-content-center" id="dash-box">
                 <div className="container-dash">
                     <h2><b>Receptionist Dashboard</b></h2>
@@ -116,27 +153,26 @@ class transferToKitchen extends Component {
                                     </div>
                                 </div>
                             </div>
-                           
+                        
 
                         </div>
                         <div className="col-8 align-self-stretch">
                             <div className="container" >
-            <div className="container"><br />
-                <br></br>
-                <h3>Kitchen Transfering Food Order Details for Order Id : {this.state.orderId}</h3>
-                
-                <h5 htmlFor="content" className="form-label mb-4" >
+                           
+         
+                <h2>Create New Food Order</h2>
+                <h5 htmlFor="content" className="form-label mb-4" style={{ textAlign: "left" }}>
 
-</h5>
+                </h5>
 
-<form onSubmit={this.onSubmit} >
+                <form onSubmit={this.onSubmit} >
 
                     <div className={"row"}>
                         <div className={"col-md-6"}>
 
 
                             <div className="mb-3" style={{ textAlign: "left" }}>
-                                <label htmlFor="orderNumber" className="form-label">Order Id</label>
+                                <label htmlFor="orderId" className="form-label">Food Order Id</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -149,59 +185,43 @@ class transferToKitchen extends Component {
                             </div>
 
 
-                            <div className="mb-3" style={{ textAlign: "left" }}>
-                                <label htmlFor="totalPrice" className="form-label">Order Total</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="totalPrice"
-                                    name="totalPrice"
-                                    value={this.state.totalPrice}
-                                    disabled
-                                    onChange={this.onChange}
-                                />
-                            </div>
+               
 
-                    
-                         
+                            <br></br>
+                            <button onClick={e => this.addFood(e, this.state.orderId)} className="btn btn-primary">Add More Foods</button>
+                            <br></br>
+                            <br></br>
 
-                            <h5><p><b> Order ItemsList</b></p></h5>
-                          
-
+                            <h5><p><b>Product Order List</b></p></h5>
                             <div className="table-responsive">
                                 <table className="table">
                                     <thead className="table-dark">
                                         <tr>
-                                            <th>Food Name</th>
+                                            <th>FoodName</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
                                             <th>Price*Qty</th>
-                                         
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.foodorders.length > 0 && this.state.foodorders.map((item, index) => (
                                             <tr key={index}>
-
                                                 <td>{item.foodName}</td>
                                                 <td>{item.quantity}</td>
                                                 <td>{item.price}</td>
                                                 <td>{item.pricenquantity}</td>
-                                                
+                                                <td><button type="button" className="btn btn-danger" onClick={e => this.deleteFood(e, item._id)}>Delete</button></td>
                                             </tr>
                                         ))}
 
                                     </tbody>
                                 </table>
                             </div>
-                            
-            
-                           
-                            <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtofoodorder(e)}> Back</button>
-
-                            <button type="button" id="form-button" className="btn btn-success" onClick={() => this.transfer()}>Transfer</button>
-                        
-    </div>
+                          
+                            <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoFoodOrderManagement(e)}>Back</button>
+                            <button type="submit" id="form-button" className="btn btn-primary" onClick={e => this.backtoFoodOrderManagementDash(e)}>Create the Order</button>
+                               </div>   
     </div>
         </form>
       </div>
@@ -209,13 +229,10 @@ class transferToKitchen extends Component {
 </div>
 </div>
 </div>
-</div>
 <br/><br/>
 </div>
-
-
         )
     }
 }
 
-export default transferToKitchen;
+export default createFoodOrders;

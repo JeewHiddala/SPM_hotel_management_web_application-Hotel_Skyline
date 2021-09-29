@@ -1,11 +1,11 @@
-import './createBooking.css';
+
 import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
 
 
 
-class transferToKitchen extends Component {
+class viewSearchedFoodorder extends Component {
     constructor(props) {
         super(props);  
         this.state = {
@@ -13,16 +13,18 @@ class transferToKitchen extends Component {
             orderId:'',
             totalPrice:''
            }   
-         
-    
+          //this.backtoFoodOrderManagement = this.backtoFoodOrderManagement.bind(this);
+          //this.deleteIngredient = this.deleteIngredient.bind(this);
+
+      
     }
 
 
     componentDidMount() {
-        const { data } = this.props.location
+        // const { data } = this.props.location
 
-        console.log("kitchenorderid: " + data);
-        axios.get(`http://localhost:8100/foodordering/${data}`)
+        // console.log("kitchenorderid: " + data);
+        axios.get(`http://localhost:8100/foodordering/${this.props.match.params.id}`)
             .then(response => {
                 this.setState({ foodordering: response.data.data });
                 this.setState({ orderId: response.data.data.orderId });
@@ -32,10 +34,10 @@ class transferToKitchen extends Component {
             })
 
 
-                 axios.get(`http://localhost:8100/foodordering/charge/${data}`)
+                 axios.get(`http://localhost:8100/foodordering/charge/${this.props.match.params.id}`)
         .then(response => {
           this.setState({totalPrice: response.data.totalPrice})
-          console.log("orderid: " + data);
+          //console.log("orderid: " + data);
         })
         .catch(error => {
           alert(error.message)
@@ -45,47 +47,26 @@ class transferToKitchen extends Component {
 
 
 
+    // componentDidMount(){
+    //     const data = this.props.match.params.id;
+    //     console.log("rrrr" + data);
+        
+    //     axios.get(`http://localhost:8100/ingredientOrder/${this.props.match.params.id}`)
+    //     .then(response => {
+    //         this.setState({ orderNumber: response.data.data.orderNumber });
+    //         this.setState({ createdDate: response.data.data.createdDate });
+    //         this.setState({ ingredients: response.data.data.ingredients});
+
+
+    //     })
+        
+    //   }
+    
 
     backtofoodorder(e) {
         window.location = '/foodorder'
     }
 
-
-    transfer() {
-
-        const { data } = this.props.location
-
-        console.log("userid: " + data);
-        let foodorder = {
-            orderId: this.state.orderId,
-            totalPrice: this.state.totalPrice,
-            foodorders: this.state.foodorders
-
-        };
-        console.log('DATA TO SEND', foodorder);
-        Swal.fire({
-            title: "Transfer to Kitchen!",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Transfer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.post('http://localhost:8100/kitchenorder/create', foodorder)
-                    .then(response => {
-                        Swal.fire(
-                            'Transfer!',
-                            'success'
-                        )
-                    })
-                    .catch(error => {
-                        console.log(error.message);
-                        alert(error.message)
-                    })
-            }
-        })
-
-    }
 
 
     render() {
@@ -116,7 +97,7 @@ class transferToKitchen extends Component {
                                     </div>
                                 </div>
                             </div>
-                           
+                          
 
                         </div>
                         <div className="col-8 align-self-stretch">
@@ -129,7 +110,7 @@ class transferToKitchen extends Component {
 
 </h5>
 
-<form onSubmit={this.onSubmit} >
+<form  >
 
                     <div className={"row"}>
                         <div className={"col-md-6"}>
@@ -163,7 +144,6 @@ class transferToKitchen extends Component {
                             </div>
 
                     
-                         
 
                             <h5><p><b> Order ItemsList</b></p></h5>
                           
@@ -194,12 +174,12 @@ class transferToKitchen extends Component {
                                     </tbody>
                                 </table>
                             </div>
-                            
+                            <br></br>
             
                            
                             <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtofoodorder(e)}> Back</button>
 
-                            <button type="button" id="form-button" className="btn btn-success" onClick={() => this.transfer()}>Transfer</button>
+                          
                         
     </div>
     </div>
@@ -218,4 +198,4 @@ class transferToKitchen extends Component {
     }
 }
 
-export default transferToKitchen;
+export default viewSearchedFoodorder;

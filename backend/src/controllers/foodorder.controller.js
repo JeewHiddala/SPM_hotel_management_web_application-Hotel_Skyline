@@ -14,12 +14,30 @@ const createFoodOrder = async (req, res) => {
     }
 }
 
+
+const getFoodsInOrder = async (req, res) => {       //get all Ingredient details.
+    
+    var orderNo = req.params.orderNo;
+    console.log(orderNo);
+
+    await Foodorder.find({ orderId: orderNo })
+        .then(data => {
+            res.status(200).send({ data: data });
+        })
+        .catch(error => {
+            res.status(500).send({ error: error.message });
+        });
+}
+
+
 const getAllFoodOrderDetails = async (req, res) => {
+    
     let page = req.query.page; 
     const options = {
         page: page,
         limit: 5
       }
+    // await Foodorder.find({})
     await Foodorder.paginate({},options)
         .then(data => {
             res.status(200).send({ data: data });
@@ -41,18 +59,18 @@ const getSelectedFoodOrderDetails = async (req, res) => {
     }
 }
 
+const updateSelectedFoodOrderDetails = async (req, res) => {       //update selected editor
+    if (req.params && req.params.id){
+        const {id} = req.params;        // fetching the id of the editor.
+        const foodorder = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No foodorder With That id');      // validating the room id
+        const updatedFoodorder = await Foodorder.findByIdAndUpdate(id, foodorder,{new : true});      // find room and room editor
+        res.json(updatedFoodorder);
+    }
+}
 
 
-// const updateSelectedReviewer = async (req, res) => {      
-//     if (req.params && req.params.id){
-//         const {id} = req.params;       
-//         const reviewer = req.body;
-
-//         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No reviewer With That id');    
-//         const updatedReviewer = await Reviewer.findByIdAndUpdate(id, reviewer,{new : true});      
-//         res.json(updatedReviewer);
-//     }
-// }
 
 const deleteFoodOrder = async (req, res) => {
     if (req.params && req.params.id) {
@@ -63,10 +81,48 @@ const deleteFoodOrder = async (req, res) => {
     }
 }
 
+// const getChargeForOrder = async (req, res) => {
+//     var orderNo = req.params.orderNo;
+//     console.log(orderNo);
+   
+//       const foodorder = await Foodorder.find({orderId: orderNo }).populate('foodorders', 'price quantity pricenquantity')
+     
+//       let totalPrice = 0;
+      
+//       if (foodorder.foodorderings.length > 0) {
+//         foodorder.foodorderings.map((foodordering) => {
+         
+//           totalPrice += (foodordering.pricenquantity) 
+         
+//         });
+//       }
+//       res.status(200).send({ totalPrice: totalPrice });
+    
+//   }
+  
+
+// const getChargeForOrder = async (req, res) => {       
+    
+//     var orderNo = req.params.orderNo;
+//     console.log(orderNo);
+
+//     await Foodorder.find({ orderId: orderNo })
+//         .then(data => {
+//             res.status(200).send({ data: data });
+//         })
+//         .catch(error => {
+//             res.status(500).send({ error: error.message });
+//         });
+// }
+
+
 module.exports = {
     createFoodOrder,
     getAllFoodOrderDetails,
     getSelectedFoodOrderDetails,
+    updateSelectedFoodOrderDetails,
+    getFoodsInOrder,
+    // getChargeForOrder,
     deleteFoodOrder
 
 };
