@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const request = require('supertest');
 
 //import APIs
-
+const bookingAPI = require('../apis/booking.api'); //IT19051826
 
 dotenv.config();
 const app = express();
@@ -45,5 +45,16 @@ app.listen(PORT, () => {
 });
 
 //register router - CHANGEABLE
+app.use('/booking', bookingAPI()); //IT19051826
 
+//IT19051826 Test Case 14
+//test case 14 - get all booking details
+
+
+test('Backend Test Case 14 - Shoulld get all booking details - IT19051826  - Herath D.D.M.', async () => {
+    await request(app).get('/booking/').send({  
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
