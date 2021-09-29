@@ -7,8 +7,8 @@ const request = require('supertest');
 
 //import APIs
 
-const foodApi = require('../apis/food.api');// IT19021058 -De Seram E.M.A.P.
-// const ingredientApi = require('../apis/ingredient.api'); // IT19021058 -De Seram E.M.A.P.
+//const foodApi = require('../apis/food.api');// IT19021058 -De Seram E.M.A.P.
+ const ingredientApi = require('../apis/ingredient.api'); // IT19021058 -De Seram E.M.A.P.
 // const serviceListApi = require('../apis/serviceList.api'); // IT19021058 -De Seram E.M.A.P.
 // const customerServiceApi = require('../apis/customerService.api'); // IT19021058 -De Seram E.M.A.P.
 
@@ -53,8 +53,8 @@ app.listen(PORT, () => {
 //register router - CHANGEABLE
 
 
-app.use('/food', foodApi());// IT19021058 -De Seram E.M.A.P.
-// app.use('/serviceList', serviceListApi());  // IT19021058 -De Seram E.M.A.P.
+//app.use('/food', foodApi());// IT19021058 -De Seram E.M.A.P.
+ app.use('/serviceList', serviceListApi());  // IT19021058 -De Seram E.M.A.P.
 // app.use('/ingredient', ingredientApi()); // IT19021058 -De Seram E.M.A.P.
 // app.use('/customerService', customerServiceApi());  // IT19021058 -De Seram E.M.A.P.
 
@@ -76,29 +76,29 @@ app.use('/food', foodApi());// IT19021058 -De Seram E.M.A.P.
 // })
 
 //test case 19 - update food details
-test('should update Food', async () => {
-    await request(app).patch('/food/update/6154b935a96a0b141c85bf68').send({
-        foodNumber: "N00648",
-        foodName: "Rice",
-        category: "Dinner",
-        price: 800,
-        description: "Fried Rice",
-        createDate: "2021-08-10",
-        status: "True",
-        chefName: "416d616c6920706572657261",
-    }).expect(200).then((res) => {
-
-    });
-})
-
-//test case 20 - delete selected ingredient
-// test('should delete ingredient', async () => {
-//     await request(app).delete('/ingredient/61249bda7512594d4c3c5c4a').send({
-
+// test('should update Food', async () => {
+//     await request(app).patch('/food/update/6154b935a96a0b141c85bf68').send({
+//         foodNumber: "N00648",
+//         foodName: "Rice",
+//         category: "Dinner",
+//         price: 800,
+//         description: "Fried Rice",
+//         createDate: "2021-08-10",
+//         status: "True",
+//         chefName: "416d616c6920706572657261",
 //     }).expect(200).then((res) => {
-//         id = res.body._id;
+
 //     });
 // })
+
+//test case 20 - delete selected ingredient
+test('should delete ingredient', async () => {
+    await request(app).delete('/ingredient/61249bda7512594d4c3c5c4a').send({
+
+    }).expect(200).then((res) => {
+        id = res.body._id;
+    });
+})
 
 //test case 21 - create new ingredient
 // test('should insert a new Ingredient', async () => {
