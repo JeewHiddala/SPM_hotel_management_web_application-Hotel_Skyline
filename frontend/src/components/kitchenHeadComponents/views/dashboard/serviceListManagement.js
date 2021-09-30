@@ -154,7 +154,8 @@ class ServiceListManagement extends Component {
         var today = new Date();
         var newdate = "Date Printed : " + today;
         doc.text(marginLeft, marginTop, newdate);
-
+        doc.text("*** Disclaimer : This is an electronically generated report, hence does not require signature.", marginLeft, marginTop + 20);
+        doc.line(40, 780, 558, 780);          //bottom line
         doc.save("Service Management Report - Hotel SkyLight.pdf")
     }
 
