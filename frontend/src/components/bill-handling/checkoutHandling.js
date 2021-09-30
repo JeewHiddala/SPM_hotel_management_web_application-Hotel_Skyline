@@ -5,17 +5,22 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import reportImage from '../../images/logo.jpg';
 // import '../receptionist-dashboard/receptionist-dashboard.css';
+// import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
 
 class CheckoutHandling extends Component {
     constructor(props) {
         super(props);
         this.state = {
             bills: [],
-            search: ""
+            search: "",
+            // currentUser: AuthService.getCurrentUser(),
+            isManager: false
         }
         this.deleteCheckoutBill = this.deleteCheckoutBill.bind(this);
         this.searchCheckoutBill = this.searchCheckoutBill.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.backToManagerDashboard = this.backToManagerDashboard.bind(this);
         this.viewBillDetails = this.viewBillDetails.bind(this);
         this.navigateCreateCheckoutBill = this.navigateCreateCheckoutBill.bind(this);
         this.navigateUpdateCheckoutBill = this.navigateUpdateCheckoutBill.bind(this);
@@ -23,9 +28,19 @@ class CheckoutHandling extends Component {
 
     componentDidMount() {   //inbuild function
         this.fetchBillsDetails();
+        UserService.getUserBoard()
+            .then(
+                response => {
+                    if (!response.data.role.name.localeCompare("Manager")) {
+                        this.setState({
+                            isManager: true,
+                        });
+                    }
+                }
+            );
     }
 
-    fetchBillsDetails(){
+    fetchBillsDetails() {
         axios.get('http://localhost:8100/bill/')
             .then(response => {
                 this.setState({ bills: response.data.data });
@@ -36,6 +51,10 @@ class CheckoutHandling extends Component {
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    backToManagerDashboard(e) {
+        window.location = '/workingEmployee'
     }
 
     navigateCreateCheckoutBill(e) {
@@ -69,7 +88,7 @@ class CheckoutHandling extends Component {
         window.location = `/reception/viewBill/${billId}`
     }
 
-    deleteCheckoutBill(e , checkoutBillId) {
+    deleteCheckoutBill(e, checkoutBillId) {
         console.log("I am on Delete", checkoutBillId)
         Swal.fire({
             title: 'Are you sure?',
@@ -159,7 +178,7 @@ class CheckoutHandling extends Component {
         var today = new Date();
         var newdate = "Report Issued: " + today;
         doc.text(marginLeft, marginTop, newdate);
-        doc.text("*** Disclaimer : This is an electronically generated report, hence does not require signature.", marginLeft, marginTop+20);
+        doc.text("*** Disclaimer : This is an electronically generated report, hence does not require signature.", marginLeft, marginTop + 20);
         doc.line(40, 780, 558, 780);          //bottom line
         doc.save("Customer Billing Report - Hotel SkyLight.pdf")
     }
@@ -202,7 +221,7 @@ class CheckoutHandling extends Component {
 
                                     <div className="float-end">
                                         <form className="d-flex" onSubmit={this.searchCheckoutBill}>
-                                            <input className="form-control me-2" type="search" placeholder="Enter Bill number" name="search" value={this.state.search} onChange={this.onChange} aria-label="Search" autoComplete="off"/>
+                                            <input className="form-control me-2" type="search" placeholder="Enter Bill number" name="search" value={this.state.search} onChange={this.onChange} aria-label="Search" autoComplete="off" />
                                             <button className="btn btn-primary" type="submit" >Search</button>
                                         </form>
                                     </div>
@@ -240,6 +259,9 @@ class CheckoutHandling extends Component {
                                             </tbody>
                                         </table>
                                     </div>
+                                    {this.state.isManager && (
+                                        <button type="button" id="button" className="btn btn-secondary" onClick={e => this.backToManagerDashboard(e)}>Back to Manager Dashboard</button>
+                                    )}
                                     <button type="button" className="btn btn-dark float-end" onClick={e => this.generateReport(e)}>Generate Report</button>
                                 </div>
                             </div>
