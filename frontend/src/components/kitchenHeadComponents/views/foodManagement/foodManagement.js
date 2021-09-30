@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 import ReactPaginate from 'react-paginate';
 import '../../../css/dash.css';
+import UserService from "../../../../services/user.service";
 
 class FoodManagement extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class FoodManagement extends Component {
             page: 0,
             foodNumber: '',
             id: '',
-            foods: []
+            foods: [],
+            isManager: false
         }
         this.deleteFood = this.deleteFood.bind(this);
         this.viewFood = this.viewFood.bind(this);
@@ -20,6 +22,7 @@ class FoodManagement extends Component {
         this.navigateUpdateFoodPage = this.navigateUpdateFoodPage.bind(this);
         this.navigateSearchFoodPage = this.navigateSearchFoodPage.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.backToManagerDashboard = this.backToManagerDashboard.bind(this);
         this.retrieveFood = this.retrieveFood.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
 
@@ -34,10 +37,25 @@ class FoodManagement extends Component {
                 console.log("WPF", this.state.foods);
                 console.log("TP", this.state.totalPages);
             })
+        UserService.getUserBoard()
+            .then(
+                response => {
+                    if (!response.data.role.name.localeCompare("Manager")) {
+                        this.setState({
+                            isManager: true,
+                        });
+                    }
+                }
+            );
     }
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
     }
+
+    backToManagerDashboard(e) {
+        window.location = '/workingEmployee'
+    }
+
     retrieveFood(page) {
         console.log("Pagef", page);
         axios.get('http://localhost:8100/food/', {
@@ -217,7 +235,9 @@ class FoodManagement extends Component {
                                         containerClassName={'pagination'}
                                         activeClassName={'active'}
                                     />
-
+                                    {this.state.isManager && (
+                                        <button type="button" id="button" className="btn btn-secondary" onClick={e => this.backToManagerDashboard(e)}>Back to Manager Dashboard</button>
+                                    )}
                                 </div>
                             </div>
                         </div>
