@@ -159,8 +159,8 @@ class kitchentransferredOrderManagement extends Component {
                                             <a href="/roomBookingManagement" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >
                                                 Room Booking Management
                                             </button></a>
-                                            <button type="button" className="list-group-item list-group-item-action">Employee Leaves</button>
-                                            <button type="button" className="list-group-item list-group-item-action">Employee Attendance</button>
+                                            <a href="/attendance/employeeLeaves" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Employee Leaves</button></a>
+                                            <a href="/attendance/employeeAttendance" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Employee Attendance</button></a>
                                             <a href="/foodorder" className="routeBtn"><button type="button" className="list-group-item list-group-item-action " >Food Ordering</button></a>
                                             <a href="/kitchentransferredOrderManagement" className="routeBtn"><button type="button" id="active-button" className="list-group-item list-group-item-action active" aria-current="true">Kitchen Transferred Orders</button></a>
                                             <a href="/create-serviceListBill" className="routeBtn"><button type="button" className="list-group-item list-group-item-action">Service List Bill</button></a>
