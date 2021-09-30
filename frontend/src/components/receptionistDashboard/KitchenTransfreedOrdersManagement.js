@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import React, { Component } from 'react';
 import axios from 'axios';
 import './roomBookingManagement.css';
+import reportImage from '../../images/logo.jpg';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -97,10 +98,22 @@ class kitchentransferredOrderManagement extends Component {
         const doc = new jsPDF(orientation, unit, size);
 
         doc.setFontSize(15);
+        var reportImg = new Image;
+        reportImg.src = reportImage;
 
         const title = "Food Orderings";
-        const headers = [["OrderId", "foodName", "price", "quantity", "price*Qty", "Total"]];
+        const headers = [["Order Id", "Food Name", "Price", "Quantity", "Price*Qty", "Total"]];
 
+        doc.addImage(reportImg, 'JPEG', 40, 13, 70, 70);
+        doc.text("Skylight Hotel", marginLeft + 80, 25);
+        doc.setFontSize(11);
+        doc.text("No.2 Main Street, Colombo", marginLeft + 80, 40);
+        doc.text("info@skylight.com", marginLeft + 80, 55);
+        doc.text("+94 255 255 111", marginLeft + 80, 70);
+
+        doc.line(40, 93, 558, 93);
+        doc.setFontSize(13);
+        doc.text(title, marginLeft, 110);
 
         const data = this.state.kitchenorders.map(item =>
 
@@ -124,19 +137,19 @@ class kitchentransferredOrderManagement extends Component {
 
 
         let content = {
-            startY: 50,
+            startY: 122,
             head: headers,
             body: data
         };
 
 
-        doc.text(title, marginLeft, 40);
         doc.autoTable(content);
-        doc.previousAutoTable.finalY + 25;
+        let marginTop = doc.previousAutoTable.finalY + 25;
         var today = new Date();
-        var newdate = "Date Printed :" + today;
-        doc.text(marginLeft,
-            marginTop, newdate);
+        var newdate = "Report Issued: " + today;
+        doc.text(marginLeft, marginTop, newdate);
+        doc.text("*** Disclaimer : This is an electronically generated report, hence does not require signature.", marginLeft, marginTop + 20);
+        doc.line(40, 780, 558, 780);  
         doc.save("report2.pdf")
     }
 
