@@ -5,18 +5,20 @@ import '../../../css/dash.css';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import reportImage from '../../../../images/logo.jpg';
-
+import UserService from "../../../../services/user.service";
 
 class ServiceListManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
             id: '',
-            serviceLists: []
+            serviceLists: [],
+            isManager: false
         }
         this.deleteServiceBill = this.deleteServiceBill.bind(this);
         this.navigateCreateServiceBillPage = this.navigateCreateServiceBillPage.bind(this);
         this.navigateUpdateServiceListPage = this.navigateUpdateServiceListPage.bind(this);
+        this.backToManagerDashboard = this.backToManagerDashboard.bind(this);
         this.exportServiceBillReportPDF = this.exportServiceBillReportPDF.bind(this);
     }
 
@@ -27,6 +29,17 @@ class ServiceListManagement extends Component {
                 console.log("abc", response.data.data);
                 console.log("fffff", this.state.serviceLists);
             })
+
+            UserService.getUserBoard()
+            .then(
+                response => {
+                    if (!response.data.role.name.localeCompare("Manager")) {
+                        this.setState({
+                            isManager: true,
+                        });
+                    }
+                }
+            );
     }
 
     ViewSericeList(e, serviceListId) {
@@ -35,6 +48,10 @@ class ServiceListManagement extends Component {
             data: `${serviceListId}`
         });
 
+    }
+
+    backToManagerDashboard(e) {
+        window.location = '/workingEmployee'
     }
 
     navigateUpdateServiceListPage(e, serviceListId) {      //edit
@@ -238,6 +255,9 @@ class ServiceListManagement extends Component {
                                         </table>
                                     </div>
                                     <br />
+                                    {this.state.isManager && (
+                                        <button type="button" id="button" className="btn btn-secondary" onClick={e => this.backToManagerDashboard(e)}>Back to Manager Dashboard</button>
+                                    )}
                                     <div className="generateReportbtn">
                                         <button type="button" className="btn btn-dark" onClick={() => this.exportServiceBillReportPDF()}>Generate Report</button>
                                     </div>
