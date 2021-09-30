@@ -244,7 +244,7 @@ class foodOrderManagement extends Component {
                                                         <td>{item.orderId}</td>
                                                         <td>
                                                             {item.foodorders.map((item, index) => (
-                                                                <h5> {item.foodName}</h5>
+                                                                <p id="food-tbl"> {item.foodName}</p>
 
                                                             ))}
 
@@ -254,21 +254,21 @@ class foodOrderManagement extends Component {
                                                         <td>
 
                                                         {item.foodorders.map((item, index) => (
-                                                                <h5> {item.price}</h5>
+                                                                <p id="food-tbl"> {item.price}</p>
 
                                                             ))}
                                                         </td>
                                                         <td>
 
                                                             {item.foodorders.map((item, index) => (
-                                                                <h5> {item.quantity}</h5>
+                                                                <p id="food-tbl"> {item.quantity}</p>
 
                                                             ))}
                                                         </td>
 
                                                         <td>
                                                         {item.foodorders.map((item, index) => (
-                                                                <h5> {item.pricenquantity}</h5>
+                                                                <p id="food-tbl"> {item.pricenquantity}</p>
 
                                                             ))}
                                                         </td>
