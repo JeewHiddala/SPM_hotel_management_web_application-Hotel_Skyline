@@ -210,10 +210,10 @@ class kitchentransferredOrderManagement extends Component {
                                             <tbody>
                                                 {this.state.kitchenorders.length > 0 && this.state.kitchenorders.map((item, index) => (
                                                     <tr key={index}>
-                                                        <td><h5>{item.orderId}</h5></td>
+                                                        <td>{item.orderId}</td>
                                                         <td>
                                                             {item.foodorders.map((item, index) => (
-                                                                <h5> {item.foodName}</h5>
+                                                                <p id="food-tbl"> {item.foodName}</p>
 
                                                             ))}
 
@@ -221,25 +221,25 @@ class kitchentransferredOrderManagement extends Component {
                                                         <td>
 
                                                             {item.foodorders.map((item, index) => (
-                                                                <h5> {item.price}</h5>
+                                                                <p id="food-tbl"> {item.price}</p>
 
                                                             ))}
                                                         </td>
                                                         <td>
 
                                                             {item.foodorders.map((item, index) => (
-                                                                <h5> {item.quantity}</h5>
+                                                                <p id="food-tbl"> {item.quantity}</p>
 
                                                             ))}
                                                         </td>
 
                                                         <td>
                                                             {item.foodorders.map((item, index) => (
-                                                                <h5> {item.pricenquantity}</h5>
+                                                                <p id="food-tbl"> {item.pricenquantity}</p>
 
                                                             ))}
                                                         </td>
-                                                        <td><h5>{item.totalPrice}</h5></td>
+                                                        <td>{item.totalPrice}</td>
                                                         <td><button type="button" className="btn btn-danger" onClick={e => this.deleteKitchenOrder(e, item._id)}>Delete</button></td>
 
 
