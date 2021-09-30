@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 import ReactPaginate from 'react-paginate';
 import moment from 'moment';
+import UserService from "../../services/user.service";
 
 
 class EmployeeAttendance extends Component {
@@ -13,18 +14,30 @@ class EmployeeAttendance extends Component {
             page: 0,
             attendances: [],
             search: "",
-            status: "Left"
+            status: "Left",
+            isManager: false
         }
         this.searchAttendance = this.searchAttendance.bind(this);
         this.onChange = this.onChange.bind(this);
         this.navigateCreateAttendance = this.navigateCreateAttendance.bind(this);
         this.UpdateAttendance = this.UpdateAttendance.bind(this);
+        this.backToManagerDashboard = this.backToManagerDashboard.bind(this);
         this.retrievePage = this.retrievePage.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     componentDidMount() {   //inbuild function
         this.fetchAttendanceDetails();
+        UserService.getUserBoard()
+            .then(
+                response => {
+                    if (!response.data.role.name.localeCompare("Manager")) {
+                        this.setState({
+                            isManager: true,
+                        });
+                    }
+                }
+            );
     }
 
     fetchAttendanceDetails() {
@@ -36,6 +49,10 @@ class EmployeeAttendance extends Component {
                 console.log("TP", this.state.totalPages);
             })
 
+    }
+
+    backToManagerDashboard(e) {
+        window.location = '/workingEmployee'
     }
 
     retrievePage(page) {
@@ -194,6 +211,9 @@ class EmployeeAttendance extends Component {
                                         containerClassName={'pagination'}
                                         activeClassName={'active'}
                                     />
+                                    {this.state.isManager && (
+                                        <button type="button" id="button" className="btn btn-secondary" onClick={e => this.backToManagerDashboard(e)}>Back to Manager Dashboard</button>
+                                    )}
                                 </div>
                             </div>
                         </div>
