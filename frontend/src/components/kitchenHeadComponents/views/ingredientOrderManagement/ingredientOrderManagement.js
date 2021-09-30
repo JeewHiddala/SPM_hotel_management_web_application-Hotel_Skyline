@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
 import '../../../css/dash.css';
+import UserService from "../../../../services/user.service";
 
 class IngredientOrderManagement extends Component {
     constructor(props) {
@@ -9,11 +10,13 @@ class IngredientOrderManagement extends Component {
         this.state = {
             id: '',
             orderNumber: '',
-            ingredientOrders: []
+            ingredientOrders: [],
+            isManager: false
         }
         this.deleteIngredientOrder = this.deleteIngredientOrder.bind(this);
         this.navigateCreateIngredientOrderPage = this.navigateCreateIngredientOrderPage.bind(this);
         this.navigateUpdateIngredientOrderPage = this.navigateUpdateIngredientOrderPage.bind(this);
+        this.backToManagerDashboard = this.backToManagerDashboard.bind(this);
         this.navigateSearchIngredientOrderPage = this.navigateSearchIngredientOrderPage.bind(this);
         this.onChange = this.onChange.bind(this);
 
@@ -28,11 +31,25 @@ class IngredientOrderManagement extends Component {
                 console.log("fffff", this.state.ingredientOrders);
 
             })
+            UserService.getUserBoard()
+            .then(
+                response => {
+                    if (!response.data.role.name.localeCompare("Manager")) {
+                        this.setState({
+                            isManager: true,
+                        });
+                    }
+                }
+            );
     }
 
 
     onChange(e) {     //update states
         this.setState({ [e.target.name]: e.target.value })
+    }
+
+    backToManagerDashboard(e) {
+        window.location = '/workingEmployee'
     }
 
     navigateSearchIngredientOrderPage(e) {      //search
@@ -189,6 +206,9 @@ class IngredientOrderManagement extends Component {
                                             </tbody>
                                         </table>
                                     </div>
+                                    {this.state.isManager && (
+                                        <button type="button" id="button" className="btn btn-secondary" onClick={e => this.backToManagerDashboard(e)}>Back to Manager Dashboard</button>
+                                    )}
                                 </div>
                             </div>
                         </div>
