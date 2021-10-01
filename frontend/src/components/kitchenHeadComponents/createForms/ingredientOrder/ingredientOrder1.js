@@ -195,7 +195,7 @@ class IngredientOrder1 extends Component {
                                     </div>
                                     <br></br>
                                     <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
-                                    <button type="submit" id="form-button" className="btn btn-primary" onClick={e => this.backtoIngredientOrderManagementDash(e)}>Create New Ingredient Order</button>
+                                    <button type="submit" id="form-button" className="btn btn-success" onClick={e => this.backtoIngredientOrderManagementDash(e)}>Create New Ingredient Order</button>
 
                                 </div>
                                 <br>

@@ -216,7 +216,7 @@ class kitchentransferredOrderManagement extends Component {
                                                     <th>Price*Qty</th>
                                                     <th>Order Total</th>
                                                     <th></th>
-                                                    <th></th>
+                                                    
 
                                                 </tr>
                                             </thead>

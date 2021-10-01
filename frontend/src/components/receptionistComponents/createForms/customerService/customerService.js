@@ -250,7 +250,7 @@ class CustomerService extends Component {
                                             <br></br>
                                             <br></br>
 
-                                            <button type="submit" className="btn btn-primary">Add Service</button>
+                                            <button type="submit" className="btn btn-success">Add Service</button>
                                         </div>
                                     </div>
                                     <br>

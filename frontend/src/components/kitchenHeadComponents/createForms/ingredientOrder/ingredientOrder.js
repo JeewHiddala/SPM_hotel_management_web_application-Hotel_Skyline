@@ -104,7 +104,7 @@ class IngredientOrder extends Component {
 
                                     <br />
                                     <button id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrderManagement(e)}>Back</button>
-                                    <button id="form-button" onClick={e => this.addIngredient(e, this.state.orderNumber)} className="btn btn-primary">Add New Ingredient</button>
+                                    <button id="form-button" onClick={e => this.addIngredient(e, this.state.orderNumber)} className="btn btn-success">Add New Ingredient</button>
 
                                 </div>
                                 <br>

@@ -39,8 +39,8 @@ class updateIngredientOrder extends Component {
     deleteIngredient(e, ingredientId) {
         console.log("I am on Delete", ingredientId)
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Are you sure you want to delete this Ingredient Order?',
+            text: "This item will be deleted immediately. You can't undo this action!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -52,7 +52,7 @@ class updateIngredientOrder extends Component {
 
                 Swal.fire(
                     'Deleted!',
-                    'Ingredient has been deleted.',
+                    'Ingredient Order has been deleted.',
                     'success'
                 )
                 window.location.reload(false);

@@ -2,21 +2,22 @@ const express = require('express');
 const expressAsyncHandler = require('express-async-handler');
 const Order = require('../models/orderModel');
 const { isAuth } = require('../../utils');
+const { authJwt } = require("../middlewares");
 
 const orderRouter = express.Router();
 
 orderRouter.get(
   '/mine',
-  isAuth,
+  authJwt.verifyToken,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({ user: req.user._id });
+    const orders = await Order.find({ user: req.userId });
     res.send(orders);
   })
 );
 
 orderRouter.post(
   '/',
-  isAuth,
+  authJwt.verifyToken,
   expressAsyncHandler(async (req, res) => {
     if (req.body.orderItems.length === 0) {
       res.status(400).send({ message: 'Cart is empty' });
@@ -29,7 +30,7 @@ orderRouter.post(
         shippingPrice: req.body.shippingPrice,
         taxPrice: req.body.taxPrice,
         totalPrice: req.body.totalPrice,
-        user: req.user._id,
+        user: req.userId,
       });
       const createdOrder = await order.save();
       res
@@ -41,7 +42,7 @@ orderRouter.post(
 
 orderRouter.get(
   '/:id',
-  isAuth,
+  authJwt.verifyToken,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
@@ -54,7 +55,7 @@ orderRouter.get(
 
 orderRouter.put(
   '/:id/pay',
-  isAuth,
+  authJwt.verifyToken,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {

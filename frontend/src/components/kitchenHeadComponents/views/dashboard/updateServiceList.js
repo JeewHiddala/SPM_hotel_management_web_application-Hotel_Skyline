@@ -18,7 +18,7 @@ class updateServiceList extends Component {
         this.state = initialState;
         this.onChange = this.onChange.bind(this);  //bind onChange function.
         this.onSubmit = this.onSubmit.bind(this);   //bind onSubmit function.
-        this.deleteServiceList = this.deleteServiceList.bind(this);
+        
         this.updateServiceList = this.updateServiceList.bind(this);
 
 
@@ -55,29 +55,6 @@ class updateServiceList extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    deleteServiceList(e, serviceListId) {
-        console.log("I am on Delete", serviceListId)
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.delete(`http://localhost:8100/serviceList/${serviceListId}`)
-
-                Swal.fire(
-                    'Deleted!',
-                    'Service List has been deleted.',
-                    'success'
-                )
-                window.location.reload(false);
-            }
-        })
-    }
 
 
 
@@ -194,7 +171,6 @@ class updateServiceList extends Component {
                                                         <td>{item.cost}</td>
 
                                                         <td><button type="button" className="btn btn-warning" onClick={e => this.updateServiceList(e, item._id)}>Update</button></td>
-                                                        <td><button type="button" className="btn btn-danger" onClick={e => this.deleteServiceList(e, item._id)}>Delete</button></td>
                                                     </tr>
                                                 ))}
                                             </tbody>

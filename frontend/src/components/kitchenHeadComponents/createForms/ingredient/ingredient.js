@@ -194,7 +194,7 @@ class Ingredient extends Component {
 
                                 <div className="mb-3">
                                     <button type="button" id="form-button" className="btn btn-secondary" onClick={e => this.backtoIngredientOrder(e)}>Back</button>
-                                    <button type="submit" id="form-button" className="btn btn-primary">Add ingredient</button>
+                                    <button type="submit" id="form-button" className="btn btn-success">Add ingredient</button>
                                 </div>
 
                                 <br>

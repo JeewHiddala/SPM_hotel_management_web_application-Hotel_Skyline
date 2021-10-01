@@ -99,7 +99,7 @@ class viewCreditPaymentForm extends Component {
 
 
                 <h2>Credit Payment Details</h2>
-                <h2>Rs.{this.state.totalCost}</h2>
+                <h2>Rs.{this.state.amount}</h2>
                 <form  >
 
                 <div className="row mb-3">

@@ -26,7 +26,7 @@ class transferToKitchen extends Component {
             .then(response => {
                 this.setState({ foodordering: response.data.data });
                 this.setState({ orderId: response.data.data.orderId });
-                this.setState({ totalPrice: response.data.data.totalPrice });
+                // this.setState({ totalPrice: response.data.data.totalPrice });
                 this.setState({ foodorders: response.data.data.foodorders});
                 console.log("abc" + response.data.data.orderId);
             })
